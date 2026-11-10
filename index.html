@@ -185,7 +185,7 @@ h1, h2, h3 { line-height: 1.3; margin: 0; }
 main > section.hero { padding: 22px 0 26px; }
 .hero .hero-inner h1 { margin: 12px 0 4px; font-size: 40pt; } /* 제목: 40pt 고정 */
 .hero .hero-subtitle { margin: 0 0 10px; font-size: 16pt; } /* 부제목: 16pt 고정 */
-.hero .hero-desc { margin: 0; max-width: 46em; }
+.hero .hero-desc { margin: 0; max-width: 46em; white-space: pre-line; } /* 설명 글의 \n 자리에서 줄바꿈 */
 .hero .facts { margin-top: 22px; }
 main > section.section { padding: 36px 0; }
 main > section .section-head { margin-bottom: 22px; }
@@ -2550,6 +2550,11 @@ window.SITE_CONFIG = {
       { id: "intro-homework", label: "과제물" },
       { id: "intro-grading", label: "평가 방법" },
     ] },
+    { id: "guide", label: "수강안내", children: [
+      { id: "guide-materials", label: "수강준비물" },
+      { id: "guide-grading", label: "평가방법" },
+      { id: "guide-notes", label: "유의사항" },
+    ] },
     { id: "curriculum", label: "학습내용보기" },
     { id: "calendar", label: "수업달력" },
     { id: "quiz", label: "퀴즈" },
@@ -2564,7 +2569,7 @@ window.SITE_CONFIG = {
     title: "교양중국어2",
     subtitle: "AI 기반 데이터 활용능력 배양",
     description:
-      "초급 중국어 수준의 말하기, 듣기, 쓰기, 읽기 능력을 골고루 배양한다. 교수자가 제작한 과목 홈페이지를 통해 AI를 활용하여 다양한 맥락에서 중국어를 습득한다.",
+      "초급 중국어 수준의 말하기, 듣기, 쓰기, 읽기 능력을 골고루 배양한다.\n교수자가 제작한 과목 홈페이지를 통해 AI를 활용하여 다양한 맥락에서 중국어를 습득한다.",
     buttons: [], // 첫 화면 버튼 (메뉴바와 겹쳐서 비움). 예: { label: "학습 내용 보기", href: "#curriculum", primary: true }
     /* 첫 화면 오른쪽 죽간에 세로로 쓰일 글귀 (한 줄 = 죽간 한 쪽, 오른쪽부터 읽힘) */
     slips: [], // 비워 두면 죽간 장식을 그리지 않습니다
@@ -3557,13 +3562,13 @@ window.SiteStore = (function () {
       "</ul>"
   );
 
-  /* 수강 안내 — 준비물 · 평가 · 유의 사항 */
+  /* 수강 안내 — 준비물 · 평가 · 유의 사항 (메뉴 '수강안내'의 하위 항목: #guide-materials · #guide-grading · #guide-notes) */
   var g = C.guide;
   fill(
     "guide",
     sectionHead(g.title, g.lead) +
-      '<div class="grid grid-2">' +
-      '<div class="card"><h3>수강 준비물</h3><ul class="materials">' +
+      '<div class="syl-list">' +
+      '<div class="card syl-block" id="guide-materials"><h3>수강 준비물</h3><ul class="materials">' +
       list(g.materials, function (m) {
         return (
           "<li><span class=\"tag " + (m.required ? "tag-req" : "tag-opt") + "\">" + (m.required ? "필수" : "권장") + "</span>" +
@@ -3571,17 +3576,17 @@ window.SiteStore = (function () {
         );
       }) +
       "</ul></div>" +
-      '<div class="card"><h3>평가 방법</h3><ul class="grading">' +
+      '<div class="card syl-block" id="guide-grading"><h3>평가 방법</h3><ul class="grading">' +
       list(g.grading, function (r) {
         return (
           "<li><div class='grading-row'><span>" + esc(r.item) + "</span><strong>" + esc(r.percent) + "%</strong></div>" +
           '<div class="bar"><span style="width:' + Number(r.percent) + '%"></span></div></li>'
         );
       }) +
-      "</ul></div></div>" +
-      '<div class="card notes"><h3>유의 사항</h3><ul>' +
+      "</ul></div>" +
+      '<div class="card notes syl-block" id="guide-notes"><h3>유의 사항</h3><ul>' +
       list(g.notes, function (n) { return "<li>" + esc(n) + "</li>"; }) +
-      "</ul></div>"
+      "</ul></div></div>"
   );
 
   /* FAQ */
