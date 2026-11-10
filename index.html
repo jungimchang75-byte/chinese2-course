@@ -821,6 +821,14 @@ main > section.view-off, .syl-block.view-off { display: none !important; }
   background: var(--yellow-200);
 }
 .faq-item[open] summary::after { content: "−"; }
+/* 수강안내: 접었다 펼치는 항목 (FAQ와 같은 +/− 동그라미) */
+.guide-acc > summary { list-style: none; cursor: pointer; position: relative; padding-right: 44px; }
+.guide-acc > summary::-webkit-details-marker { display: none; }
+.guide-acc > summary h3 { margin: 0 !important; }
+.guide-acc[open] > summary { margin-bottom: 14px; }
+.guide-acc > summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: var(--brown-700); background: var(--yellow-200); }
+.guide-acc[open] > summary::after { content: "−"; }
+.guide-acc.notes { margin-top: 0; }
 .faq-item p { padding: 0 24px 22px; color: var(--text-soft); }
 
 /* ===== 메뉴 배지 · 자물쇠 ===== */
@@ -3568,25 +3576,26 @@ window.SiteStore = (function () {
     "guide",
     sectionHead(g.title, g.lead) +
       '<div class="syl-list">' +
-      '<div class="card syl-block" id="guide-materials"><h3>수강 준비물</h3><ul class="materials">' +
+      /* 세 항목은 접혀 있다가 제목을 눌러야 펼쳐짐 (메뉴에서 고르면 그 항목만 펼친 채로 보임) */
+      '<details class="card syl-block guide-acc" id="guide-materials"><summary><h3>수강 준비물</h3></summary><ul class="materials">' +
       list(g.materials, function (m) {
         return (
           "<li><span class=\"tag " + (m.required ? "tag-req" : "tag-opt") + "\">" + (m.required ? "필수" : "권장") + "</span>" +
           "<div><strong>" + esc(m.item) + "</strong><span>" + esc(m.detail) + "</span></div></li>"
         );
       }) +
-      "</ul></div>" +
-      '<div class="card syl-block" id="guide-grading"><h3>평가 방법</h3><ul class="grading">' +
+      "</ul></details>" +
+      '<details class="card syl-block guide-acc" id="guide-grading"><summary><h3>평가 방법</h3></summary><ul class="grading">' +
       list(g.grading, function (r) {
         return (
           "<li><div class='grading-row'><span>" + esc(r.item) + "</span><strong>" + esc(r.percent) + "%</strong></div>" +
           '<div class="bar"><span style="width:' + Number(r.percent) + '%"></span></div></li>'
         );
       }) +
-      "</ul></div>" +
-      '<div class="card notes syl-block" id="guide-notes"><h3>유의 사항</h3><ul>' +
+      "</ul></details>" +
+      '<details class="card notes syl-block guide-acc" id="guide-notes"><summary><h3>유의 사항</h3></summary><ul>' +
       list(g.notes, function (n) { return "<li>" + esc(n) + "</li>"; }) +
-      "</ul></div></div>"
+      "</ul></details></div>"
   );
 
   /* FAQ */
@@ -3731,6 +3740,7 @@ window.SiteStore = (function () {
     /* 교과목 소개 하위 항목 */
     document.querySelectorAll(".syl-block").forEach(function (b) {
       b.classList.toggle("view-off", !!CHILD_OF[id] && b.id !== id);
+      if (b.classList.contains("guide-acc")) b.open = b.id === id; /* 수강안내: 메뉴에서 고른 항목만 펼침, '수강안내' 화면에서는 모두 접힘 */
     });
     navLinks.forEach(function (a) {
       a.classList.toggle("active", !!parent && (a.getAttribute("data-target") === parent || a.getAttribute("href") === "#" + id));
