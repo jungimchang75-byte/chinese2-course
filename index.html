@@ -3324,8 +3324,9 @@ window.SiteStore = (function () {
       '<div class="syl-list">' +
       list(intro.blocks || [], function (b) {
         return (
-          '<article class="card syl-block" id="' + esc(b.id) + '">' +
-          '<h3><span class="syl-no">' + esc(b.no) + "</span>" + esc(b.title) + "</h3>" +
+          /* 수강안내와 같이 접혀 있다가 제목을 눌러야 펼쳐짐 (메뉴에서 고르면 그 항목만 펼친 채로 보임) */
+          '<details class="card syl-block guide-acc" id="' + esc(b.id) + '">' +
+          '<summary><h3><span class="syl-no">' + esc(b.no) + "</span>" + esc(b.title) + "</h3></summary>" +
           (b.items ? '<ul class="syl-items">' + list(b.items, function (t) { return "<li>" + linkify(t) + "</li>"; }) + "</ul>" : "") +
           (b.lines
             ? '<div class="syl-lines">' +
@@ -3339,7 +3340,7 @@ window.SiteStore = (function () {
               }) +
               "</div>"
             : "") +
-          "</article>"
+          "</details>"
         );
       }) +
       "</div>"
