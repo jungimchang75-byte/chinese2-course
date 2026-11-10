@@ -2452,6 +2452,24 @@ a { color: var(--green-700); }
 .wa-gram { border-left-color: var(--pink-500); }
 .cs { border-radius: 24px; box-shadow: 0 18px 40px rgba(90, 60, 40, 0.18); }
 .ai-dig { border: 1px solid #e6dfd1; }
+/* 강의 노트 · 문화 슬라이드: 아주 연한 파스텔 바탕 + 진한 글자 (눈부심 줄이기) */
+.cs { box-shadow: 0 10px 28px rgba(90, 60, 40, 0.10); border: 1px solid #ece4d6; }
+.cs-slide { color: #4a4257; }
+.cs-text h5 { color: #2f2840; }
+.cs-no { color: #8a8098; opacity: 1; }
+.cs-emoji { filter: drop-shadow(0 4px 8px rgba(80, 60, 100, 0.12)); }
+.cs-points { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(120, 100, 150, 0.10); }
+.cs-points li::before { color: #c98aa6; }
+.cs-chips span, .cs-key { background: rgba(255, 255, 255, 0.7); color: #4a4257; }
+.cs-phrase { background: rgba(255, 255, 255, 0.85); }
+.cs-deco { background: rgba(255, 255, 255, 0.5); }
+.cs-pic { box-shadow: 0 6px 16px rgba(80, 60, 100, 0.12); }
+.cs-count { color: #5d5470; background: rgba(255, 255, 255, 0.75); }
+.cs-ctrl button { color: #5d5470; background: rgba(255, 255, 255, 0.75); box-shadow: 0 1px 4px rgba(80, 60, 100, 0.12); }
+.cs-ctrl button:hover { background: #fff; }
+.cs-bar { background: rgba(80, 60, 100, 0.08); }
+.cs-bar span { background: #b7a3d4; }
+.cs.is-present { background: #f6f2ea; }
 </style>
 </head>
 <body>
@@ -7054,13 +7072,13 @@ window.SiteStore = (function () {
     var slides = [];
     /* AI가 만든 수업용 슬라이드(기본 20장)가 있으면 그대로 씀 */
     (n.slides || []).forEach(function (s) {
-      slides.push({ emoji: esc(s.emoji || "📘"), img: s.img, kicker: wn + "주차 강의 노트", title: s.title, body:
+      slides.push({ emoji: esc(s.emoji || "📘"), img: s.img, kicker: (Number(wn) > 100 ? "제" + (wn - 100) + "과" : wn + "주차") + " 강의 노트", title: s.title, body:
         ((s.points || []).length ? '<ul class="cs-points">' + list(s.points, function (p) { return "<li>" + esc(p) + "</li>"; }) + "</ul>" : "") +
         (s.zh ? '<p class="cs-phrase"><button class="wa-say" type="button" data-say="' + esc(s.zh) + '" aria-label="듣기">🔊</button> <span><b lang="zh-CN">' + esc(s.zh) + "</b>" +
           (s.pinyin ? ' <small class="cs-py">' + esc(s.pinyin) + "</small>" : "") + (s.ko ? "<br />" + esc(s.ko) : "") + "</span></p>" : "") });
     });
     if (slides.length) return slidesShell(slides, "강의 노트 슬라이드", true);
-    slides.push({ emoji: "📘", kicker: wn + "주차 강의 노트", title: n.title || "강의 노트", body:
+    slides.push({ emoji: "📘", kicker: (Number(wn) > 100 ? "제" + (wn - 100) + "과" : wn + "주차") + " 강의 노트", title: n.title || "강의 노트", body:
       (n.summary ? "<p>" + esc(n.summary) + "</p>" : "") +
       '<p class="cs-chips"><span>📑 ' + secs.length + "개 단계</span><span>🗣️ 핵심 표현 " + ex.length + "개</span><span>❓ 확인 질문 " + qs.length + "개</span></p>" });
     if (secs.length > 1) {
@@ -7107,10 +7125,10 @@ window.SiteStore = (function () {
     return (
       '<div class="cs-bar"><span></span></div>' +
       '<p class="cs-count" aria-live="polite"></p>' +
-      '<div class="cs-ctrl"><button type="button" class="cs-prev" aria-label="이전">‹</button>' +
-      '<button type="button" class="cs-play" aria-label="' + (paused ? "재생" : "일시 정지") + '">' + (paused ? "▶" : "❚❚") + "</button>" +
-      '<button type="button" class="cs-next" aria-label="다음">›</button>' +
-      '<button type="button" class="cs-full" aria-label="프레젠테이션 모드" title="프레젠테이션 모드 (F)">🖥 <span>발표</span></button></div>'
+      '<div class="cs-ctrl"><button type="button" class="cs-prev" aria-label="이전" title="이전 장">‹</button>' +
+      '<button type="button" class="cs-play" aria-label="' + (paused ? "자동 넘기기 시작" : "자동 넘기기 멈춤") + '" title="' + (paused ? "자동 넘기기 시작" : "자동 넘기기 멈춤") + '">' + (paused ? "▶" : "❚❚") + "</button>" +
+      '<button type="button" class="cs-next" aria-label="다음" title="다음 장">›</button>' +
+      '<button type="button" class="cs-full" aria-label="프레젠테이션 모드" title="전체 화면으로 크게 보기 (F) — 수업 시간 화면 띄우기용">🖥 <span>발표</span></button></div>'
     );
   }
   function assignmentTab(a) {
@@ -7222,10 +7240,11 @@ window.SiteStore = (function () {
     );
   }
   var SLIDE_BG = [
-    "linear-gradient(135deg,#5b3fe0,#8f6bff)", "linear-gradient(135deg,#d6457f,#ff7eb0)", "linear-gradient(135deg,#3554c7,#5f86f0)",
-    "linear-gradient(135deg,#7a3fd1,#b56cf0)", "linear-gradient(135deg,#1f7a8c,#38a9b8)", "linear-gradient(135deg,#4a2fb8,#6f55e8)",
-    "linear-gradient(135deg,#c2477a,#e9789f)", "linear-gradient(135deg,#2c3f9e,#4f6fd6)", "linear-gradient(135deg,#6a35c8,#9a62ee)",
-    "linear-gradient(135deg,#3b2a8f,#6248d8)",
+    /* 아주 연한 파스텔: 라벤더 · 벚꽃 · 하늘 · 민트 · 살구 · 레몬 · 연두 · 라일락 · 장미 · 연하늘 */
+    "linear-gradient(135deg,#f6f3fd,#ece6fa)", "linear-gradient(135deg,#fdf4f7,#f9e6ee)", "linear-gradient(135deg,#f2f6fd,#e4edfa)",
+    "linear-gradient(135deg,#eff8f6,#e0f1ed)", "linear-gradient(135deg,#fdf6ef,#f9eadc)", "linear-gradient(135deg,#fcf9ec,#f5efd3)",
+    "linear-gradient(135deg,#f2f8ee,#e5f0dd)", "linear-gradient(135deg,#f8f2fb,#efe3f6)", "linear-gradient(135deg,#fdf3f3,#f8e4e4)",
+    "linear-gradient(135deg,#f0f7fb,#e1eff6)",
   ];
   function cultureHTML(slides) {
     return (
@@ -7850,7 +7869,7 @@ window.SiteStore = (function () {
         cs._paused = !cs._paused;
         var pb = cs.querySelector(".cs-play");
         pb.textContent = cs._paused ? "▶" : "❚❚";
-        pb.setAttribute("aria-label", cs._paused ? "재생" : "일시 정지");
+        pb.setAttribute("aria-label", cs._paused ? "자동 넘기기 시작" : "자동 넘기기 멈춤"); pb.title = pb.getAttribute("aria-label");
         showSlide(cs, cs._i);
       }
       return;
