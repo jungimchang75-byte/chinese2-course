@@ -167,11 +167,43 @@ h1, h2, h3 { line-height: 1.3; margin: 0; }
 /* ===== 첫 화면 ===== */
 .hero { padding: 56px 0 48px; }
 .hero-inner.no-slips { grid-template-columns: 1fr; }
+.hero-buttons:empty { display: none; }
+#curriculum .week-num { min-width: 84px; text-align: center; justify-content: center; } /* 날짜 칸 너비를 맞춰 진도 글자 줄 맞춤 */
+.tag.tag-quiz { color: #fff; background: #4a7c66; } /* 퀴즈: 옥색(초록) — 朱砂·宣纸와 어울리는 차분한 초록 */
+/* 내용 없는 공지: 눌러도 빈 칸이 펼쳐지지 않음 */
+.notice-item.no-body .notice-body { display: none; }
+.notice-item.no-body > summary, .notice-item.no-body[open] > summary { border-bottom: 0 !important; }
+/* AI 도구: 왼쪽 그림 + 오른쪽 설명 (한 줄짜리 작은 카드, 2열) */
+.tools.grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px; }
+.card.tool { display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
+.card.tool .feature-icon { flex: none; width: 44px; height: 44px; margin: 0; font-size: 22px; border-radius: 12px; }
+.card.tool .tool-text { min-width: 0; }
+.card.tool h3 { margin: 0; font-size: 16px; line-height: 1.35; }
+.card.tool p { margin: 2px 0 0; font-size: 14px; line-height: 1.5; }
+@media (max-width: 600px) { .tools.grid { grid-template-columns: 1fr !important; } }
+/* 빈 공간 줄이기 */
+main > section.hero { padding: 22px 0 26px; }
+.hero .hero-inner h1 { margin: 12px 0 4px; font-size: 40pt; } /* 제목: 40pt 고정 */
+.hero .hero-subtitle { margin: 0 0 10px; font-size: 16pt; } /* 부제목: 16pt 고정 */
+.hero .hero-desc { margin: 0; max-width: 46em; }
+.hero .facts { margin-top: 22px; }
+main > section.section { padding: 36px 0; }
+main > section .section-head { margin-bottom: 22px; }
+body .site-footer { padding: 18px 0 16px; }
+.site-footer .container > .footer-bottom:first-child { margin: 0; padding-top: 0; border-top: 0; }
+/* 맨 아래 띠: 진한 색 바를 없애고 바탕과 같은 색의 작은 글씨로 */
+body .site-footer { background: transparent !important; color: var(--text-soft); border-top: 1px solid var(--line); }
+.site-footer .footer-bottom, .site-footer .footer-bottom p { color: var(--text-soft) !important; font-size: 12.5px; }
+.site-footer .footer-bottom a { color: var(--text-soft) !important; }
+@media (max-width: 600px) {
+  main > section.hero { padding: 16px 0 20px; }
+  main > section.section { padding: 28px 0; }
+}
 /* 회원가입·내 강의실은 쓰지 않음 (출석·과제는 LMS에서 관리) */
 #apply[hidden], #classroom[hidden], #stats[hidden], #poll[hidden] { display: none !important; }
 /* 화면 전환: 메뉴에서 고른 섹션 하나만 보임 */
 main > section.view-off, .syl-block.view-off { display: none !important; }
-body.view-mode main > section:not(.view-off) { min-height: calc(100vh - 220px); }
+
 /* 메뉴 드롭다운 (교과목 소개) */
 .nav-caret { font-size: 0.75em; margin-left: 2px; }
 .nav-dd-btn[aria-expanded="true"] .nav-caret { display: inline-block; transform: rotate(180deg); }
@@ -189,6 +221,9 @@ body.view-mode main > section:not(.view-off) { min-height: calc(100vh - 220px); 
 .syl-lines p { margin: 0 0 6px; }
 .syl-lines .syl-indent { padding-left: 2.2em; color: var(--text-soft); }
 .syl-block a { word-break: break-all; }
+.syl-lines .syl-hang { display: flex; align-items: flex-start; }
+.syl-hang-colon { margin-right: 0.35em; }
+.syl-hang-list { display: flex; flex-direction: column; gap: 0; }
 @media (max-width: 1100px) { .syl-block { scroll-margin-top: 140px; } }
 .hero-inner {
   display: grid;
@@ -2486,7 +2521,7 @@ window.SITE_CONFIG = {
   /* 상단 메뉴: id는 아래 각 섹션의 id와 같아야 합니다 */
   nav: [
     { id: "notice", label: "공지" },
-    { id: "intro", label: "교과목 소개", children: [
+    { id: "intro", label: "교과목소개", children: [
       { id: "intro-overview", label: "과목개요" },
       { id: "intro-goals", label: "학습목표" },
       { id: "intro-prereq", label: "추천 선수과목 및 수강요건" },
@@ -2495,9 +2530,10 @@ window.SITE_CONFIG = {
       { id: "intro-homework", label: "과제물" },
       { id: "intro-grading", label: "평가 방법" },
     ] },
-    { id: "curriculum", label: "학습 내용" },
-    { id: "calendar", label: "달력" },
+    { id: "curriculum", label: "학습내용보기" },
+    { id: "calendar", label: "수업달력" },
     { id: "quiz", label: "퀴즈" },
+    { id: "tools", label: "AI도구" },
     { id: "faq", label: "FAQ" },
   ],
 
@@ -2509,10 +2545,7 @@ window.SITE_CONFIG = {
     subtitle: "AI 기반 데이터 활용능력 배양",
     description:
       "초급 중국어 수준의 말하기, 듣기, 쓰기, 읽기 능력을 골고루 배양한다. 교수자가 제작한 과목 홈페이지를 통해 AI를 활용하여 다양한 맥락에서 중국어를 습득한다.",
-    buttons: [
-      { label: "학습 내용 보기", href: "#curriculum", primary: true },
-      { label: "수업 달력", href: "#calendar", primary: false },
-    ],
+    buttons: [], // 첫 화면 버튼 (메뉴바와 겹쳐서 비움). 예: { label: "학습 내용 보기", href: "#curriculum", primary: true }
     /* 첫 화면 오른쪽 죽간에 세로로 쓰일 글귀 (한 줄 = 죽간 한 쪽, 오른쪽부터 읽힘) */
     slips: [], // 비워 두면 죽간 장식을 그리지 않습니다
     /* 제목 아래 한눈에 보는 정보 — "auto:range"는 학습 내용(수업일) 날짜로 자동 계산됩니다 */
@@ -2534,6 +2567,7 @@ window.SITE_CONFIG = {
 
   /* 사이트에 담긴 공지 — 관리자 화면 › 설정 파일 › 「index.html 내려받기」를 하면 그때의 공지로 바뀝니다 */
   noticeList: [
+    {"id": "nwinter2026", "title": "2026년도 겨울학기가 시작되었습니다", "body": "반갑습니다!", "pinned": false, "at": "2026-11-10T07:37:00.000Z"},
   ],
 
   /* 공지사항 — 공지 글은 관리자 화면에서 올립니다 */
@@ -2581,13 +2615,12 @@ window.SITE_CONFIG = {
       { id: "intro-homework", no: "6", title: "과제물", lines: [
         { text: "(1) 매 과가 끝난 후 각 과의 본문을 한자로 1회 쓰고, 한자 위에 성조 표시할 것." },
         { text: "(2) 매 과가 끝난 후 워크북을 풀어서 제출" },
-        { strong: "제출 방법", text: ": (1)번 과제: 수업 시 실물 제출" },
-        { text: "(2)번 과제: 수업 시 워크북 제출", indent: true },
+        { strong: "제출 방법", sub: ["(1)번 과제: 수업 시 실물 제출", "(2)번 과제: 수업 시 워크북 제출"] },
       ] },
       { id: "intro-grading", no: "7", title: "평가 방법", lines: [
         { text: "(1) 출석(10%): 지각 -0.5, 결석 -1 감점" },
         { text: "(2) 과제(20%): 매 과가 끝나고, 새 과를 시작하기 전까지 과제물을 제출할 것. (총 9회)" },
-        { text: "(3) 퀴즈(10%): 2개 과가 끝나고 퀴즈를 본다. 형식: 받아쓰기, 본문 읽기, 대화 만들기 등. (총 4회)" },
+        { text: "(3) 퀴즈(10%): 2개 과가 끝나고 퀴즈를 본다. 형식: 받아쓰기, 본문 읽기, 구두 발표, 대화 만들기 등. (총 4회)" },
         { text: "(4) 중간고사(30%): 말하기+쓰기 시험으로 구성. 형식은 추후 공지." },
         { text: "(5) 기말고사(30%): 말하기+쓰기 시험으로 구성. 형식은 추후 공지." },
       ] },
@@ -2602,10 +2635,11 @@ window.SITE_CONFIG = {
      - assignment는 그날 제출하는 과제입니다 (due: 제출 시각). */
   curriculum: {
     title: "학습 내용",
-    lead: "매일 학습 내용(변동 가능) — 날짜를 누르면 학습진도·제출과제·퀴즈가 펼쳐집니다.",
+    lead: "매일 학습 내용(변동 가능) — 날짜를 누르면 학습진도·제출과제·퀴즈와 그날 배우는 과의 학습 자료가 펼쳐집니다.",
     startDate: "2026-12-21",
     defaultTime: "9:00-12:50 (1교시-4교시)",
     defaultPlace: "서관 223호",
+    showDateLine: false, // 목록 둘째 줄(날짜 · 요약) 숨김
     showWeekMaterials: false, // 16주용 '주차 학습 자료'는 숨김 (겨울학기 일정과 맞지 않음)
     submitUrl: "", // (사용 안 함) 과제는 수업 시 제출합니다.
     holidays: [
@@ -2613,49 +2647,49 @@ window.SITE_CONFIG = {
       { date: "2027-01-01", name: "신정 (휴강)" },
     ],
     weeks: [
-      { week: 1, date: "2026-12-21", label: "1주차 월", short: "OT·1과", title: "OT, 第一课 你选好课了吗？", note: "수업",
+      { week: 1, date: "2026-12-21", label: "12/21(월)", short: "OT·1과", lesson: 101, title: "OT, 第一课 你选好课了吗？", note: "수업",
         content: ["학습진도: OT, 第一课 你选好课了吗？"] },
-      { week: 2, date: "2026-12-22", label: "1주차 화", short: "1과", title: "第一课 你选好课了吗？", note: "수업",
+      { week: 2, date: "2026-12-22", label: "12/22(화)", short: "1과", lesson: 101, title: "第一课 你选好课了吗？", note: "수업",
         content: ["학습진도: 第一课 你选好课了吗？"] },
-      { week: 3, date: "2026-12-23", label: "1주차 수", short: "2과", title: "第二课 路上辛苦了！", note: "제1과 과제 제출",
+      { week: 3, date: "2026-12-23", label: "12/23(수)", short: "2과", lesson: 102, title: "第二课 路上辛苦了！", note: "제1과 과제 제출",
         content: ["학습진도: 第二课 路上辛苦了！", "제출과제: 제1과 과제 제출"],
         assignment: { title: "제1과 과제 제출", desc: "제1과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2026-12-23 09:00" } },
-      { week: 4, date: "2026-12-24", label: "1주차 목", short: "3과", title: "第三课 你在打什么工？", note: "제2과 과제 제출 · [퀴즈1]제1-2과",
+      { week: 4, date: "2026-12-24", label: "12/24(목)", short: "3과", lesson: 103, title: "第三课 你在打什么工？", note: "제2과 과제 제출 · [퀴즈1]제1-2과",
         content: ["학습진도: 第三课 你在打什么工？", "제출과제: 제2과 과제 제출", "퀴즈: [퀴즈1]제1-2과"],
         assignment: { title: "제2과 과제 제출", desc: "제2과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2026-12-24 09:00" } },
-      { week: 5, date: "2026-12-28", label: "2주차 월", short: "3과", title: "第三课 你在打什么工？", note: "수업",
+      { week: 5, date: "2026-12-28", label: "12/28(월)", short: "3과", lesson: 103, title: "第三课 你在打什么工？", note: "수업",
         content: ["학습진도: 第三课 你在打什么工？"] },
-      { week: 6, date: "2026-12-29", label: "2주차 화", short: "4과", title: "第四课 今天天气怎么样？", note: "제3과 과제 제출",
+      { week: 6, date: "2026-12-29", label: "12/29(화)", short: "4과", lesson: 104, title: "第四课 今天天气怎么样？", note: "제3과 과제 제출",
         content: ["학습진도: 第四课 今天天气怎么样？", "제출과제: 제3과 과제 제출"],
         assignment: { title: "제3과 과제 제출", desc: "제3과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2026-12-29 09:00" } },
-      { week: 7, date: "2026-12-30", label: "2주차 수", short: "5과", title: "第五课 水煮肉是我们店的招牌菜", note: "제4과 과제 제출 · [퀴즈2]제3-4과",
+      { week: 7, date: "2026-12-30", label: "12/30(수)", short: "5과", lesson: 105, title: "第五课 水煮肉是我们店的招牌菜", note: "제4과 과제 제출 · [퀴즈2]제3-4과",
         content: ["학습진도: 第五课 水煮肉是我们店的招牌菜", "제출과제: 제4과 과제 제출", "퀴즈: [퀴즈2]제3-4과"],
         assignment: { title: "제4과 과제 제출", desc: "제4과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2026-12-30 09:00" } },
-      { week: 8, date: "2026-12-31", label: "2주차 목", short: "5과", title: "第五课 水煮肉是我们店的招牌菜", note: "수업",
+      { week: 8, date: "2026-12-31", label: "12/31(목)", short: "5과", lesson: 105, title: "第五课 水煮肉是我们店的招牌菜", note: "수업",
         content: ["학습진도: 第五课 水煮肉是我们店的招牌菜"] },
-      { week: 9, date: "2027-01-04", label: "3주차 월", short: "중간", title: "중간고사 (범위: 1-5과)", note: "제5과 과제 제출", type: "exam",
+      { week: 9, date: "2027-01-04", label: "1/4(월)", short: "중간", title: "중간고사 (범위: 1-5과)", note: "제5과 과제 제출", type: "exam",
         content: ["중간고사 (범위: 1-5과)", "제출과제: 제5과 과제 제출"],
         assignment: { title: "제5과 과제 제출", desc: "제5과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2027-01-04 09:00" } },
-      { week: 10, date: "2027-01-05", label: "3주차 화", short: "6과", title: "第六课 我想换钱", note: "수업",
+      { week: 10, date: "2027-01-05", label: "1/5(화)", short: "6과", lesson: 106, title: "第六课 我想换钱", note: "수업",
         content: ["학습진도: 第六课 我想换钱"] },
-      { week: 11, date: "2027-01-06", label: "3주차 수", short: "6과", title: "第六课 我想换钱", note: "수업",
+      { week: 11, date: "2027-01-06", label: "1/6(수)", short: "6과", lesson: 106, title: "第六课 我想换钱", note: "수업",
         content: ["학습진도: 第六课 我想换钱"] },
-      { week: 12, date: "2027-01-07", label: "3주차 목", short: "7과", title: "第七课 您哪儿不舒服？", note: "제6과 과제 제출",
+      { week: 12, date: "2027-01-07", label: "1/7(목)", short: "7과", lesson: 107, title: "第七课 您哪儿不舒服？", note: "제6과 과제 제출",
         content: ["학습진도: 第七课 您哪儿不舒服？", "제출과제: 제6과 과제 제출"],
         assignment: { title: "제6과 과제 제출", desc: "제6과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2027-01-07 09:00" } },
-      { week: 13, date: "2027-01-08", label: "3주차 금", short: "7과", title: "第七课 您哪儿不舒服？", note: "수업",
+      { week: 13, date: "2027-01-08", label: "1/8(금)", short: "7과", lesson: 107, title: "第七课 您哪儿不舒服？", note: "수업",
         content: ["학습진도: 第七课 您哪儿不舒服？"] },
-      { week: 14, date: "2027-01-11", label: "4주차 월", short: "8과", title: "第八课 你去过故宫和长城吗？", note: "제7과 과제 제출 · [퀴즈3]제6-7과",
+      { week: 14, date: "2027-01-11", label: "1/11(월)", short: "8과", lesson: 108, title: "第八课 你去过故宫和长城吗？", note: "제7과 과제 제출 · [퀴즈3]제6-7과",
         content: ["학습진도: 第八课 你去过故宫和长城吗？", "제출과제: 제7과 과제 제출", "퀴즈: [퀴즈3]제6-7과"],
         assignment: { title: "제7과 과제 제출", desc: "제7과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2027-01-11 09:00" } },
-      { week: 15, date: "2027-01-12", label: "4주차 화", short: "8과", title: "第八课 你去过故宫和长城吗？", note: "수업",
+      { week: 15, date: "2027-01-12", label: "1/12(화)", short: "8과", lesson: 108, title: "第八课 你去过故宫和长城吗？", note: "수업",
         content: ["학습진도: 第八课 你去过故宫和长城吗？"] },
-      { week: 16, date: "2027-01-13", label: "4주차 수", short: "9과", title: "第九课 不是刷微博，就是看短视频", note: "제8과 과제 제출",
+      { week: 16, date: "2027-01-13", label: "1/13(수)", short: "9과", lesson: 109, title: "第九课 不是刷微博，就是看短视频", note: "제8과 과제 제출",
         content: ["학습진도: 第九课 不是刷微博，就是看短视频", "제출과제: 제8과 과제 제출"],
         assignment: { title: "제8과 과제 제출", desc: "제8과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2027-01-13 09:00" } },
-      { week: 17, date: "2027-01-14", label: "4주차 목", short: "9과", title: "第九课 不是刷微博，就是看短视频", note: "[퀴즈4]제8-9과",
+      { week: 17, date: "2027-01-14", label: "1/14(목)", short: "9과", lesson: 109, title: "第九课 不是刷微博，就是看短视频", note: "[퀴즈4]제8-9과",
         content: ["학습진도: 第九课 不是刷微博，就是看短视频", "퀴즈: [퀴즈4]제8-9과"] },
-      { week: 18, date: "2027-01-15", label: "4주차 금", short: "기말", title: "기말고사 (범위: 6-9과)", note: "제9과 과제 제출", type: "exam",
+      { week: 18, date: "2027-01-15", label: "1/15(금)", short: "기말", title: "기말고사 (범위: 6-9과)", note: "제9과 과제 제출", type: "exam",
         content: ["기말고사 (범위: 6-9과)", "제출과제: 제9과 과제 제출"],
         assignment: { title: "제9과 과제 제출", desc: "제9과 과제: (1) 본문을 한자로 1회 쓰고 한자 위에 성조 표시 (2) 워크북 풀기 — 수업 시 제출", due: "2027-01-15 09:00" } },
     ],
@@ -2802,10 +2836,6 @@ window.SITE_CONFIG = {
       {
         q: "교양중국어1을 듣지 않았는데 수강할 수 있나요?",
         a: "교양중국어I 혹은 그에 상응하는 중국어 실력을 갖춘 학생을 대상으로 합니다.",
-      },
-      {
-        q: "코딩이나 데이터 분석을 몰라도 되나요?",
-        a: "괜찮습니다. 스프레드시트 기초부터 함께 하며, Colab 실습은 미리 만든 코드를 실행하고 결과를 해석하는 수준입니다.",
       },
       {
         q: "AI 도구 유료 구독이 필요한가요?",
@@ -3267,6 +3297,11 @@ window.SiteStore = (function () {
           (b.lines
             ? '<div class="syl-lines">' +
               list(b.lines, function (l) {
+                /* sub: 「제출 방법:」 뒤에 여러 줄을 같은 위치에 맞춰 세움 */
+                if (l.sub) {
+                  return '<p class="syl-hang"><strong>' + esc(l.strong || "") + '</strong><span class="syl-hang-colon">:</span><span class="syl-hang-list">' +
+                    list(l.sub, function (s) { return "<span>" + linkify(s) + "</span>"; }) + "</span></p>";
+                }
                 return '<p' + (l.indent ? ' class="syl-indent"' : "") + ">" + (l.strong ? "<strong>" + esc(l.strong) + "</strong>" : "") + linkify(l.text || "") + "</p>";
               }) +
               "</div>"
@@ -3305,9 +3340,10 @@ window.SiteStore = (function () {
           "<summary>" +
           '<span class="week-num">' + esc(wLabel(w)) + "</span>" +
           '<span class="week-sum"><strong>' + esc(w.title) + "</strong>" +
-          '<span class="week-date">' + esc(fmtDate(w._date)) + " · " + esc(w.note) + "</span></span>" +
+          (cur.showDateLine === false ? "" : '<span class="week-date">' + esc(fmtDate(w._date)) + " · " + esc(w.note) + "</span>") + "</span>" +
           (a ? '<span class="tag tag-hw">과제</span>' : "") +
-          (exam ? '<span class="tag tag-exam">시험</span>' : "") +
+          ((w.content || []).some(function (c) { return /^퀴즈/.test(c); }) ? '<span class="tag tag-quiz">퀴즈</span>' : "") +
+
           "</summary>" +
           '<div class="week-body">' +
           '<dl class="week-meta">' +
@@ -3326,7 +3362,9 @@ window.SiteStore = (function () {
               "</ul>"
             : "") +
           (a ? assignmentHTML(a) : "") +
-          (cur.showWeekMaterials !== false && w.week <= 15 ? '<div class="week-ai" data-week="' + esc(w.week) + '"></div>' : "") +
+          (w.lesson && window.WEEK_CONTENT && window.WEEK_CONTENT[String(w.lesson)]
+            ? '<div class="week-ai" data-week="' + esc(w.lesson) + '"></div>' /* 겨울학기: 그날 배우는 과(101~109 = 제1과~제9과)의 학습 자료 */
+            : cur.showWeekMaterials !== false && w.week <= 15 ? '<div class="week-ai" data-week="' + esc(w.week) + '"></div>' : "") +
           "</div></details>"
         );
       }) +
@@ -3499,7 +3537,7 @@ window.SiteStore = (function () {
       list(t.items, function (tool) {
         return (
           '<li class="card tool"><span class="feature-icon" aria-hidden="true">' + esc(tool.icon) + "</span>" +
-          "<h3>" + esc(tool.name) + "</h3><p>" + esc(tool.use) + "</p></li>"
+          '<div class="tool-text"><h3>' + esc(tool.name) + "</h3><p>" + esc(tool.use) + "</p></div></li>"
         );
       }) +
       "</ul>"
@@ -3783,7 +3821,7 @@ window.SiteStore = (function () {
           ? '<div class="notice-list" tabindex="-1">' +
             list(items, function (n) {
               return (
-                '<details class="card notice-item' + (n.pinned ? " is-pinned" : "") + '" data-id="' + esc(n.id) + '">' +
+                '<details class="card notice-item' + (n.pinned ? " is-pinned" : "") + (String(n.body || "").trim() ? "" : " no-body") + '" data-id="' + esc(n.id) + '">' +
                 "<summary>" +
                 (n.pinned ? '<span class="tag tag-req">고정</span>' : "") +
                 '<span class="notice-title">' + esc(n.title) + "</span>" +
@@ -6949,6 +6987,11 @@ window.SiteStore = (function () {
     try { return sessionStorage.getItem("kc2-admin") === "1"; } catch (e) { return false; }
   }
   function weekOf(n) {
+    /* 101~109 = 제1과~제9과 (겨울학기 과별 자료): 날짜가 아니라 과 단위 */
+    if (Number(n) > 100) {
+      var day = C.curriculum.weeks.filter(function (w) { return String(w.lesson) === String(n); })[0] || {};
+      return { week: Number(n), lesson: true, title: day.title || "제" + (n - 100) + "과", note: "", content: day.content || [] };
+    }
     return C.curriculum.weeks.filter(function (w) { return String(w.week) === String(n); })[0];
   }
   function content(n) { return WC[String(n)] || {}; }
@@ -7295,7 +7338,7 @@ window.SiteStore = (function () {
     el._tab = cur;
     el.innerHTML =
       '<div class="wa">' +
-      '<h4 class="wa-title">📚 주차 학습 자료</h4>' +
+      '<h4 class="wa-title">📚 ' + (Number(n) > 100 ? "제" + (n - 100) + "과 학습 자료" : "주차 학습 자료") + "</h4>" +
       adminHTML(n, c) +
       (tabs.length
         ? '<div class="wa-tabs" role="tablist">' + list(tabs, function (t) {
@@ -7820,7 +7863,7 @@ window.SiteStore = (function () {
       var lq = content(n).liveQuiz;
       var w = weekOf(n);
       S.prefSet("quizDraft", {
-        title: n + "주차 " + w.title + " 퀴즈",
+        title: (w.lesson ? "" : n + "주차 ") + w.title + " 퀴즈",
         questions: lq.questions.map(function (qq) {
           var ch = qq.choices.slice(0, 4);
           while (ch.length < 4) ch.push("");
