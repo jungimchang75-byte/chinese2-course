@@ -829,6 +829,34 @@ main > section.view-off, .syl-block.view-off { display: none !important; }
 .guide-acc > summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: var(--brown-700); background: var(--yellow-200); }
 .guide-acc[open] > summary::after { content: "−"; }
 .guide-acc.notes { margin-top: 0; }
+/* 첫 화면: 오늘의 수업 + 학습내용 보기 */
+.home-row { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 18px; margin-top: 18px; }
+.hm-today { padding: 22px 26px; background: linear-gradient(135deg, #fffdf8, #f7efe6); border: 1px solid var(--line); }
+.hm-head { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px dashed var(--line); }
+.hm-head h2 { margin: 0; font-size: 18px; color: var(--green-800); }
+.hm-icon { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--green-100); font-size: 17px; }
+.hm-date { margin-left: auto; padding: 3px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; color: var(--green-700); background: var(--green-100); }
+.hm-body > * { margin: 0; }
+.hm-kicker { font-size: 15px; font-weight: 700; color: var(--text); }
+.hm-dday { margin-left: 4px; padding: 1px 10px; border-radius: 8px; color: #fff; background: var(--green-700); font-size: 15px; }
+.hm-sub { margin-top: 12px !important; font-size: 13px; color: var(--text-soft); }
+.hm-lesson { margin-top: 6px !important; font-size: clamp(19px, 2.2vw, 24px); font-weight: 800; color: var(--green-800); line-height: 1.35; }
+.hm-when { margin-top: 4px !important; font-size: 14px; color: var(--text-soft); }
+.hm-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px !important; }
+.hm-tag { padding: 3px 10px; border-radius: 999px; font-size: 13px; color: var(--green-700); background: var(--green-100); }
+.hm-tag.is-quiz { color: #fff; background: #4a7c66; }
+.hm-tag.is-exam { color: #fff; background: var(--green-700); }
+.hm-body .btn { margin-top: 16px; }
+.hm-go { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 22px 24px; text-decoration: none; color: var(--text);
+  background: linear-gradient(160deg, #fdf4f1, #f3e2da); border: 1px solid var(--green-200); transition: transform 0.2s, box-shadow 0.2s; }
+.hm-go:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.hm-go-icon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: #fff; box-shadow: 0 2px 6px rgba(90, 60, 40, 0.08); }
+.hm-go-title { margin-top: 6px; font-size: 20px; color: var(--green-700); }
+.hm-go-desc { font-size: 14px; line-height: 1.6; color: var(--text-soft); }
+.hm-go-meta { margin-top: auto; padding-top: 10px; font-size: 13px; font-weight: 700; color: var(--green-800); }
+.hm-go-arrow { position: absolute; right: 22px; bottom: 18px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: var(--green-700); font-weight: 700; transition: transform 0.2s; }
+.hm-go:hover .hm-go-arrow { transform: translateX(4px); }
+@media (max-width: 760px) { .home-row { grid-template-columns: 1fr; } .hm-today, .hm-go { padding: 18px; } }
 .faq-item p { padding: 0 24px 22px; color: var(--text-soft); }
 
 /* ===== 메뉴 배지 · 자물쇠 ===== */
@@ -3295,7 +3323,92 @@ window.SiteStore = (function () {
         "</strong></div></li>"
       );
     }) +
-    "</ul>";
+    "</ul>" +
+    homeRowHTML();
+
+  /* 첫 화면 아래: 「오늘의 수업」 상자 + 「학습내용 보기」 바로가기 카드
+     - 날짜에 따라 자동으로 바뀜: 개강 전(D-day) · 수업일 · 수업 없는 날(다음 수업) · 휴강일 · 종강 후
+     - 주소 끝에 ?today=2026-12-23 을 붙이면 그 날짜로 미리 볼 수 있음 */
+  function homeRowHTML() {
+    var ws = cur.weeks.slice().sort(function (a, b) { return a._date - b._date; });
+    if (!ws.length) return "";
+    var q = /[?&]today=(\d{4}-\d{2}-\d{2})/.exec(location.search);
+    var now = q ? parseDate(q[1]) : new Date();
+    var tk = dateKey(now);
+    var t0 = parseDate(tk);
+    var DOW = ["일", "월", "화", "수", "목", "금", "토"];
+    var todayText = (now.getMonth() + 1) + "월 " + now.getDate() + "일 (" + DOW[now.getDay()] + ")";
+    var first = ws[0], last = ws[ws.length - 1];
+    var todayW = classByDate[tk];
+    var next = ws.filter(function (w) { return w._date > t0; })[0];
+    function dday(w) { return Math.round((w._date - t0) / 86400000); }
+    function tags(w) {
+      var out = [];
+      if (w.type === "exam") out.push('<span class="hm-tag is-exam">📝 시험</span>');
+      (w.content || []).forEach(function (c) {
+        if (/^제출과제:/.test(c)) out.push('<span class="hm-tag">📌 ' + esc(c.replace(/^제출과제:\s*/, "")) + "</span>");
+        if (/^퀴즈:/.test(c)) out.push('<span class="hm-tag is-quiz">✅ ' + esc(c.replace(/^퀴즈:\s*/, "")) + "</span>");
+      });
+      return out.length ? '<div class="hm-tags">' + out.join("") + "</div>" : "";
+    }
+    function lessonLine(w) {
+      return '<p class="hm-lesson" lang="zh-CN">' + esc(w.title) + "</p>" +
+        '<p class="hm-when">' + esc(w.label || fmtDate(w._date)) + " · " + esc(w._time) + " · " + esc(w._place) + "</p>";
+    }
+    function openBtn(w, text) {
+      return '<a class="btn btn-primary btn-sm hm-open" href="#curriculum" data-week="' + esc(w.week) + '">' + text + " →</a>";
+    }
+    var body;
+    if (todayW) {
+      body = '<p class="hm-kicker">오늘은 수업이 있어요</p>' + lessonLine(todayW) + tags(todayW) +
+        openBtn(todayW, todayW.lesson ? "오늘 학습 자료 열기" : "오늘 내용 보기");
+    } else if (t0 < first._date) {
+      body = '<p class="hm-kicker">개강까지 <strong class="hm-dday">D-' + dday(first) + "</strong></p>" +
+        '<p class="hm-sub">첫 수업</p>' + lessonLine(first) + tags(first) + openBtn(first, "첫 수업 미리 보기");
+    } else if (t0 > last._date) {
+      body = '<p class="hm-kicker">이번 학기 수업이 모두 끝났어요</p>' +
+        '<p class="hm-sub">한 학기 동안 수고 많았어요! 학습 자료는 언제든 다시 볼 수 있어요.</p>' +
+        '<a class="btn btn-primary btn-sm" href="#curriculum">학습 내용 다시 보기 →</a>';
+    } else {
+      body = '<p class="hm-kicker">' + (holidayMap[tk] ? esc(holidayMap[tk]) : "오늘은 수업이 없어요") + "</p>" +
+        (next ? '<p class="hm-sub">다음 수업 · ' + (dday(next) === 1 ? "내일" : dday(next) + "일 뒤") + "</p>" + lessonLine(next) + tags(next) + openBtn(next, "다음 수업 미리 보기") : "");
+    }
+    var lessons = ws.filter(function (w) { return w.lesson; });
+    var nLessons = lessons.length ? lessons[lessons.length - 1].lesson - 100 : 0;
+    return (
+      '<div class="home-row">' +
+      '<section class="card hm-today" aria-label="오늘의 수업">' +
+      '<div class="hm-head"><span class="hm-icon" aria-hidden="true">📅</span><h2>오늘의 수업</h2><span class="hm-date">' + esc(todayText) + "</span></div>" +
+      '<div class="hm-body">' + body + "</div>" +
+      "</section>" +
+      '<a class="card hm-go" href="#curriculum">' +
+      '<span class="hm-go-icon" aria-hidden="true">📖</span>' +
+      '<strong class="hm-go-title">학습내용 보기</strong>' +
+      '<span class="hm-go-desc">날짜별 진도 · 과제 · 퀴즈와<br />' + (nLessons ? "제1과~제" + nLessons + "과 " : "") + "학습 자료(강의 노트·문장·퀴즈·문화)</span>" +
+      '<span class="hm-go-meta">수업 ' + ws.filter(function (w) { return w.type !== "exam"; }).length + "일 · 시험 " + ws.filter(function (w) { return w.type === "exam"; }).length + "회</span>" +
+      '<span class="hm-go-arrow" aria-hidden="true">→</span>' +
+      "</a>" +
+      "</div>"
+    );
+  }
+  /* 「학습 자료 열기」: 학습내용 화면으로 가서 그 날짜를 펼침 */
+  document.querySelector(".hero").addEventListener("click", function (e) {
+    var a = e.target.closest(".hm-open");
+    if (!a) return;
+    var item = document.getElementById("week-" + a.getAttribute("data-week"));
+    if (!item) return;
+    e.preventDefault();
+    /* 화면 전환(맨 위로 스크롤)이 끝난 뒤에 그 날짜를 펼치고 내려감 */
+    window.addEventListener("hashchange", function once() {
+      window.removeEventListener("hashchange", once);
+      setTimeout(function () {
+        item.open = true;
+        var hh = (document.querySelector(".site-header") || {}).offsetHeight || 70;
+        window.scrollTo({ top: item.getBoundingClientRect().top + window.pageYOffset - hh - 12, behavior: "instant" });
+      }, 60);
+    });
+    location.hash = "#curriculum";
+  });
 
   /* 숫자 강조 카드 */
   var toolCount = (C.tools && C.tools.items ? C.tools.items.length : 0);
