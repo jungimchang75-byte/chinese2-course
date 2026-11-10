@@ -829,6 +829,48 @@ main > section.view-off, .syl-block.view-off { display: none !important; }
 .guide-acc > summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: var(--brown-700); background: var(--yellow-200); }
 .guide-acc[open] > summary::after { content: "−"; }
 .guide-acc.notes { margin-top: 0; }
+/* 수업 달력: 개강~종강 한 장 (월~금) */
+.c2 { padding: 22px 24px; max-width: 1080px; margin: 0 auto; }
+.c2-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 14px; }
+.c2-head .cal-title { margin: 0; font-size: 20px; }
+.c2-sum { font-size: 14px; color: var(--text-soft); }
+.c2-weekdays, .c2-week { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.c2-weekdays span { text-align: center; font-size: 13px; font-weight: 700; color: var(--text-soft); padding-bottom: 6px; }
+.c2-week + .c2-week { margin-top: 8px; }
+.c2-day { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-height: 128px; padding: 10px 11px; border-radius: 14px; text-align: left;
+  font: inherit; color: var(--text); background: #fff; border: 1px solid var(--line); }
+button.c2-day { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+button.c2-day:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.c2-day.is-class { background: #fdf6f3; border-color: var(--green-200); }
+.c2-day.is-exam { background: #fbe9e5; border: 2px solid var(--green-700); }
+.c2-day.is-holiday { background: #f3efe6; border-style: dashed; }
+.c2-day.is-off { background: transparent; border-style: dashed; }
+.c2-day.is-today { box-shadow: 0 0 0 3px var(--green-500); }
+.c2-date { font-size: 13px; color: var(--text-soft); }
+.c2-date b { font-size: 15px; color: var(--text); }
+.c2-now { margin-left: 2px; padding: 0 6px; border-radius: 6px; font-style: normal; font-size: 11px; font-weight: 700; color: #fff; background: var(--green-700); }
+.c2-lesson { margin-top: 2px; padding: 1px 9px; border-radius: 999px; font-size: 13px; font-weight: 800; color: #fff; background: var(--green-700); }
+.c2-day.is-exam .c2-lesson { background: var(--green-800); }
+.c2-title { font-size: 13px; line-height: 1.4; color: var(--green-800); font-weight: 600; }
+.c2-tags { display: flex; flex-direction: column; gap: 3px; margin-top: auto; padding-top: 4px; }
+.c2-tag { font-size: 12px; line-height: 1.35; padding: 2px 7px; border-radius: 8px; }
+.c2-tag.is-hw { color: #8a3b22; background: #fbe4d8; }
+.c2-tag.is-quiz { color: #fff; background: #4a7c66; }
+.c2-off { margin: auto 0; font-size: 13px; line-height: 1.5; color: var(--text-soft); }
+.c2-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 16px; font-size: 13px; color: var(--text-soft); }
+.c2-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.c2-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--green-200); }
+.c2-legend .lg-class { background: #fdf6f3; }
+.c2-legend .lg-exam { background: #fbe9e5; border: 2px solid var(--green-700); }
+.c2-legend .lg-holiday { background: #f3efe6; border-style: dashed; border-color: var(--line); }
+/* 좁은 화면: 한 줄에 하루씩 */
+@media (max-width: 720px) {
+  .c2 { padding: 16px; }
+  .c2-weekdays { display: none; }
+  .c2-week { grid-template-columns: 1fr; gap: 6px; }
+  .c2-day { min-height: 0; }
+  .c2-day.is-off { display: none; }
+}
 /* 첫 화면: 오늘의 수업 + 학습내용 보기 */
 .home-row { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 18px; margin-top: 18px; }
 .hm-today { padding: 22px 26px; background: linear-gradient(135deg, #fffdf8, #f7efe6); border: 1px solid var(--line); }
@@ -2760,7 +2802,7 @@ window.SITE_CONFIG = {
   /* 수업 달력 */
   calendar: {
     title: "수업 달력",
-    lead: "수업일(월-금)과 휴강일, 과제 제출일이 표시됩니다. 날짜를 누르면 그날 학습 내용이 나옵니다.",
+    lead: "12/21(월)부터 1/15(금)까지 한 장에 진도 · 과제 제출 · 퀴즈 · 중간/기말고사를 표시했어요. 날짜를 누르면 그날 학습 내용이 펼쳐집니다.",
   },
 
   /* 주제 투표 */
@@ -3512,129 +3554,83 @@ window.SiteStore = (function () {
       "</div>"
   );
 
-  /* 수업 달력 */
-  fill(
-    "calendar",
-    sectionHead(C.calendar.title, C.calendar.lead) +
-      '<div class="cal-layout">' +
-      '<div class="card cal">' +
-      '<div class="cal-head">' +
-      '<button class="cal-nav" type="button" data-dir="-1" aria-label="이전 달">‹</button>' +
-      '<h3 class="cal-title" aria-live="polite"></h3>' +
-      '<button class="cal-nav" type="button" data-dir="1" aria-label="다음 달">›</button>' +
-      "</div>" +
-      '<div class="cal-grid cal-weekdays">' + list(WEEKDAYS, function (d) { return "<span>" + d + "</span>"; }) + "</div>" +
-      '<div class="cal-grid cal-days"></div>' +
-      '<div class="cal-legend"><span><i class="lg-class"></i>수업</span><span><i class="lg-due"></i>과제 제출</span><span><i class="lg-holiday"></i>휴강</span></div>' +
-      "</div>" +
-      '<div class="card cal-detail" aria-live="polite"></div>' +
-      "</div>"
-  );
-
+  /* 수업 달력 — 개강일~종강일(12/21~1/15)을 한 장에: 월~금 칸마다 진도 · 과제 제출 · 퀴즈 · 중간/기말고사 · 휴강 표시
+     칸을 누르면 학습내용 화면에서 그 날짜를 펼쳐 보여 줌 */
   var today = new Date();
   today.setHours(0, 0, 0, 0);
-  var inSemester = today >= firstClass && today <= lastClass;
-  var view = inSemester ? new Date(today.getFullYear(), today.getMonth(), 1) : new Date(firstClass.getFullYear(), firstClass.getMonth(), 1);
-  var selectedKey = dateKey(inSemester && classByDate[dateKey(today)] ? today : firstClass);
-  var calDays = document.querySelector(".cal-days");
-  var calDetail = document.querySelector(".cal-detail");
-
-  function renderCalendar() {
-    document.querySelector(".cal-title").textContent = view.getFullYear() + "년 " + (view.getMonth() + 1) + "월";
-    var daysInMonth = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
-    var cells = Math.ceil((view.getDay() + daysInMonth) / 7) * 7;
-    var start = addDays(view, -view.getDay());
-    var html = "";
-    for (var i = 0; i < cells; i++) {
-      var d = addDays(start, i);
+  (function () {
+    var calFirst = addDays(firstClass, -((firstClass.getDay() + 6) % 7)); // 개강 주 월요일
+    var calLast = addDays(lastClass, (5 - lastClass.getDay() + 7) % 7); // 종강 주 금요일
+    var nClass = cur.weeks.filter(function (w) { return w.type !== "exam"; }).length;
+    var nExam = cur.weeks.length - nClass;
+    function short(d) { return d.getMonth() + 1 + "/" + d.getDate(); }
+    function cellHTML(d) {
       var k = dateKey(d);
       var w = classByDate[k];
       var hol = holidayMap[k];
-      var due = dueByDate[k];
-      var cls = ["cal-day"];
-      if (d.getMonth() !== view.getMonth()) cls.push("is-out");
-      if (w) cls.push("is-class");
-      if (w && w.type === "exam") cls.push("is-exam");
-      if (hol) cls.push("is-holiday");
-      if (due) cls.push("has-due");
+      var cls = ["c2-day"];
       if (d.getTime() === today.getTime()) cls.push("is-today");
-      if (k === selectedKey) cls.push("is-selected");
-      var label = fmtDate(d) + (w ? ", " + wLabel(w) + " 수업" : "") + (hol ? ", " + hol : "") + (due ? ", 과제 마감" : "");
-      html +=
-        '<button type="button" class="' + cls.join(" ") + '" data-date="' + k + '" aria-label="' + esc(label) + '"' +
-        (k === selectedKey ? ' aria-pressed="true"' : "") + ">" +
-        '<span class="cal-num">' + d.getDate() + "</span>" +
-        (w ? '<span class="cal-tag">' + esc(w.short || w.week + "주") + "</span>" : "") +
-        (hol ? '<span class="cal-tag">휴강</span>' : "") +
-        (due ? '<span class="cal-dot" aria-hidden="true"></span>' : "") +
-        "</button>";
+      var head = '<span class="c2-date"><b>' + short(d) + "</b> " + WEEKDAYS[d.getDay()] + (d.getTime() === today.getTime() ? ' <em class="c2-now">오늘</em>' : "") + "</span>";
+      if (w) {
+        var exam = w.type === "exam";
+        cls.push(exam ? "is-exam" : "is-class");
+        var tags = "";
+        (w.content || []).forEach(function (c) {
+          var m;
+          if ((m = /^제출과제:\s*(.+?)\s*제출$/.exec(c) || /^제출과제:\s*(.+)$/.exec(c))) tags += '<span class="c2-tag is-hw">📌 ' + esc(m[1]) + " 제출</span>";
+          if ((m = /^퀴즈:\s*\[(.+?)\]\s*(.+)$/.exec(c))) tags += '<span class="c2-tag is-quiz">✅ ' + esc(m[1]) + " (" + esc(m[2]) + ")</span>";
+        });
+        var body = exam
+          ? '<span class="c2-lesson">📝 ' + esc(w.title.replace(/\s*\(.*\)\s*$/, "")) + "</span>" +
+            '<span class="c2-title">' + esc((/\((.*)\)/.exec(w.title) || [, ""])[1]) + "</span>"
+          : '<span class="c2-lesson">' + esc(w.short || "") + "</span>" +
+            '<span class="c2-title" lang="zh-CN">' + esc(w.title) + "</span>";
+        return (
+          '<button type="button" class="' + cls.join(" ") + '" data-week="' + esc(w.week) + '" aria-label="' + esc(fmtDate(d) + ", " + w.title + " — 학습 내용 보기") + '">' +
+          head + body + (tags ? '<span class="c2-tags">' + tags + "</span>" : "") + "</button>"
+        );
+      }
+      if (hol) cls.push("is-holiday");
+      else cls.push("is-off");
+      return (
+        '<div class="' + cls.join(" ") + '">' + head +
+        '<span class="c2-off">' + (hol ? esc(hol.replace(/\s*\(휴강\)\s*$/, "")) + "<br />휴강" : "수업 없음") + "</span></div>"
+      );
     }
-    calDays.innerHTML = html;
-  }
-
-  function showDay(k) {
-    var d = parseDate(k);
-    var w = classByDate[k];
-    var hol = holidayMap[k];
-    var dues = dueByDate[k] || [];
-    var html = '<p class="detail-date">' + esc(fmtDate(d)) + "</p>";
-    if (w) {
-      html +=
-        "<h3>" + esc(wLabel(w)) + " · " + esc(w.title) + "</h3>" +
-        '<dl class="week-meta">' +
-        "<div><dt>시간</dt><dd>" + esc(w._time) + "</dd></div>" +
-        "<div><dt>장소</dt><dd>" + esc(w._place) + "</dd></div>" +
-        (w.expression ? '<div><dt>핵심 표현</dt><dd class="week-expr" lang="zh-CN">' + esc(w.expression) + "</dd></div>" : "") +
-        "</dl>" +
-        '<ul class="week-content">' + list(w.content, function (c) { return "<li>" + esc(c) + "</li>"; }) + "</ul>" +
-        (w.assignment ? '<p class="detail-hw"><span class="tag tag-hw">과제</span> ' + esc(w.assignment.title) + " · 마감 " + esc(fmtDateTime(w.assignment._due)) + "</p>" : "") +
-        '<button type="button" class="btn btn-ghost btn-sm open-week" data-week="' + esc(w.week) + '">학습 내용에서 보기</button>';
-    } else if (hol) {
-      html += "<h3>" + esc(hol) + "</h3><p>이날은 수업이 없습니다.</p>";
-    } else {
-      var next = cur.weeks.filter(function (x) { return x._date > d; })[0];
-      html +=
-        '<h3 class="detail-empty">수업이 없는 날입니다</h3>' +
-        (next ? "<p>다음 수업: " + esc(fmtDate(next._date)) + " · " + esc(wLabel(next)) + " " + esc(next.title) + "</p>" : "<p>이번 학기 수업이 모두 끝났습니다.</p>");
+    var rows = "";
+    for (var d = calFirst; d <= calLast; d = addDays(d, 7)) {
+      var cells = "";
+      for (var i = 0; i < 5; i++) cells += cellHTML(addDays(d, i));
+      rows += '<div class="c2-week">' + cells + "</div>";
     }
-    if (dues.length) {
-      html +=
-        '<div class="detail-due"><strong>이날 제출하는 과제</strong><ul>' +
-        list(dues, function (x) {
-          return "<li>" + esc(x.assignment.title) + " (" + pad(x.assignment._due.getHours()) + ":" + pad(x.assignment._due.getMinutes()) + ")</li>";
-        }) +
-        "</ul></div>";
-    }
-    calDetail.innerHTML = html;
-  }
-
-  calDays.addEventListener("click", function (e) {
-    var btn = e.target.closest(".cal-day");
-    if (!btn) return;
-    selectedKey = btn.getAttribute("data-date");
-    var d = parseDate(selectedKey);
-    if (d.getMonth() !== view.getMonth()) view = new Date(d.getFullYear(), d.getMonth(), 1);
-    renderCalendar();
-    showDay(selectedKey);
-  });
-  document.querySelectorAll(".cal-nav").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      view = new Date(view.getFullYear(), view.getMonth() + Number(btn.getAttribute("data-dir")), 1);
-      renderCalendar();
+    fill(
+      "calendar",
+      sectionHead(C.calendar.title, C.calendar.lead) +
+        '<div class="card c2">' +
+        '<div class="c2-head"><h3 class="cal-title">' + esc(fmtDot(firstClass)) + " – " + esc(fmtDot(lastClass)) + "</h3>" +
+        '<span class="c2-sum">수업 ' + nClass + "일 · 시험 " + nExam + "회 · 월~금 9:00-12:50</span></div>" +
+        '<div class="c2-weekdays"><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span></div>' +
+        rows +
+        '<div class="c2-legend"><span><i class="lg-class"></i>수업 (진도)</span><span>📌 과제 제출</span><span>✅ 퀴즈</span><span><i class="lg-exam"></i>📝 시험</span><span><i class="lg-holiday"></i>휴강</span></div>' +
+        "</div>"
+    );
+    /* 칸을 누르면 학습내용 화면에서 그 날짜를 펼침 */
+    document.getElementById("calendar").addEventListener("click", function (e) {
+      var btn = e.target.closest(".c2-day[data-week]");
+      if (!btn) return;
+      var item = document.getElementById("week-" + btn.getAttribute("data-week"));
+      if (!item) return;
+      window.addEventListener("hashchange", function once() {
+        window.removeEventListener("hashchange", once);
+        setTimeout(function () {
+          item.open = true;
+          var hh = (document.querySelector(".site-header") || {}).offsetHeight || 70;
+          window.scrollTo({ top: item.getBoundingClientRect().top + window.pageYOffset - hh - 12, behavior: "instant" });
+        }, 60);
+      });
+      location.hash = "#curriculum";
     });
-  });
-  calDetail.addEventListener("click", function (e) {
-    var btn = e.target.closest(".open-week");
-    if (!btn) return;
-    var item = document.getElementById("week-" + btn.getAttribute("data-week"));
-    if (item) {
-      if (window.SiteView) window.SiteView.show("curriculum");
-      item.open = true;
-      setTimeout(function () { item.scrollIntoView({ behavior: "smooth", block: "start" }); }, 60);
-    }
-  });
-  renderCalendar();
-  showDay(selectedKey);
+  })();
 
   /* 과제 마감 카운트다운 (1분마다 갱신) */
   function updateCountdowns() {
