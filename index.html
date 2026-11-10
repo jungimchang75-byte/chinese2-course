@@ -2620,11 +2620,7 @@ window.SITE_CONFIG = {
   nav: [
     { id: "notice", label: "공지" },
     { id: "intro", label: "교과목소개" }, // 드롭다운 없이 바로 교과목 소개 화면 (7개 항목은 접혀 있고 눌러야 펼쳐짐)
-    { id: "guide", label: "수강안내", children: [
-      { id: "guide-materials", label: "수강준비물" },
-      { id: "guide-grading", label: "평가방법" },
-      { id: "guide-notes", label: "유의사항" },
-    ] },
+    { id: "guide", label: "수강안내" }, // 드롭다운 없이 바로 수강 안내 화면 (3개 항목은 접혀 있고 눌러야 펼쳐짐)
     { id: "curriculum", label: "학습내용보기" },
     { id: "calendar", label: "수업달력" },
     { id: "quiz", label: "퀴즈" },
@@ -3672,7 +3668,7 @@ window.SiteStore = (function () {
       "</ul>"
   );
 
-  /* 수강 안내 — 준비물 · 평가 · 유의 사항 (메뉴 '수강안내'의 하위 항목: #guide-materials · #guide-grading · #guide-notes) */
+  /* 수강 안내 — 준비물 · 평가 · 유의 사항 (각 항목은 접혀 있다가 눌러야 펼쳐짐) */
   var g = C.guide;
   fill(
     "guide",
