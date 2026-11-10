@@ -2438,6 +2438,8 @@ a { color: var(--green-700); }
 
 /* 주차 학습 자료 */
 .wa { border-top-color: #dcd5c6; }
+.week-body > .week-ai:first-child .wa { margin-top: 0; padding-top: 0; border-top: 0; } /* 맨 위에 올 때는 점선 구분선 없음 */
+.week-body > :first-child { margin-top: 0; }
 .wa-tabs button { box-shadow: none; border: 1px solid #dcd5c6; background: var(--surface); }
 .wa-tabs button.is-on { background: var(--grad); border-color: transparent; }
 .wa-admin, .wa-edit-bar { background: #f6eee4; border-color: #d9b9ae; }
@@ -3346,13 +3348,7 @@ window.SiteStore = (function () {
 
           "</summary>" +
           '<div class="week-body">' +
-          '<dl class="week-meta">' +
-          "<div><dt>날짜 · 시간</dt><dd>" + esc(fmtDate(w._date)) + " " + esc(w._time) + "</dd></div>" +
-          "<div><dt>수업 장소</dt><dd>" + esc(w._place) + "</dd></div>" +
-          (w.expression ? '<div><dt>핵심 표현</dt><dd class="week-expr" lang="zh-CN">' + esc(w.expression) + "</dd></div>" : "") +
-          "</dl>" +
-          "<h4>학습 내용</h4>" +
-          '<ul class="week-content">' + list(w.content, function (c) { return "<li>" + esc(c) + "</li>"; }) + "</ul>" +
+          /* 날짜·시간·장소·학습 내용 목록은 표시하지 않음 (제목 줄과 같은 내용) */
           (w.videos && w.videos.length
             ? "<h4>참고 영상</h4>" +
               '<ul class="video-links">' +
