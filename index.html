@@ -2612,7 +2612,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.0.8",
+    version: "v1.0.9",
     logoText: "漢",
   },
 
@@ -7265,9 +7265,10 @@ window.SiteStore = (function () {
       '<label class="ed-check"><input type="checkbox" class="wa-show-py" checked /> 병음</label>' +
       '<label class="ed-check"><input type="checkbox" class="wa-show-ko" checked /> 번역</label>' +
       '<label class="ed-check"><input type="checkbox" class="wa-show-gram" checked /> 문법 설명</label>' +
-      '<select class="wa-rate" aria-label="읽기 속도"><option value="0.7">느리게</option><option value="0.9" selected>보통</option><option value="1.1">빠르게</option></select>' +
       '<button type="button" class="btn btn-primary btn-sm wa-play-all">▶ 전체 듣기</button>' +
       '<button type="button" class="btn btn-ghost btn-sm wa-stop" hidden>■ 멈춤</button>' +
+      // 처음에는 '속도'라고만 보이고, 고르지 않으면 보통(0.9) 속도로 읽습니다.
+      '<select class="wa-rate" aria-label="읽기 속도"><option value="" selected disabled hidden>속도</option><option value="0.7">느리게</option><option value="0.9">보통</option><option value="1.1">빠르게</option></select>' +
       "</div></div>" +
       '<p class="wa-tts-msg small-note" hidden></p>' +
       '<ol class="wa-sent-list">' +
@@ -7814,7 +7815,7 @@ window.SiteStore = (function () {
   function playAll(root) {
     stopSpeak();
     var items = Array.prototype.filter.call(root.querySelectorAll(".wa-s"), function (li) { return li.style.display !== "none"; });
-    var rate = Number(root.querySelector(".wa-rate").value);
+    var rate = Number(root.querySelector(".wa-rate").value) || 0.9;
     var i = 0;
     playing = root;
     root.querySelector(".wa-stop").hidden = false;
@@ -7947,7 +7948,7 @@ window.SiteStore = (function () {
       stopSpeak();
       var root = el.querySelector(".wa-sent");
       if (root) ttsWarn(root);
-      var rate = root ? Number(root.querySelector(".wa-rate").value) : 0.9;
+      var rate = (root && Number(root.querySelector(".wa-rate").value)) || 0.9;
       var li = say.closest(".wa-s");
       if (li) li.classList.add("is-speaking");
       return speak(say.getAttribute("data-say"), rate, function () { if (li) li.classList.remove("is-speaking"); });
