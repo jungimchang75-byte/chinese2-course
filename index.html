@@ -2200,7 +2200,8 @@ a { color: var(--green-700); }
 @keyframes resPop { 0% { transform: scale(0.3) rotate(-20deg); } 60% { transform: scale(1.3) rotate(8deg); } 100% { transform: scale(1); } }
 
 /* 독해연습 */
-.rd-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+.rd-bar { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; max-width: 100%; }
+.rd-help { display: block; }
 .rd-help { margin: 0 0 12px; }
 .rd-body { padding: 20px 22px; border-radius: 16px; background: var(--surface); box-shadow: var(--raise, var(--shadow)); }
 .rd-title { margin: 0; font-size: 22px; }
@@ -2702,7 +2703,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.4.2",
+    version: "v1.4.3",
     logoText: "漢",
   },
 
@@ -7865,7 +7866,22 @@ window.SiteStore = (function () {
         : '<p class="wa-empty">아직 만든 자료가 없습니다. 위의 버튼으로 만들어 보세요.</p>') +
       "</div>";
     if (cur === "culture" || cur === "notes") startSlides(el.querySelector(".cs"));
+    if (cur === "readings") rdAlign(el);
   }
+  /* 독해연습: 등급·병음·번역·전체 듣기 줄을 '📖 독해연습' 탭 버튼 바로 밑에 맞춤 (좁은 화면에서는 왼쪽) */
+  function rdAlign(el) {
+    var tab = el.querySelector('.wa-tabs [data-tab="readings"]');
+    var bar = el.querySelector(".rd-bar");
+    if (!tab || !bar) return;
+    bar.style.marginLeft = "0px";
+    var box = bar.parentElement.getBoundingClientRect();
+    var left = tab.getBoundingClientRect().left - box.left;
+    var room = box.width - bar.scrollWidth;
+    bar.style.marginLeft = Math.max(0, Math.min(left, room)) + "px";
+  }
+  window.addEventListener("resize", function () {
+    document.querySelectorAll("#curriculum .week-ai").forEach(function (el) { if (el._tab === "readings") rdAlign(el); });
+  });
   function tabBody(id, c, w, n) {
     if (id === "notes") return notesHTML(c.notes, n);
     if (id === "assignment") return assignmentTab(c.assignment);
