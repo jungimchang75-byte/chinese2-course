@@ -2659,7 +2659,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.2.1",
+    version: "v1.2.2",
     logoText: "漢",
   },
 
@@ -7477,6 +7477,7 @@ window.SiteStore = (function () {
     var exp = box.querySelector(".lqp-exp");
     if (exp) exp.hidden = false;
     lqpBtn(box, "start").disabled = true;
+    lqpBtn(box, "start").textContent = "▶ 시작";
     lqpBtn(box, "reveal").disabled = true;
   }
   /* 보기(1~4)를 눌러 답하기: 시간 안에만 됩니다. 바로 정답·오답을 보여 줍니다. */
