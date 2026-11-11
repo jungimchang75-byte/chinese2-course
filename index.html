@@ -2659,7 +2659,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.2.2",
+    version: "v1.2.3",
     logoText: "漢",
   },
 
@@ -7390,11 +7390,12 @@ window.SiteStore = (function () {
     return html;
   }
   /* 실시간 퀴즈 탭 (교실용, 서버 없이 작동)
-     - 한 문제씩 크게 보여 주고, ▶ 시작을 누르면 타이머(문제의 time, 없으면 20초)가 돌아갑니다.
+     - 한 문제씩 크게 보여 주고, ▶ 시작을 누르면 타이머(모든 문제 LQP_TIME = 10초)가 돌아갑니다.
      - 시간 안에 보기(1~4)를 누르면 바로 정답·오답을 알려 줍니다. 누르지 않았으면 '정답 보기'로 함께 확인합니다.
      - 다 풀면 맞힌 개수가 나옵니다 (저장은 안 됨).
      - 🖥 발표: 전체 화면으로 크게. 키보드: 1~4 답하기, Space 시작·멈춤, Enter 정답 보기, ←/→ 이전·다음, F 전체 화면
      - 교실 화면에 그대로 띄우므로, 관리자 화면에서도 정답을 미리 표시하지 않습니다. */
+  var LQP_TIME = 10; // 실시간 퀴즈 제한 시간(초) — 모든 문제 공통
   function lqpStage(q, i) {
     return (
       '<div class="lqp-q"><span class="lqp-no">Q' + (i + 1) + "</span>" + esc(q.q) + "</div>" +
@@ -7405,7 +7406,7 @@ window.SiteStore = (function () {
   }
   function liveQuizHTML(lq) {
     var qs = lq.questions || [];
-    var t = Number(qs[0] && qs[0].time) || 20;
+    var t = LQP_TIME;
     return (
       '<div class="wa-lq">' +
       '<div class="lqp" tabindex="0">' +
@@ -7429,7 +7430,7 @@ window.SiteStore = (function () {
   function lqpInit(box, qs) {
     if (box._i != null) return;
     box._i = 0;
-    box._full = box._left = Number(qs[0] && qs[0].time) || 20;
+    box._full = box._left = LQP_TIME;
   }
   function lqpBtn(box, cls) { return box.querySelector(".lqp-" + cls); }
   function lqpStop(box) {
@@ -7519,7 +7520,7 @@ window.SiteStore = (function () {
     }
     box.querySelector(".lqp-stage").innerHTML = lqpStage(qs[i], i);
     lqpBtn(box, "count").textContent = i + 1 + " / " + total;
-    box._full = box._left = Number(qs[i].time) || 20;
+    box._full = box._left = LQP_TIME;
     start.disabled = reveal.disabled = next.disabled = false;
     next.textContent = i === total - 1 ? "끝내기 ›" : "다음 ›";
     lqpShow(box);
