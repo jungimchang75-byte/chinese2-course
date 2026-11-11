@@ -374,6 +374,7 @@ main > section.view-off, .syl-block.view-off { display: none !important; }
 
 /* ===== 공통 섹션 · 카드 ===== */
 .section { padding: 72px 0; position: relative; }
+#quiz[hidden] { display: none !important; } /* 서버용 실시간 퀴즈 화면은 쓰지 않음 */
 .section-tint { background: linear-gradient(180deg, rgba(245, 226, 168, 0.35), rgba(236, 213, 159, 0.25)); }
 .section-head { text-align: center; margin-bottom: 36px; }
 .section-title {
@@ -2630,7 +2631,8 @@ a { color: var(--green-700); }
     <section class="section" id="poll" hidden></section>
     <section class="section section-tint" id="apply" hidden></section>
     <section class="section" id="classroom" hidden></section>
-    <section class="section section-tint" id="quiz"></section>
+    <!-- 서버용 실시간 퀴즈 화면: 서버(server.py)가 없어 쓰지 않으므로 숨김 (v1.3.0). 다시 쓰려면 hidden을 지우고 nav에 { id: "quiz", label: "퀴즈" }를 넣어요. -->
+    <section class="section section-tint" id="quiz" hidden></section>
     <section class="section" id="tools"></section>
     <section class="section section-tint" id="guide"></section>
     <section class="section" id="faq"></section>
@@ -2659,7 +2661,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.2.3",
+    version: "v1.3.0",
     logoText: "漢",
   },
 
@@ -2670,7 +2672,6 @@ window.SITE_CONFIG = {
     { id: "guide", label: "수강안내" }, // 드롭다운 없이 바로 수강 안내 화면 (3개 항목은 접혀 있고 눌러야 펼쳐짐)
     { id: "calendar", label: "수업달력" },
     { id: "curriculum", label: "학습내용보기" },
-    { id: "quiz", label: "퀴즈" },
     { id: "tools", label: "AI도구" },
     { id: "faq", label: "FAQ" },
   ],
@@ -7422,7 +7423,6 @@ window.SiteStore = (function () {
       "</div>" +
       '<p class="small-note lqp-help">▶ 시작을 누르고 시간 안에 1~4 중 답을 누르면 바로 정답인지 알려 줘요. 답을 안 눌렀으면 \'정답 보기\'로 확인해요.<br>키보드: 1~4 답하기 · Space 시작·멈춤 · Enter 정답 보기 · ←/→ 이전·다음 · F 전체 화면</p>' +
       "</div>" +
-      (isAdmin() ? '<p style="margin-top:12px"><button class="btn btn-ghost btn-sm wa-lq-open" type="button">⚡ 이 문제로 서버용 실시간 퀴즈 열기</button></p>' : "") +
       "</div>"
     );
   }
