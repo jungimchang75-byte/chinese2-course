@@ -2218,6 +2218,24 @@ a { color: var(--green-700); }
 .rd-words ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 14px; font-size: 14px; }
 .rd-words b { font-size: 16px; }
 .rd-wpy { color: #b5532d; }
+.rd-quiz { margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--line, #e2dacb); }
+.rd-quiz h5 { margin: 0 0 8px; font-size: 15px; }
+.rd-quiz ol { margin: 0; padding-left: 22px; display: grid; gap: 14px; }
+.rd-qq { margin: 0 0 6px; font-size: 16px; font-weight: 700; }
+.rd-ch { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px; }
+.rd-pick { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 38px; padding: 7px 12px; text-align: left; font: inherit; font-size: 15px; color: var(--text); background: var(--surface); border: 1px solid var(--line, #e2dacb); border-radius: 10px; cursor: pointer; transition: background .15s, border-color .15s; }
+.rd-pick b { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #f1e7dc; color: #8a5a3c; font-size: 12px; }
+.rd-pick:hover:not(:disabled) { background: #fdf3ef; border-color: #d98a75; }
+.rd-pick:disabled { cursor: default; }
+.rd-q.is-done .rd-pick:not(.is-right):not(.is-wrong) { opacity: .5; }
+.rd-pick.is-right { background: #e7f5eb; border-color: #3f9a5e; color: #1d6a39; font-weight: 700; }
+.rd-pick.is-right::after { content: "⭕"; margin-left: auto; }
+.rd-pick.is-wrong { background: #fbeaea; border-color: #c0392b; color: #a02b20; font-weight: 700; }
+.rd-pick.is-wrong::after { content: "❌"; margin-left: auto; }
+.rd-fb { margin: 6px 0 0; padding: 6px 12px; border-radius: 10px; font-size: 14px; font-weight: 700; }
+.rd-fb.ok { background: #e7f5eb; color: #1d6a39; }
+.rd-fb.no { background: #fbeaea; color: #a02b20; }
+.rd-end { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; padding: 10px 14px; border-radius: 12px; background: #fff7e0; font-weight: 700; color: #6b4a00; }
 @media (max-width: 600px) { .rd-body { padding: 16px; } .rd-text { font-size: 17px; } }
 
 /* 실시간 퀴즈 (교실용): 한 문제씩 크게 + 타이머 + 정답 보기. 바탕이 늘 밝아서 글자색을 고정함 */
@@ -2683,7 +2701,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.4.0",
+    version: "v1.4.1",
     logoText: "漢",
   },
 
@@ -7444,8 +7462,57 @@ window.SiteStore = (function () {
       "</div>" +
       ((item.w || []).length
         ? '<div class="rd-words"><h5>📌 주요 단어</h5><ul>' + list(item.w, function (x) { return "<li><b>" + esc(x[0]) + '</b> <span class="rd-wpy">' + esc(x[1]) + "</span> " + esc(x[2]) + "</li>"; }) + "</ul></div>"
-        : "")
+        : "") +
+      rdQuizHTML(item.q)
     );
+  }
+  /* 독해 확인 문제: 4지선다, 보기를 누르면 바로 정답·오답 (한 문제에 한 번), 다 풀면 점수 */
+  function rdQuizHTML(qs) {
+    if (!qs || !qs.length) return "";
+    return (
+      '<div class="rd-quiz" data-total="' + qs.length + '"><h5>✅ 확인 문제</h5><ol>' +
+      list(qs, function (q) {
+        return (
+          '<li class="rd-q" data-ans="' + Number(q[2]) + '"><p class="rd-qq">' + esc(q[0]) + '</p><div class="rd-ch">' +
+          list(q[1], function (c, k) { return '<button type="button" class="rd-pick" data-k="' + k + '"><b>' + "ABCD".charAt(k) + "</b> " + esc(c) + "</button>"; }) +
+          '</div><p class="rd-fb" hidden></p></li>'
+        );
+      }) +
+      '</ol><div class="rd-end" hidden><span class="rd-score"></span> <button type="button" class="btn btn-ghost btn-sm rd-retry">↺ 다시 풀기</button></div></div>'
+    );
+  }
+  function rdPick(btn) {
+    var q = btn.closest(".rd-q");
+    if (!q || q.classList.contains("is-done")) return;
+    q.classList.add("is-done");
+    var ans = Number(q.getAttribute("data-ans"));
+    var k = Number(btn.getAttribute("data-k"));
+    var ok = k === ans;
+    q.classList.add(ok ? "is-ok" : "is-no");
+    Array.prototype.forEach.call(q.querySelectorAll(".rd-pick"), function (b, i) {
+      b.disabled = true;
+      if (i === ans) b.classList.add("is-right");
+    });
+    if (!ok) btn.classList.add("is-wrong");
+    var fb = q.querySelector(".rd-fb");
+    fb.className = "rd-fb " + (ok ? "ok" : "no");
+    fb.textContent = ok ? "⭕ 정답이에요!" : "❌ 아쉬워요. 정답은 " + "ABCD".charAt(ans) + "예요.";
+    fb.hidden = false;
+    var box = q.closest(".rd-quiz");
+    var total = Number(box.getAttribute("data-total"));
+    if (box.querySelectorAll(".rd-q.is-done").length >= total) {
+      var right = box.querySelectorAll(".rd-q.is-ok").length;
+      box.querySelector(".rd-score").textContent = "🎯 " + total + "문제 중 " + right + "문제 맞혔어요!" + (right === total ? " 만점이에요 🎉" : "");
+      box.querySelector(".rd-end").hidden = false;
+    }
+  }
+  function rdRetry(box) {
+    box.querySelectorAll(".rd-q").forEach(function (q) {
+      q.classList.remove("is-done", "is-ok", "is-no");
+      q.querySelectorAll(".rd-pick").forEach(function (b) { b.disabled = false; b.classList.remove("is-right", "is-wrong"); });
+      q.querySelector(".rd-fb").hidden = true;
+    });
+    box.querySelector(".rd-end").hidden = true;
   }
   function readingsHTML(r) {
     var lv = readingLevel(r);
@@ -8288,6 +8355,9 @@ window.SiteStore = (function () {
     if (rd) {
       if (t.closest(".rd-play")) return rdPlay(rd);
       if (t.closest(".rd-stop")) return rdStop(rd);
+      var rp = t.closest(".rd-pick");
+      if (rp) return rdPick(rp);
+      if (t.closest(".rd-retry")) return rdRetry(t.closest(".rd-quiz"));
       var rs = t.closest(".rd-s");
       if (rs) return rdSay(rd, rs);
       return;
