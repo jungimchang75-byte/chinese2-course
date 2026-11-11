@@ -2214,7 +2214,14 @@ a { color: var(--green-700); }
 .lqp-ch li { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; background: #fff; border: 2px solid transparent; font-size: 18px; font-weight: 600; transition: opacity .25s, transform .25s; }
 .lqp-ch b { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #fff; font-size: 18px; }
 .lqp-c0 b { background: #e5484d; } .lqp-c1 b { background: #3e7be0; } .lqp-c2 b { background: #e0a020; } .lqp-c3 b { background: #2f9e5b; }
-.lqp.is-revealed .lqp-ch li:not(.is-right) { opacity: .35; }
+.lqp:not(.is-revealed):not(.is-timeup) .lqp-ch li { cursor: pointer; }
+.lqp:not(.is-revealed):not(.is-timeup) .lqp-ch li:hover { border-color: #d98a75; transform: translateY(-2px); }
+.lqp.is-revealed .lqp-ch li:not(.is-right):not(.is-wrong) { opacity: .35; }
+.lqp-ch li.is-wrong { border-color: #c0392b; background: #fbeaea; }
+.lqp-ch li.is-wrong::after { content: "❌ 내 답"; margin-left: auto; font-weight: 800; color: #a02b20; font-size: .85em; white-space: nowrap; }
+.lqp-fb { margin: 12px 0 0; padding: 10px 14px; border-radius: 12px; font-size: 19px; font-weight: 800; text-align: center; }
+.lqp-fb.ok { background: #e7f5eb; color: #1d6a39; }
+.lqp-fb.no { background: #fbeaea; color: #a02b20; }
 .lqp-ch li.is-right { border-color: #2f9e5b; background: #e7f5eb; transform: scale(1.02); }
 .lqp-ch li.is-right::after { content: "⭕ 정답"; margin-left: auto; font-weight: 800; color: #1d6a39; font-size: .85em; white-space: nowrap; }
 .lqp-exp { margin: 12px 0 0; padding: 10px 14px; border-radius: 12px; background: #fff; font-size: 16px; color: #5a4c40; }
@@ -2235,6 +2242,7 @@ a { color: var(--green-700); }
 .lqp.is-present .lqp-count { font-size: min(3vh, 2vw); }
 .lqp.is-present .lqp-bar { height: 1.4vh; }
 .lqp.is-present .lqp-exp { font-size: min(3.2vh, 2.2vw); }
+.lqp.is-present .lqp-fb { font-size: min(4.4vh, 3vw); }
 .lqp.is-present .lqp-done { font-size: min(6vh, 4vw); }
 .lqp.is-present .lqp-help { display: none; }
 .lqp.is-present .lqp-full { font-size: min(2.4vh, 1.6vw); padding: .8vh 1.4vw; }
@@ -2651,7 +2659,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.2.0",
+    version: "v1.2.1",
     logoText: "漢",
   },
 
@@ -7135,11 +7143,11 @@ window.SiteStore = (function () {
   var IMG_KIND = { noteimages: "notes", cultureimages: "culture" };
   var TABS = [
     { id: "notes", label: "📒 강의 노트" },
-    { id: "assignment", label: "📌 과제" },
     { id: "sentences", label: "🗣️ 문장" },
     { id: "liveQuiz", label: "⚡ 실시간 퀴즈" },
     { id: "onlineQuiz", label: "✅ self-check" }, // 예전 이름: 온라인 퀴즈
     { id: "culture", label: "🎞️ 문화 슬라이드" },
+    { id: "assignment", label: "📌 과제" },
     { id: "videos", label: "🎬 영상" },
     { id: "songs", label: "🎵 노래" },
   ];
@@ -7383,13 +7391,15 @@ window.SiteStore = (function () {
   }
   /* 실시간 퀴즈 탭 (교실용, 서버 없이 작동)
      - 한 문제씩 크게 보여 주고, ▶ 시작을 누르면 타이머(문제의 time, 없으면 20초)가 돌아갑니다.
-     - 학생들은 손가락으로 1~4번을 표시하고, 시간이 끝나면 교수자가 '정답 보기'를 눌러 함께 확인합니다.
-     - 🖥 발표: 전체 화면으로 크게. 키보드: Space 시작·멈춤, Enter 정답 보기, ←/→ 이전·다음, F 전체 화면
+     - 시간 안에 보기(1~4)를 누르면 바로 정답·오답을 알려 줍니다. 누르지 않았으면 '정답 보기'로 함께 확인합니다.
+     - 다 풀면 맞힌 개수가 나옵니다 (저장은 안 됨).
+     - 🖥 발표: 전체 화면으로 크게. 키보드: 1~4 답하기, Space 시작·멈춤, Enter 정답 보기, ←/→ 이전·다음, F 전체 화면
      - 교실 화면에 그대로 띄우므로, 관리자 화면에서도 정답을 미리 표시하지 않습니다. */
   function lqpStage(q, i) {
     return (
       '<div class="lqp-q"><span class="lqp-no">Q' + (i + 1) + "</span>" + esc(q.q) + "</div>" +
       '<ol class="lqp-ch">' + list(q.choices, function (c, k) { return '<li class="lqp-c' + k + '"><b>' + (k + 1) + "</b><span>" + esc(c) + "</span></li>"; }) + "</ol>" +
+      '<p class="lqp-fb" hidden></p>' +
       (q.explanation ? '<p class="lqp-exp" hidden>💡 ' + esc(q.explanation) + "</p>" : "")
     );
   }
@@ -7409,7 +7419,7 @@ window.SiteStore = (function () {
       '<button type="button" class="btn btn-ghost btn-sm lqp-reveal">정답 보기</button>' +
       '<button type="button" class="btn btn-ghost btn-sm lqp-next">' + (qs.length > 1 ? "다음 ›" : "끝내기 ›") + "</button>" +
       "</div>" +
-      '<p class="small-note lqp-help">교실 화면에 띄우고 ▶ 시작을 누르세요. 학생들은 손가락으로 1~4번을 표시하고, 시간이 끝나면 \'정답 보기\'로 함께 확인해요.<br>키보드: Space 시작·멈춤 · Enter 정답 보기 · ←/→ 이전·다음 · F 전체 화면</p>' +
+      '<p class="small-note lqp-help">▶ 시작을 누르고 시간 안에 1~4 중 답을 누르면 바로 정답인지 알려 줘요. 답을 안 눌렀으면 \'정답 보기\'로 확인해요.<br>키보드: 1~4 답하기 · Space 시작·멈춤 · Enter 정답 보기 · ←/→ 이전·다음 · F 전체 화면</p>' +
       "</div>" +
       (isAdmin() ? '<p style="margin-top:12px"><button class="btn btn-ghost btn-sm wa-lq-open" type="button">⚡ 이 문제로 서버용 실시간 퀴즈 열기</button></p>' : "") +
       "</div>"
@@ -7469,6 +7479,22 @@ window.SiteStore = (function () {
     lqpBtn(box, "start").disabled = true;
     lqpBtn(box, "reveal").disabled = true;
   }
+  /* 보기(1~4)를 눌러 답하기: 시간 안에만 됩니다. 바로 정답·오답을 보여 줍니다. */
+  function lqpPick(box, qs, k) {
+    if (box._revealed || box._left <= 0 || box._i >= qs.length) return;
+    var lis = box.querySelectorAll(".lqp-ch li");
+    if (!lis[k]) return;
+    var ans = Number(qs[box._i].answer);
+    var ok = k === ans;
+    box._score = box._score || {};
+    box._score[box._i] = ok;
+    lqpReveal(box, qs);
+    if (!ok) lis[k].classList.add("is-wrong");
+    var fb = box.querySelector(".lqp-fb");
+    fb.className = "lqp-fb " + (ok ? "ok" : "no");
+    fb.textContent = ok ? "⭕ 정답이에요!" : "❌ 틀렸어요. 정답은 " + (ans + 1) + "번이에요.";
+    fb.hidden = false;
+  }
   function lqpGo(box, qs, i) {
     lqpStop(box);
     var total = qs.length;
@@ -7480,7 +7506,10 @@ window.SiteStore = (function () {
     lqpBtn(box, "prev").disabled = i === 0;
     start.textContent = "▶ 시작";
     if (i >= total) {
-      box.querySelector(".lqp-stage").innerHTML = '<div class="lqp-done">🎉 퀴즈 끝! 모두 수고했어요.<br><button type="button" class="btn btn-primary btn-sm lqp-restart">↺ 처음부터</button></div>';
+      var sc = box._score || {}, tried = Object.keys(sc).length, right = Object.keys(sc).filter(function (k) { return sc[k]; }).length;
+      box.querySelector(".lqp-stage").innerHTML = '<div class="lqp-done">🎉 퀴즈 끝! 모두 수고했어요.<br>' +
+        (tried ? "🎯 " + total + "문제 중 " + right + "문제 맞혔어요!" + (right === total ? " 만점 🎉" : "") + "<br>" : "") +
+        '<button type="button" class="btn btn-primary btn-sm lqp-restart">↺ 처음부터</button></div>';
       lqpBtn(box, "count").textContent = total + " / " + total;
       lqpBtn(box, "timer").textContent = "";
       lqpBtn(box, "bar").firstChild.style.width = "0%";
@@ -7524,7 +7553,9 @@ window.SiteStore = (function () {
     if (t.closest(".lqp-reveal")) return lqpReveal(box, qs);
     if (t.closest(".lqp-next")) return lqpGo(box, qs, box._i + 1);
     if (t.closest(".lqp-prev")) return lqpGo(box, qs, box._i - 1);
-    if (t.closest(".lqp-restart")) return lqpGo(box, qs, 0);
+    if (t.closest(".lqp-restart")) { box._score = {}; return lqpGo(box, qs, 0); }
+    var pickLi = t.closest(".lqp-ch li");
+    if (pickLi) return lqpPick(box, qs, Array.prototype.indexOf.call(pickLi.parentNode.children, pickLi));
     if (t.closest(".lqp-full")) return lqpFull(box);
   }
   function lqpKey(box, e, n) {
@@ -7532,7 +7563,8 @@ window.SiteStore = (function () {
     if (!qs.length) return;
     lqpInit(box, qs);
     box._total = qs.length;
-    if (e.key === " ") { e.preventDefault(); lqpToggle(box); }
+    if (/^[1-4]$/.test(e.key)) lqpPick(box, qs, Number(e.key) - 1);
+    else if (e.key === " ") { e.preventDefault(); lqpToggle(box); }
     else if (e.key === "Enter") { e.preventDefault(); lqpReveal(box, qs); }
     else if (e.key === "ArrowRight") { e.preventDefault(); if (box._i < qs.length) lqpGo(box, qs, box._i + 1); }
     else if (e.key === "ArrowLeft") { e.preventDefault(); if (box._i > 0) lqpGo(box, qs, box._i - 1); }
