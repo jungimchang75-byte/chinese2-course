@@ -2132,7 +2132,8 @@ a { color: var(--green-700); }
 .wa-filter button { min-height: 32px; padding: 0 10px; border: 1px solid var(--line, #e2dacb); border-radius: 999px; font: inherit; font-size: 13px; background: var(--surface); cursor: pointer; }
 .wa-filter button.is-on { color: #fff; background: var(--green-500, #8f7bff); border-color: transparent; }
 .wa-sent-opts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.wa-rate { min-height: 34px; border: 1px solid var(--line, #e2dacb); border-radius: 10px; font: inherit; background: var(--surface); }
+.wa-rate { min-height: 34px; padding: 0 6px; border: 1px solid var(--line, #e2dacb); border-radius: 10px; font: inherit; font-size: 14px; background: var(--surface); }
+.wa-rate option { font-size: 14px; } /* '■ 멈춤' 버튼(14px)과 같은 크기 */
 .wa-sent-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 520px; overflow-y: auto; padding-right: 4px; }
 .wa-s { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 12px; background: var(--surface); box-shadow: var(--raise, var(--shadow)); transition: background 0.2s; }
 .wa-s.is-speaking { background: var(--green-100, #efebff); outline: 2px solid var(--green-500, #8f7bff); }
@@ -2612,7 +2613,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.0.9",
+    version: "v1.0.10",
     logoText: "漢",
   },
 
