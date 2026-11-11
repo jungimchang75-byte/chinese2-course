@@ -908,15 +908,12 @@ button.c2-day:hover { transform: translateY(-2px); box-shadow: var(--shadow-hove
   min-width: 18px;
   height: 18px;
   margin-left: 4px;
-  padding: 0 6px;
+  padding: 0 5px;
   border-radius: 999px;
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: #5a3d00;
-  background: #ffd23f;
-  box-shadow: 0 0 0 1px rgba(160, 110, 0, 0.25);
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: #b5532d;
   vertical-align: 1px;
 }
 .member-btn {
@@ -2035,7 +2032,7 @@ a { color: var(--green-700); }
 .qz-board-rank, .qz-name, .qz-rank b { color: var(--green-700); }
 .qz-dots i { background: var(--green-500); }
 .qz-paste { background: var(--surface); }
-.nav-badge { background: #ffd23f; }
+.nav-badge { background: #b4483c; }
 
 .done-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 
@@ -2615,7 +2612,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.0.3",
+    version: "v1.0.4",
     logoText: "漢",
   },
 
@@ -3916,7 +3913,7 @@ window.SiteStore = (function () {
       }
       if (badge) {
         if (unread) {
-          badge.textContent = "new";
+          badge.textContent = unread;
           badge.setAttribute("aria-label", "읽지 않은 공지 " + unread + "개");
         } else badge.remove();
       }
