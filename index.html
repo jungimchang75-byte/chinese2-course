@@ -2202,6 +2202,11 @@ a { color: var(--green-700); }
 /* 독해연습 */
 .rd-bar { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; max-width: 100%; }
 .rd-help { display: block; }
+/* 전체 듣기·멈춤: 옆 HSK 급수 드롭다운과 같은 크기·모양(높이 32px, 모서리 10px, 글자 13px), 은은한 연두 파스텔 */
+.rd-bar .rd-play, .rd-bar .rd-stop { min-height: 32px; height: 32px; padding: 0 12px; border-radius: 10px; font-size: 13px; font-weight: 600; box-shadow: none; }
+.rd-bar .rd-play { background: #e6f4ea; color: #2f6b45; border: 1px solid #bfdfc9; }
+.rd-bar .rd-play:hover { background: #d8eedf; border-color: #a9d3b6; color: #255a39; }
+.rd-bar .rd-stop { background: var(--surface); color: var(--text-soft); border: 1px solid var(--line, #e2dacb); }
 .rd-help { margin: 0 0 12px; }
 .rd-body { padding: 20px 22px; border-radius: 16px; background: var(--surface); box-shadow: var(--raise, var(--shadow)); }
 .rd-title { margin: 0; font-size: 22px; }
@@ -2703,7 +2708,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.4.3",
+    version: "v1.4.4",
     logoText: "漢",
   },
 
