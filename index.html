@@ -2198,25 +2198,47 @@ a { color: var(--green-700); }
 .fw-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
 @keyframes resPop { 0% { transform: scale(0.3) rotate(-20deg); } 60% { transform: scale(1.3) rotate(8deg); } 100% { transform: scale(1); } }
 
-/* 실시간 퀴즈 미리보기 */
-.wa-lq ol { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 16px; }
-.wa-lq-help { margin: 0 0 10px; }
-.wa-lq-ch { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px; }
-.wa-lq-pick { width: 100%; min-height: 38px; padding: 7px 12px; text-align: left; font: inherit; font-size: 14px; color: var(--text); background: var(--surface); border: 1px solid var(--line, #e2dacb); border-radius: 10px; cursor: pointer; transition: background .15s, border-color .15s; }
-.wa-lq-pick:hover:not(:disabled) { background: #fdf3ef; border-color: #d98a75; }
-.wa-lq-pick:disabled { cursor: default; }
-.wa-lq-q.is-done .wa-lq-pick:not(.is-right):not(.is-wrong) { opacity: .55; }
-.wa-lq-pick.is-ans { color: var(--green-700, #6246ea); font-weight: 700; } /* 관리자에게만: 답하기 전 정답 표시 */
-.wa-lq-pick.is-ans::after { content: " ✓"; }
-.wa-lq-pick.is-right { background: #e7f5eb; border-color: #3f9a5e; color: #1d6a39; font-weight: 700; }
-.wa-lq-pick.is-right::after { content: " ⭕"; }
-.wa-lq-pick.is-wrong { background: #fbeaea; border-color: #c0392b; color: #a02b20; font-weight: 700; }
-.wa-lq-pick.is-wrong::after { content: " ❌"; }
-.wa-lq-fb { margin: 8px 0 0; padding: 7px 12px; border-radius: 10px; font-size: 14px; font-weight: 700; }
-.wa-lq-fb.ok { background: #e7f5eb; color: #1d6a39; }
-.wa-lq-fb.no { background: #fbeaea; color: #a02b20; }
-.wa-lq-exp { margin: 6px 0 0; padding: 7px 12px; border-radius: 10px; font-size: 13.5px; background: #f4f2fd; color: var(--text-soft); }
-.wa-lq-end { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 4px 0 12px; padding: 10px 14px; border-radius: 12px; background: #fff7e0; font-weight: 700; color: #6b4a00; }
+/* 실시간 퀴즈 (교실용): 한 문제씩 크게 + 타이머 + 정답 보기. 바탕이 늘 밝아서 글자색을 고정함 */
+.lqp { position: relative; padding: 18px 20px 14px; border-radius: 18px; background: linear-gradient(135deg, #fdf6ef, #f9eadc); color: #2a2420; box-shadow: var(--raise, var(--shadow)); outline: none; }
+.lqp-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.lqp-count { font-weight: 700; color: #7a6a5c; }
+.lqp-timer { margin-left: auto; font-weight: 800; font-size: 18px; color: #b5532d; font-variant-numeric: tabular-nums; }
+.lqp.is-hurry .lqp-timer { color: #d0261b; animation: lqpBlink 1s infinite; }
+.lqp.is-timeup .lqp-timer { color: #d0261b; }
+.lqp-full { border: 1px solid #e2dacb; background: #fff; color: #2a2420; border-radius: 999px; padding: 4px 12px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.lqp-bar { height: 8px; border-radius: 999px; background: rgba(0, 0, 0, .08); overflow: hidden; margin-bottom: 16px; }
+.lqp-bar span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #e0a03a, #c0392b); transition: width 1s linear; }
+.lqp-q { font-size: 22px; font-weight: 800; line-height: 1.45; margin-bottom: 16px; }
+.lqp-no { display: inline-block; margin-right: 10px; padding: 2px 10px; border-radius: 999px; background: #b5532d; color: #fff; font-size: .7em; vertical-align: 3px; }
+.lqp-ch { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.lqp-ch li { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; background: #fff; border: 2px solid transparent; font-size: 18px; font-weight: 600; transition: opacity .25s, transform .25s; }
+.lqp-ch b { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #fff; font-size: 18px; }
+.lqp-c0 b { background: #e5484d; } .lqp-c1 b { background: #3e7be0; } .lqp-c2 b { background: #e0a020; } .lqp-c3 b { background: #2f9e5b; }
+.lqp.is-revealed .lqp-ch li:not(.is-right) { opacity: .35; }
+.lqp-ch li.is-right { border-color: #2f9e5b; background: #e7f5eb; transform: scale(1.02); }
+.lqp-ch li.is-right::after { content: "⭕ 정답"; margin-left: auto; font-weight: 800; color: #1d6a39; font-size: .85em; white-space: nowrap; }
+.lqp-exp { margin: 12px 0 0; padding: 10px 14px; border-radius: 12px; background: #fff; font-size: 16px; color: #5a4c40; }
+.lqp-ctrl { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+.lqp-help { margin: 10px 0 0; text-align: center; color: #7a6a5c; }
+.lqp-done { text-align: center; font-size: 24px; font-weight: 800; padding: 40px 0; line-height: 2.2; }
+@keyframes lqpBlink { 50% { opacity: .35; } }
+@media (max-width: 600px) { .lqp-ch { grid-template-columns: 1fr; } .lqp-q { font-size: 19px; } .lqp-ch li { font-size: 16px; } }
+/* 발표(전체 화면) */
+.lqp.is-present { display: flex; flex-direction: column; border-radius: 0; padding: 4vh 6vw; }
+.lqp.is-fixed { position: fixed; inset: 0; z-index: 9000; }
+.lqp.is-present .lqp-stage { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.lqp.is-present .lqp-q { font-size: min(6vh, 4.2vw); margin-bottom: 5vh; }
+.lqp.is-present .lqp-ch { gap: 2.5vh 2vw; }
+.lqp.is-present .lqp-ch li { font-size: min(4.2vh, 3vw); padding: 3vh 2vw; }
+.lqp.is-present .lqp-ch b { width: min(7vh, 5vw); height: min(7vh, 5vw); font-size: min(4vh, 2.8vw); }
+.lqp.is-present .lqp-timer { font-size: min(6vh, 4vw); }
+.lqp.is-present .lqp-count { font-size: min(3vh, 2vw); }
+.lqp.is-present .lqp-bar { height: 1.4vh; }
+.lqp.is-present .lqp-exp { font-size: min(3.2vh, 2.2vw); }
+.lqp.is-present .lqp-done { font-size: min(6vh, 4vw); }
+.lqp.is-present .lqp-help { display: none; }
+.lqp.is-present .lqp-full { font-size: min(2.4vh, 1.6vw); padding: .8vh 1.4vw; }
+.lqp.is-present .lqp-ctrl .btn { font-size: min(2.6vh, 1.8vw); min-height: 0; height: auto; padding: 1vh 2vw; }
 
 /* 문화 슬라이드 (모션 그래픽) */
 .cs { position: relative; border-radius: 18px; overflow: hidden; box-shadow: var(--raise, var(--shadow)); outline: none; }
@@ -2629,7 +2651,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.1.0",
+    version: "v1.2.0",
     logoText: "漢",
   },
 
@@ -7104,8 +7126,8 @@ window.SiteStore = (function () {
     { kind: "notes", field: "notes", label: "📒 강의 노트" },
     { kind: "assignment", field: "assignment", label: "📌 과제" },
     { kind: "sentences", field: "sentences", label: "🗣️ 문장 50개" },
-    { kind: "onlinequiz", field: "onlineQuiz", label: "✅ 온라인 퀴즈" },
     { kind: "livequiz", field: "liveQuiz", label: "⚡ 실시간 퀴즈" },
+    { kind: "onlinequiz", field: "onlineQuiz", label: "✅ self-check" },
     { kind: "culture", field: "culture", label: "🎞️ 문화 슬라이드" },
     { kind: "noteimages", field: "noteimages", label: "🖼️ 노트 그림", target: "notes" },
     { kind: "cultureimages", field: "cultureimages", label: "🖼️ 슬라이드 그림", target: "culture" },
@@ -7115,8 +7137,8 @@ window.SiteStore = (function () {
     { id: "notes", label: "📒 강의 노트" },
     { id: "assignment", label: "📌 과제" },
     { id: "sentences", label: "🗣️ 문장" },
-    { id: "onlineQuiz", label: "✅ 온라인 퀴즈" },
     { id: "liveQuiz", label: "⚡ 실시간 퀴즈" },
+    { id: "onlineQuiz", label: "✅ self-check" }, // 예전 이름: 온라인 퀴즈
     { id: "culture", label: "🎞️ 문화 슬라이드" },
     { id: "videos", label: "🎬 영상" },
     { id: "songs", label: "🎵 노래" },
@@ -7359,64 +7381,163 @@ window.SiteStore = (function () {
     html += '<div class="ad-actions"><button class="btn btn-primary btn-sm" type="submit">채점하기</button><button class="btn btn-ghost btn-sm wa-oq-reset" type="button">다시 풀기</button><span class="wa-score" aria-live="polite"></span></div></form>';
     return html;
   }
-  /* 실시간 퀴즈 탭: 보기를 누르면 맞았는지 바로 알려 줍니다 (서버 없이 작동).
-     - 한 문제에 한 번만 답할 수 있고, 답하면 정답 보기와 해설이 보입니다.
-     - 다 풀면 점수가 나오고 '다시 풀기'로 처음부터 다시 풀 수 있습니다.
-     - 정답 표시(✓)는 답하기 전에는 관리자에게만 보입니다. */
-  function liveQuizHTML(lq) {
-    var admin = isAdmin();
-    var qs = lq.questions || [];
+  /* 실시간 퀴즈 탭 (교실용, 서버 없이 작동)
+     - 한 문제씩 크게 보여 주고, ▶ 시작을 누르면 타이머(문제의 time, 없으면 20초)가 돌아갑니다.
+     - 학생들은 손가락으로 1~4번을 표시하고, 시간이 끝나면 교수자가 '정답 보기'를 눌러 함께 확인합니다.
+     - 🖥 발표: 전체 화면으로 크게. 키보드: Space 시작·멈춤, Enter 정답 보기, ←/→ 이전·다음, F 전체 화면
+     - 교실 화면에 그대로 띄우므로, 관리자 화면에서도 정답을 미리 표시하지 않습니다. */
+  function lqpStage(q, i) {
     return (
-      '<div class="wa-lq" data-total="' + qs.length + '">' +
-      '<p class="small-note wa-lq-help">👆 보기를 누르면 맞았는지 바로 알려 줘요.</p>' +
-      "<ol>" +
-      list(qs, function (q) {
-        return (
-          '<li class="wa-lq-q" data-ans="' + Number(q.answer) + '">' +
-          '<span class="wa-lq-text">' + esc(q.q) + "</span>" +
-          '<ul class="wa-lq-ch">' +
-          list(q.choices, function (c, i) {
-            return '<li><button type="button" class="wa-lq-pick' + (admin && i === q.answer ? " is-ans" : "") + '" data-i="' + i + '">' + esc(c) + "</button></li>";
-          }) +
-          "</ul>" +
-          '<p class="wa-lq-fb" hidden></p>' +
-          (q.explanation ? '<p class="wa-lq-exp" hidden>💡 ' + esc(q.explanation) + "</p>" : "") +
-          "</li>"
-        );
-      }) +
-      "</ol>" +
-      '<div class="wa-lq-end" hidden><span class="wa-lq-score"></span> <button type="button" class="btn btn-ghost btn-sm wa-lq-reset">↺ 다시 풀기</button></div>' +
-      (admin ? '<button class="btn btn-primary btn-sm wa-lq-open" type="button">⚡ 이 문제로 실시간 퀴즈 열기</button>' : "") +
+      '<div class="lqp-q"><span class="lqp-no">Q' + (i + 1) + "</span>" + esc(q.q) + "</div>" +
+      '<ol class="lqp-ch">' + list(q.choices, function (c, k) { return '<li class="lqp-c' + k + '"><b>' + (k + 1) + "</b><span>" + esc(c) + "</span></li>"; }) + "</ol>" +
+      (q.explanation ? '<p class="lqp-exp" hidden>💡 ' + esc(q.explanation) + "</p>" : "")
+    );
+  }
+  function liveQuizHTML(lq) {
+    var qs = lq.questions || [];
+    var t = Number(qs[0] && qs[0].time) || 20;
+    return (
+      '<div class="wa-lq">' +
+      '<div class="lqp" tabindex="0">' +
+      '<div class="lqp-top"><span class="lqp-count">1 / ' + qs.length + '</span><span class="lqp-timer" aria-live="polite">⏱ ' + t + '초</span>' +
+      '<button type="button" class="lqp-full" title="전체 화면으로 크게 보기 (F)">🖥 <span>발표</span></button></div>' +
+      '<div class="lqp-bar"><span></span></div>' +
+      '<div class="lqp-stage">' + lqpStage(qs[0], 0) + "</div>" +
+      '<div class="lqp-ctrl">' +
+      '<button type="button" class="btn btn-ghost btn-sm lqp-prev" disabled>‹ 이전</button>' +
+      '<button type="button" class="btn btn-primary btn-sm lqp-start">▶ 시작</button>' +
+      '<button type="button" class="btn btn-ghost btn-sm lqp-reveal">정답 보기</button>' +
+      '<button type="button" class="btn btn-ghost btn-sm lqp-next">' + (qs.length > 1 ? "다음 ›" : "끝내기 ›") + "</button>" +
+      "</div>" +
+      '<p class="small-note lqp-help">교실 화면에 띄우고 ▶ 시작을 누르세요. 학생들은 손가락으로 1~4번을 표시하고, 시간이 끝나면 \'정답 보기\'로 함께 확인해요.<br>키보드: Space 시작·멈춤 · Enter 정답 보기 · ←/→ 이전·다음 · F 전체 화면</p>' +
+      "</div>" +
+      (isAdmin() ? '<p style="margin-top:12px"><button class="btn btn-ghost btn-sm wa-lq-open" type="button">⚡ 이 문제로 서버용 실시간 퀴즈 열기</button></p>' : "") +
       "</div>"
     );
   }
-  function pickLiveQuiz(pick) {
-    var qli = pick.closest(".wa-lq-q");
-    if (!qli || qli.classList.contains("is-done")) return;
-    qli.classList.add("is-done");
-    var ans = Number(qli.getAttribute("data-ans"));
-    var mine = Number(pick.getAttribute("data-i"));
-    var ok = mine === ans;
-    qli.classList.add(ok ? "is-ok" : "is-no");
-    Array.prototype.forEach.call(qli.querySelectorAll(".wa-lq-pick"), function (b, i) {
-      b.disabled = true;
-      if (i === ans) b.classList.add("is-right");
-    });
-    if (!ok) pick.classList.add("is-wrong");
-    var fb = qli.querySelector(".wa-lq-fb");
-    fb.className = "wa-lq-fb " + (ok ? "ok" : "no");
-    fb.textContent = ok ? "⭕ 정답이에요!" : "❌ 아쉬워요. 정답은 " + (ans + 1) + "번이에요.";
-    fb.hidden = false;
-    var exp = qli.querySelector(".wa-lq-exp");
-    if (exp) exp.hidden = false;
-    var box = qli.closest(".wa-lq");
-    var total = Number(box.getAttribute("data-total"));
-    var done = box.querySelectorAll(".wa-lq-q.is-done").length;
-    if (done >= total) {
-      var right = box.querySelectorAll(".wa-lq-q.is-ok").length;
-      box.querySelector(".wa-lq-score").textContent = "🎯 " + total + "문제 중 " + right + "문제 맞혔어요!" + (right === total ? " 만점이에요 🎉" : "");
-      box.querySelector(".wa-lq-end").hidden = false;
+  function lqpQuestions(n) { return ((content(n) || {}).liveQuiz || {}).questions || []; }
+  function lqpInit(box, qs) {
+    if (box._i != null) return;
+    box._i = 0;
+    box._full = box._left = Number(qs[0] && qs[0].time) || 20;
+  }
+  function lqpBtn(box, cls) { return box.querySelector(".lqp-" + cls); }
+  function lqpStop(box) {
+    clearInterval(box._timer);
+    box._timer = null;
+    box._running = false;
+  }
+  function lqpShow(box) {
+    lqpBtn(box, "timer").textContent = box._left > 0 ? "⏱ " + box._left + "초" : "⏰ 시간 끝!";
+    lqpBtn(box, "bar").firstChild.style.width = (box._left / box._full) * 100 + "%";
+    box.classList.toggle("is-hurry", box._running && box._left > 0 && box._left <= 5);
+  }
+  function lqpToggle(box) {
+    if (box._revealed || box._left <= 0 || box._i >= box._total) return;
+    var start = lqpBtn(box, "start");
+    if (box._running) {
+      lqpStop(box);
+      start.textContent = "▶ 계속";
+      return lqpShow(box);
     }
+    box._running = true;
+    start.textContent = "⏸ 멈춤";
+    lqpShow(box);
+    box._timer = setInterval(function () {
+      if (!document.body.contains(box)) return lqpStop(box);
+      box._left -= 1;
+      if (box._left <= 0) {
+        box._left = 0;
+        lqpStop(box);
+        box.classList.add("is-timeup");
+        start.textContent = "▶ 시작";
+        start.disabled = true;
+      }
+      lqpShow(box);
+    }, 1000);
+  }
+  function lqpReveal(box, qs) {
+    if (box._revealed || box._i >= qs.length) return;
+    lqpStop(box);
+    box._revealed = true;
+    box.classList.add("is-revealed");
+    box.classList.remove("is-hurry");
+    var li = box.querySelectorAll(".lqp-ch li")[Number(qs[box._i].answer)];
+    if (li) li.classList.add("is-right");
+    var exp = box.querySelector(".lqp-exp");
+    if (exp) exp.hidden = false;
+    lqpBtn(box, "start").disabled = true;
+    lqpBtn(box, "reveal").disabled = true;
+  }
+  function lqpGo(box, qs, i) {
+    lqpStop(box);
+    var total = qs.length;
+    box._total = total;
+    box._i = i = Math.max(0, Math.min(i, total));
+    box._revealed = false;
+    box.classList.remove("is-timeup", "is-revealed", "is-hurry");
+    var start = lqpBtn(box, "start"), reveal = lqpBtn(box, "reveal"), next = lqpBtn(box, "next");
+    lqpBtn(box, "prev").disabled = i === 0;
+    start.textContent = "▶ 시작";
+    if (i >= total) {
+      box.querySelector(".lqp-stage").innerHTML = '<div class="lqp-done">🎉 퀴즈 끝! 모두 수고했어요.<br><button type="button" class="btn btn-primary btn-sm lqp-restart">↺ 처음부터</button></div>';
+      lqpBtn(box, "count").textContent = total + " / " + total;
+      lqpBtn(box, "timer").textContent = "";
+      lqpBtn(box, "bar").firstChild.style.width = "0%";
+      start.disabled = reveal.disabled = next.disabled = true;
+      return;
+    }
+    box.querySelector(".lqp-stage").innerHTML = lqpStage(qs[i], i);
+    lqpBtn(box, "count").textContent = i + 1 + " / " + total;
+    box._full = box._left = Number(qs[i].time) || 20;
+    start.disabled = reveal.disabled = next.disabled = false;
+    next.textContent = i === total - 1 ? "끝내기 ›" : "다음 ›";
+    lqpShow(box);
+  }
+  function lqpPresent(box, on, fixed) {
+    box.classList.toggle("is-present", on);
+    box.classList.toggle("is-fixed", !!(on && fixed));
+    document.documentElement.classList.toggle("cs-lock", !!(on && fixed));
+    lqpBtn(box, "full").querySelector("span").textContent = on ? "나가기" : "발표";
+    if (on) box.focus();
+  }
+  function lqpFull(box) {
+    if (document.fullscreenElement === box) return document.exitFullscreen();
+    if (box.classList.contains("is-fixed")) return lqpPresent(box, false);
+    /* 전체 화면이 막힌 곳(앱 안의 미리보기 등)에서는 창을 가득 채우는 방식으로 대신함 */
+    if (!box.requestFullscreen) return lqpPresent(box, true, true);
+    box.requestFullscreen().then(function () { lqpPresent(box, true); }, function () { lqpPresent(box, true, true); });
+  }
+  document.addEventListener("fullscreenchange", function () {
+    document.querySelectorAll(".lqp").forEach(function (box) {
+      var on = document.fullscreenElement === box;
+      if (on || !box.classList.contains("is-fixed")) lqpPresent(box, on);
+    });
+  });
+  /* 실시간 퀴즈 버튼 처리 (아래 curriculum 클릭 처리에서 부름) */
+  function lqpClick(box, t, n) {
+    var qs = lqpQuestions(n);
+    if (!qs.length) return;
+    lqpInit(box, qs);
+    box._total = qs.length;
+    if (t.closest(".lqp-start")) return lqpToggle(box);
+    if (t.closest(".lqp-reveal")) return lqpReveal(box, qs);
+    if (t.closest(".lqp-next")) return lqpGo(box, qs, box._i + 1);
+    if (t.closest(".lqp-prev")) return lqpGo(box, qs, box._i - 1);
+    if (t.closest(".lqp-restart")) return lqpGo(box, qs, 0);
+    if (t.closest(".lqp-full")) return lqpFull(box);
+  }
+  function lqpKey(box, e, n) {
+    var qs = lqpQuestions(n);
+    if (!qs.length) return;
+    lqpInit(box, qs);
+    box._total = qs.length;
+    if (e.key === " ") { e.preventDefault(); lqpToggle(box); }
+    else if (e.key === "Enter") { e.preventDefault(); lqpReveal(box, qs); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); if (box._i < qs.length) lqpGo(box, qs, box._i + 1); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); if (box._i > 0) lqpGo(box, qs, box._i - 1); }
+    else if (e.key === "f" || e.key === "F") lqpFull(box);
+    else if (e.key === "Escape" && box.classList.contains("is-fixed")) lqpPresent(box, false);
   }
   var SLIDE_BG = [
     /* 아주 연한 파스텔: 라벤더 · 벚꽃 · 하늘 · 민트 · 살구 · 레몬 · 연두 · 라일락 · 장미 · 연하늘 */
@@ -7945,6 +8066,15 @@ window.SiteStore = (function () {
     showSlide(cs, cs._i + d);
   }
   /* 슬라이드에 초점이 있을 때 방향키로 넘기기, 스페이스로 재생/멈춤 */
+  /* 실시간 퀴즈 키보드 조작 (퀴즈 상자를 한 번 누른 뒤) */
+  document.addEventListener("keydown", function (e) {
+    var a = document.activeElement;
+    var box = a && a.closest && a.closest(".lqp");
+    if (!box) return;
+    if (a.tagName === "BUTTON" && (e.key === " " || e.key === "Enter")) return; // 버튼은 원래대로 눌림
+    var wk = box.closest(".week-ai");
+    if (wk) lqpKey(box, e, wk.getAttribute("data-week"));
+  });
   document.addEventListener("keydown", function (e) {
     var cs = document.activeElement && document.activeElement.closest && document.activeElement.closest(".cs");
     if (!cs || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
@@ -8018,9 +8148,8 @@ window.SiteStore = (function () {
       if (li) li.classList.add("is-speaking");
       return speak(say.getAttribute("data-say"), rate, function () { if (li) li.classList.remove("is-speaking"); });
     }
-    var lqPick = t.closest(".wa-lq-pick");
-    if (lqPick) return pickLiveQuiz(lqPick);
-    if (t.closest(".wa-lq-reset")) return renderPanel(el);
+    var lqp = t.closest(".lqp");
+    if (lqp) return lqpClick(lqp, t, n);
     if (t.closest(".wa-play-all")) return playAll(el.querySelector(".wa-sent"));
     if (t.closest(".wa-stop")) return stopSpeak();
     var f = t.closest(".wa-filter button");
