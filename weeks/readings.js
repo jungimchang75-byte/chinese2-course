@@ -1,0 +1,358 @@
+/* 독해연습 자료 — 각 과 주제와 관련된 HSK 3·4·5급 읽기 글 (사이트용으로 새로 쓴 글)
+   READINGS[과 번호][등급] = { title: 중국어 제목, ko: 한국어 제목, s: [[문장, 병음, 번역], …], w: [[단어, 병음, 뜻], …] }
+   과 번호는 WEEK_CONTENT와 같아요 (101 = 제1과 … 109 = 제9과). 글을 고치거나 더할 때 이 파일만 고치면 돼요. */
+window.READINGS = {
+  "101": {
+    "3": {
+      title: "新学期选课", ko: "새 학기 수강 신청",
+      s: [
+        ["新学期开始了，小金要选课了。", "Xīn xuéqī kāishǐ le, Xiǎo Jīn yào xuǎn kè le.", "새 학기가 시작되어 샤오진은 수강 신청을 해야 해요."],
+        ["他想学汉语，因为他对中国文化很感兴趣。", "Tā xiǎng xué Hànyǔ, yīnwèi tā duì Zhōngguó wénhuà hěn gǎn xìngqù.", "그는 중국어를 배우고 싶어요. 중국 문화에 관심이 많기 때문이에요."],
+        ["可是选课的人太多了，网站一直打不开。", "Kěshì xuǎn kè de rén tài duō le, wǎngzhàn yìzhí dǎ bu kāi.", "그런데 수강 신청하는 사람이 너무 많아서 사이트가 계속 열리지 않았어요."],
+        ["他等了半个小时，终于选好了。", "Tā děng le bàn ge xiǎoshí, zhōngyú xuǎn hǎo le.", "30분을 기다려서 드디어 신청을 마쳤어요."],
+        ["汉语课每个星期一、三、五上课，老师是北京人。", "Hànyǔ kè měi ge xīngqīyī, sān, wǔ shàng kè, lǎoshī shì Běijīng rén.", "중국어 수업은 매주 월·수·금에 있고, 선생님은 베이징 사람이에요."],
+        ["小金很高兴，他觉得这个学期一定会很有意思。", "Xiǎo Jīn hěn gāoxìng, tā juéde zhège xuéqī yídìng huì hěn yǒu yìsi.", "샤오진은 무척 기뻤어요. 이번 학기는 분명 재미있을 거라고 생각했어요."]
+      ],
+      w: [["选课", "xuǎn kè", "수강 신청하다"], ["感兴趣", "gǎn xìngqù", "관심이 있다"], ["一直", "yìzhí", "줄곧, 계속"], ["终于", "zhōngyú", "마침내"], ["学期", "xuéqī", "학기"]]
+    },
+    "4": {
+      title: "选课的烦恼", ko: "수강 신청의 고민",
+      s: [
+        ["每到新学期，选课都是让大学生最头疼的事情。", "Měi dào xīn xuéqī, xuǎn kè dōu shì ràng dàxuéshēng zuì tóuténg de shìqing.", "새 학기만 되면 수강 신청은 대학생을 가장 골치 아프게 하는 일이에요."],
+        ["热门的课程几分钟就满了，速度慢一点儿就选不上。", "Rèmén de kèchéng jǐ fēnzhōng jiù mǎn le, sùdù màn yìdiǎnr jiù xuǎn bu shàng.", "인기 강좌는 몇 분 만에 마감돼서 조금만 늦어도 신청하지 못해요."],
+        ["我的朋友小李为了选到一门有名的汉语课，提前十分钟就坐在电脑前等着。", "Wǒ de péngyou Xiǎo Lǐ wèile xuǎn dào yì mén yǒumíng de Hànyǔ kè, tíqián shí fēnzhōng jiù zuò zài diànnǎo qián děngzhe.", "제 친구 샤오리는 유명한 중국어 수업을 신청하려고 10분 전부터 컴퓨터 앞에 앉아 기다렸어요."],
+        ["没想到，系统突然出了问题，等他再登录的时候，课已经满了。", "Méi xiǎngdào, xìtǒng tūrán chū le wèntí, děng tā zài dēnglù de shíhou, kè yǐjīng mǎn le.", "뜻밖에도 시스템에 갑자기 문제가 생겼고, 다시 로그인했을 때는 이미 마감되었어요."],
+        ["他只好给老师发电子邮件，说明自己为什么想上这门课。", "Tā zhǐhǎo gěi lǎoshī fā diànzǐ yóujiàn, shuōmíng zìjǐ wèishénme xiǎng shàng zhè mén kè.", "그는 어쩔 수 없이 선생님께 이메일을 보내 왜 이 수업을 듣고 싶은지 설명했어요."],
+        ["老师被他的态度感动了，同意让他加课。", "Lǎoshī bèi tā de tàidu gǎndòng le, tóngyì ràng tā jiā kè.", "선생님은 그의 태도에 감동해서 추가 수강을 허락했어요."],
+        ["小李说，选课不仅需要速度，有时候也需要勇气。", "Xiǎo Lǐ shuō, xuǎn kè bùjǐn xūyào sùdù, yǒu shíhou yě xūyào yǒngqì.", "샤오리는 수강 신청에는 속도뿐 아니라 때로는 용기도 필요하다고 말했어요."]
+      ],
+      w: [["头疼", "tóuténg", "골치 아프다"], ["热门", "rèmén", "인기 있는"], ["提前", "tíqián", "앞당기다, 미리"], ["只好", "zhǐhǎo", "어쩔 수 없이"], ["态度", "tàidu", "태도"], ["勇气", "yǒngqì", "용기"]]
+    },
+    "5": {
+      title: "大学选课，选的是什么？", ko: "대학 수강 신청, 무엇을 고르는 걸까?",
+      s: [
+        ["在不少大学生看来，选课不过是开学前的一项手续，其实它反映了一个人的学习目标。", "Zài bù shǎo dàxuéshēng kànlái, xuǎn kè búguò shì kāixué qián de yí xiàng shǒuxù, qíshí tā fǎnyìng le yí ge rén de xuéxí mùbiāo.", "많은 대학생이 보기에 수강 신청은 개강 전 절차일 뿐이지만, 사실 한 사람의 학습 목표를 반영해요."],
+        ["有的人专门挑选学分容易拿的课，希望轻轻松松地毕业。", "Yǒu de rén zhuānmén tiāoxuǎn xuéfēn róngyì ná de kè, xīwàng qīngqīngsōngsōng de bìyè.", "어떤 사람은 학점 받기 쉬운 수업만 골라 편하게 졸업하기를 바라요."],
+        ["也有人主动选择有挑战性的课程，哪怕作业多、考试难。", "Yě yǒu rén zhǔdòng xuǎnzé yǒu tiǎozhànxìng de kèchéng, nǎpà zuòyè duō, kǎoshì nán.", "과제가 많고 시험이 어렵더라도 도전적인 강좌를 스스로 선택하는 사람도 있어요."],
+        ["教育专家认为，选课时不应该只考虑成绩，更要考虑自己的兴趣和将来的发展。", "Jiàoyù zhuānjiā rènwéi, xuǎn kè shí bù yīnggāi zhǐ kǎolǜ chéngjì, gèng yào kǎolǜ zìjǐ de xìngqù hé jiānglái de fāzhǎn.", "교육 전문가들은 수강 신청 때 성적만 생각할 게 아니라 흥미와 앞으로의 발전을 더 생각해야 한다고 봐요."],
+        ["比如，一个经济专业的学生如果选修中文，将来在中韩贸易领域可能会有更多机会。", "Bǐrú, yí ge jīngjì zhuānyè de xuésheng rúguǒ xuǎnxiū Zhōngwén, jiānglái zài Zhōng-Hán màoyì lǐngyù kěnéng huì yǒu gèng duō jīhuì.", "예를 들어 경제 전공 학생이 중국어를 선택 수강하면 앞으로 한중 무역 분야에서 더 많은 기회가 있을 수 있어요."],
+        ["当然，课程安排也要合理，否则一学期下来，身体和精神都会吃不消。", "Dāngrán, kèchéng ānpái yě yào hélǐ, fǒuzé yì xuéqī xiàlái, shēntǐ hé jīngshén dōu huì chī bu xiāo.", "물론 시간표도 합리적이어야 해요. 그렇지 않으면 한 학기가 끝날 즈음 몸도 마음도 버티기 힘들어요."],
+        ["归根结底，选课选的不只是课，而是自己想成为什么样的人。", "Guīgēn-jiédǐ, xuǎn kè xuǎn de bù zhǐ shì kè, ér shì zìjǐ xiǎng chéngwéi shénmeyàng de rén.", "결국 수강 신청에서 고르는 것은 수업만이 아니라 내가 어떤 사람이 되고 싶은가예요."]
+      ],
+      w: [["手续", "shǒuxù", "절차"], ["反映", "fǎnyìng", "반영하다"], ["挑战性", "tiǎozhànxìng", "도전성"], ["哪怕", "nǎpà", "설령 ~하더라도"], ["吃不消", "chī bu xiāo", "감당하지 못하다"], ["归根结底", "guīgēn-jiédǐ", "결국"]]
+    }
+  },
+  "102": {
+    "3": {
+      title: "第一次去北京", ko: "처음 간 베이징",
+      s: [
+        ["上个月，我第一次坐飞机去北京。", "Shàng ge yuè, wǒ dì-yī cì zuò fēijī qù Běijīng.", "지난달 저는 처음으로 비행기를 타고 베이징에 갔어요."],
+        ["飞机晚了两个小时，我又累又饿。", "Fēijī wǎn le liǎng ge xiǎoshí, wǒ yòu lèi yòu è.", "비행기가 두 시간 늦어서 저는 피곤하고 배도 고팠어요."],
+        ["下了飞机，我看见中国朋友王明在出口等我。", "Xià le fēijī, wǒ kànjiàn Zhōngguó péngyou Wáng Míng zài chūkǒu děng wǒ.", "비행기에서 내리자 중국 친구 왕밍이 출구에서 저를 기다리는 게 보였어요."],
+        ["他笑着说：“路上辛苦了！欢迎你来北京！”", "Tā xiàozhe shuō: “Lùshang xīnkǔ le! Huānyíng nǐ lái Běijīng!”", "그는 웃으며 “오느라 수고했어! 베이징에 온 걸 환영해!”라고 했어요."],
+        ["他帮我拿行李，还带我去吃了一碗热热的面条。", "Tā bāng wǒ ná xíngli, hái dài wǒ qù chī le yì wǎn rèrè de miàntiáo.", "그는 짐을 들어 주고, 따뜻한 국수도 한 그릇 사 줬어요."],
+        ["那天虽然很累，但是我心里特别温暖。", "Nà tiān suīrán hěn lèi, dànshì wǒ xīnli tèbié wēnnuǎn.", "그날은 피곤했지만 마음은 정말 따뜻했어요."]
+      ],
+      w: [["第一次", "dì-yī cì", "처음"], ["又…又…", "yòu…yòu…", "~하고 ~하다"], ["出口", "chūkǒu", "출구"], ["行李", "xíngli", "짐"], ["温暖", "wēnnuǎn", "따뜻하다"]]
+    },
+    "4": {
+      title: "一次难忘的旅行", ko: "잊지 못할 여행",
+      s: [
+        ["去年寒假，我和同学打算去上海旅行。", "Qùnián hánjià, wǒ hé tóngxué dǎsuàn qù Shànghǎi lǚxíng.", "작년 겨울방학에 저는 반 친구와 상하이 여행을 계획했어요."],
+        ["出发那天下了大雪，航班被推迟了。", "Chūfā nà tiān xià le dà xuě, hángbān bèi tuīchí le.", "출발하는 날 큰 눈이 내려 항공편이 연기되었어요."],
+        ["我们在机场等了整整五个小时，只好一边看书一边聊天。", "Wǒmen zài jīchǎng děng le zhěngzhěng wǔ ge xiǎoshí, zhǐhǎo yìbiān kàn shū yìbiān liáotiān.", "우리는 공항에서 꼬박 다섯 시간을 기다리며 책을 읽고 이야기를 나눌 수밖에 없었어요."],
+        ["到上海的时候已经是半夜了，地铁也停了。", "Dào Shànghǎi de shíhou yǐjīng shì bànyè le, dìtiě yě tíng le.", "상하이에 도착했을 때는 이미 한밤중이었고 지하철도 끊겼어요."],
+        ["幸亏酒店的服务员很热情，专门开车来机场接我们。", "Xìngkuī jiǔdiàn de fúwùyuán hěn rèqíng, zhuānmén kāi chē lái jīchǎng jiē wǒmen.", "다행히 호텔 직원이 친절해서 일부러 차를 몰고 공항에 마중 나왔어요."],
+        ["一见面，他就说：“路上辛苦了，房间已经准备好了。”", "Yí jiàn miàn, tā jiù shuō: “Lùshang xīnkǔ le, fángjiān yǐjīng zhǔnbèi hǎo le.”", "만나자마자 그는 “오시느라 고생하셨어요. 방은 준비되어 있습니다.”라고 했어요."],
+        ["这次旅行虽然不太顺利，但是让我们感受到了陌生人的友好。", "Zhè cì lǚxíng suīrán bú tài shùnlì, dànshì ràng wǒmen gǎnshòu dào le mòshēngrén de yǒuhǎo.", "이번 여행은 순조롭지 않았지만 낯선 사람의 친절을 느끼게 해 주었어요."]
+      ],
+      w: [["推迟", "tuīchí", "연기하다"], ["整整", "zhěngzhěng", "꼬박"], ["幸亏", "xìngkuī", "다행히"], ["专门", "zhuānmén", "일부러"], ["顺利", "shùnlì", "순조롭다"], ["陌生人", "mòshēngrén", "낯선 사람"]]
+    },
+    "5": {
+      title: "“辛苦了”里的人情味", ko: "“수고했어요”에 담긴 정",
+      s: [
+        ["在中国，朋友远道而来，主人见面的第一句话往往是“路上辛苦了”。", "Zài Zhōngguó, péngyou yuǎndào ér lái, zhǔrén jiàn miàn de dì-yī jù huà wǎngwǎng shì “lùshang xīnkǔ le”.", "중국에서는 친구가 먼 길을 오면 주인이 만나서 하는 첫마디가 흔히 “오느라 수고했어”예요."],
+        ["这句话看似简单，却包含着对客人的关心和体谅。", "Zhè jù huà kànsì jiǎndān, què bāohánzhe duì kèrén de guānxīn hé tǐliàng.", "이 말은 단순해 보이지만 손님에 대한 관심과 배려가 담겨 있어요."],
+        ["过去交通不发达，从一个城市到另一个城市可能要花好几天，旅途的确非常辛苦。", "Guòqù jiāotōng bù fādá, cóng yí ge chéngshì dào lìng yí ge chéngshì kěnéng yào huā hǎo jǐ tiān, lǚtú díquè fēicháng xīnkǔ.", "예전에는 교통이 발달하지 않아 도시 사이를 오가는 데 며칠씩 걸리기도 해서 여정이 정말 고됐어요."],
+        ["如今有了高铁和飞机，几个小时就能到达，可人们仍然习惯这样问候。", "Rújīn yǒu le gāotiě hé fēijī, jǐ ge xiǎoshí jiù néng dàodá, kě rénmen réngrán xíguàn zhèyàng wènhòu.", "지금은 고속철도와 비행기로 몇 시간이면 도착하지만 사람들은 여전히 이렇게 인사해요."],
+        ["除了口头问候，主人通常还会主动帮客人提行李，安排好吃住。", "Chúle kǒutóu wènhòu, zhǔrén tōngcháng hái huì zhǔdòng bāng kèrén tí xíngli, ānpái hǎo chī zhù.", "말로 하는 인사 외에도 주인은 보통 먼저 나서서 짐을 들어 주고 숙식을 마련해요."],
+        ["韩国也有意思相近的问候语，可见两国文化都重视对客人的照顾。", "Hánguó yě yǒu yìsi xiāngjìn de wènhòuyǔ, kějiàn liǎng guó wénhuà dōu zhòngshì duì kèrén de zhàogù.", "한국에도 뜻이 비슷한 인사말이 있으니, 두 나라 문화 모두 손님을 챙기는 것을 중시함을 알 수 있어요."],
+        ["一句“辛苦了”，拉近了人与人之间的距离，也体现了中国人热情好客的传统。", "Yí jù “xīnkǔ le”, lājìn le rén yǔ rén zhījiān de jùlí, yě tǐxiàn le Zhōngguórén rèqíng hàokè de chuántǒng.", "“수고했어” 한마디가 사람 사이의 거리를 좁히고, 손님을 반기는 중국인의 전통도 보여 줘요."]
+      ],
+      w: [["远道而来", "yuǎndào ér lái", "먼 길을 오다"], ["体谅", "tǐliàng", "헤아리다, 배려하다"], ["旅途", "lǚtú", "여정"], ["仍然", "réngrán", "여전히"], ["问候", "wènhòu", "안부를 묻다"], ["热情好客", "rèqíng hàokè", "손님을 반기다"]]
+    }
+  },
+  "103": {
+    "3": {
+      title: "我在咖啡店打工", ko: "카페에서 아르바이트해요",
+      s: [
+        ["我是大学二年级的学生，周末在一家咖啡店打工。", "Wǒ shì dàxué èr niánjí de xuésheng, zhōumò zài yì jiā kāfēidiàn dǎgōng.", "저는 대학교 2학년이고 주말에 카페에서 아르바이트해요."],
+        ["我每天工作五个小时，主要是做咖啡和打扫卫生。", "Wǒ měi tiān gōngzuò wǔ ge xiǎoshí, zhǔyào shì zuò kāfēi hé dǎsǎo wèishēng.", "하루 다섯 시간 일하는데 주로 커피를 만들고 청소를 해요."],
+        ["刚开始的时候，我常常做错，客人有点儿不高兴。", "Gāng kāishǐ de shíhou, wǒ chángcháng zuò cuò, kèrén yǒudiǎnr bù gāoxìng.", "처음에는 자주 실수해서 손님들이 조금 언짢아했어요."],
+        ["店长对我很好，一次一次地教我。", "Diànzhǎng duì wǒ hěn hǎo, yí cì yí cì de jiāo wǒ.", "점장님이 잘해 주셔서 몇 번이고 가르쳐 주셨어요."],
+        ["现在我做的咖啡又快又好喝，客人都说“谢谢”。", "Xiànzài wǒ zuò de kāfēi yòu kuài yòu hǎohē, kèrén dōu shuō “xièxie”.", "이제 제가 만든 커피는 빠르고 맛있어서 손님들이 모두 “고마워요”라고 해요."],
+        ["打工虽然很累，但是我学到了很多书上没有的东西。", "Dǎgōng suīrán hěn lèi, dànshì wǒ xué dào le hěn duō shū shang méiyǒu de dōngxi.", "아르바이트는 힘들지만 책에 없는 많은 것을 배웠어요."]
+      ],
+      w: [["打工", "dǎgōng", "아르바이트하다"], ["年级", "niánjí", "학년"], ["打扫", "dǎsǎo", "청소하다"], ["刚", "gāng", "막, 방금"], ["店长", "diànzhǎng", "점장"]]
+    },
+    "4": {
+      title: "打工的收获", ko: "아르바이트로 얻은 것",
+      s: [
+        ["现在，越来越多的大学生利用课余时间打工。", "Xiànzài, yuè lái yuè duō de dàxuéshēng lìyòng kèyú shíjiān dǎgōng.", "요즘 점점 더 많은 대학생이 수업 외 시간을 이용해 아르바이트를 해요."],
+        ["有的人在餐厅当服务员，有的人做家教，还有的人在网上卖东西。", "Yǒu de rén zài cāntīng dāng fúwùyuán, yǒu de rén zuò jiājiào, hái yǒu de rén zài wǎng shang mài dōngxi.", "식당 종업원을 하는 사람, 과외를 하는 사람, 인터넷에서 물건을 파는 사람도 있어요."],
+        ["打工的原因各不相同：有的是为了减轻父母的负担，有的是为了积累经验。", "Dǎgōng de yuányīn gè bù xiāngtóng: yǒu de shì wèile jiǎnqīng fùmǔ de fùdān, yǒu de shì wèile jīlěi jīngyàn.", "이유는 제각각이에요. 부모님의 부담을 덜기 위해서이기도 하고, 경험을 쌓기 위해서이기도 해요."],
+        ["我的室友在一家公司做翻译，每个月的收入还不错。", "Wǒ de shìyǒu zài yì jiā gōngsī zuò fānyì, měi ge yuè de shōurù hái búcuò.", "제 룸메이트는 회사에서 통번역을 하는데 월수입이 괜찮아요."],
+        ["不过，她也说，打工时间太长会影响学习，所以一定要安排好时间。", "Búguò, tā yě shuō, dǎgōng shíjiān tài cháng huì yǐngxiǎng xuéxí, suǒyǐ yídìng yào ānpái hǎo shíjiān.", "하지만 그녀는 일을 너무 오래 하면 공부에 영향이 있으니 시간 배분을 잘해야 한다고 했어요."],
+        ["在我看来，打工最大的收获不是钱，而是学会了怎样跟别人合作。", "Zài wǒ kànlái, dǎgōng zuì dà de shōuhuò bú shì qián, ér shì xuéhuì le zěnyàng gēn biérén hézuò.", "제가 보기에 아르바이트의 가장 큰 수확은 돈이 아니라 남과 협력하는 법을 배운 것이에요."]
+      ],
+      w: [["利用", "lìyòng", "이용하다"], ["家教", "jiājiào", "과외"], ["减轻", "jiǎnqīng", "덜다"], ["积累", "jīlěi", "쌓다"], ["收入", "shōurù", "수입"], ["合作", "hézuò", "협력하다"]]
+    },
+    "5": {
+      title: "“斜杠青年”", ko: "‘슬래시 청년’",
+      s: [
+        ["近年来，中国出现了一个新词——“斜杠青年”。", "Jìnnián lái, Zhōngguó chūxiàn le yí ge xīn cí — “xiégàng qīngnián”.", "최근 중국에 ‘슬래시 청년’이라는 신조어가 생겼어요."],
+        ["它指的是不满足于单一职业，同时拥有几份工作和身份的年轻人。", "Tā zhǐ de shì bù mǎnzú yú dānyī zhíyè, tóngshí yōngyǒu jǐ fèn gōngzuò hé shēnfèn de niánqīngrén.", "하나의 직업에 만족하지 않고 여러 일과 정체성을 동시에 가진 젊은이를 가리켜요."],
+        ["比如，一个人白天是公司职员，晚上是网络主播，周末又去当摄影师。", "Bǐrú, yí ge rén báitiān shì gōngsī zhíyuán, wǎnshang shì wǎngluò zhǔbō, zhōumò yòu qù dāng shèyǐngshī.", "예를 들어 낮에는 회사원, 밤에는 인터넷 방송인, 주말에는 사진작가로 일하는 거예요."],
+        ["支持者认为，这种生活方式能充分发挥个人的才能，也能增加收入来源。", "Zhīchízhě rènwéi, zhè zhǒng shēnghuó fāngshì néng chōngfèn fāhuī gèrén de cáinéng, yě néng zēngjiā shōurù láiyuán.", "지지하는 사람들은 이런 생활 방식이 개인의 재능을 충분히 발휘하고 수입원도 늘릴 수 있다고 봐요."],
+        ["但也有人担心，精力过于分散，反而哪一样都做不好。", "Dàn yě yǒu rén dānxīn, jīnglì guòyú fēnsàn, fǎn'ér nǎ yí yàng dōu zuò bu hǎo.", "하지만 에너지가 지나치게 흩어져 오히려 어느 것도 잘하지 못할까 걱정하는 사람도 있어요."],
+        ["对大学生来说，打工或许就是成为“斜杠青年”的第一步。", "Duì dàxuéshēng lái shuō, dǎgōng huòxǔ jiù shì chéngwéi “xiégàng qīngnián” de dì-yī bù.", "대학생에게는 아르바이트가 어쩌면 ‘슬래시 청년’이 되는 첫걸음일 거예요."],
+        ["关键在于，要清楚自己真正想要什么，而不是盲目地追求忙碌。", "Guānjiàn zàiyú, yào qīngchu zìjǐ zhēnzhèng xiǎng yào shénme, ér bú shì mángmù de zhuīqiú mánglù.", "중요한 것은 바쁨을 맹목적으로 좇는 게 아니라 자신이 정말 원하는 게 무엇인지 아는 거예요."]
+      ],
+      w: [["拥有", "yōngyǒu", "가지다"], ["发挥", "fāhuī", "발휘하다"], ["来源", "láiyuán", "원천"], ["分散", "fēnsàn", "분산되다"], ["反而", "fǎn'ér", "오히려"], ["盲目", "mángmù", "맹목적이다"]]
+    }
+  },
+  "104": {
+    "3": {
+      title: "北京的冬天", ko: "베이징의 겨울",
+      s: [
+        ["北京的冬天很冷，常常零下十度。", "Běijīng de dōngtiān hěn lěng, chángcháng língxià shí dù.", "베이징의 겨울은 추워서 자주 영하 10도까지 내려가요."],
+        ["早上出门以前，我一定要看看天气预报。", "Zǎoshang chū mén yǐqián, wǒ yídìng yào kànkan tiānqì yùbào.", "아침에 나가기 전에 꼭 일기예보를 봐요."],
+        ["如果刮大风，我就穿最厚的衣服，还要戴帽子。", "Rúguǒ guā dà fēng, wǒ jiù chuān zuì hòu de yīfu, hái yào dài màozi.", "바람이 세게 불면 가장 두꺼운 옷을 입고 모자도 써요."],
+        ["北京的冬天不常下雪，所以下雪的时候大家都特别高兴。", "Běijīng de dōngtiān bù cháng xià xuě, suǒyǐ xià xuě de shíhou dàjiā dōu tèbié gāoxìng.", "베이징은 겨울에 눈이 자주 오지 않아서 눈이 오면 모두 무척 기뻐해요."],
+        ["昨天终于下雪了，我和朋友去公园里玩儿，还照了很多照片。", "Zuótiān zhōngyú xià xuě le, wǒ hé péngyou qù gōngyuán li wánr, hái zhào le hěn duō zhàopiàn.", "어제 드디어 눈이 와서 친구와 공원에 가서 놀고 사진도 많이 찍었어요."],
+        ["虽然外面很冷，但是房间里有暖气，非常舒服。", "Suīrán wàimiàn hěn lěng, dànshì fángjiān li yǒu nuǎnqì, fēicháng shūfu.", "밖은 춥지만 방 안에는 난방이 있어서 아주 편안해요."]
+      ],
+      w: [["零下", "língxià", "영하"], ["预报", "yùbào", "예보"], ["刮风", "guā fēng", "바람이 불다"], ["厚", "hòu", "두껍다"], ["暖气", "nuǎnqì", "난방"]]
+    },
+    "4": {
+      title: "天气和心情", ko: "날씨와 기분",
+      s: [
+        ["你有没有发现，天气常常会影响人的心情？", "Nǐ yǒu méiyǒu fāxiàn, tiānqì chángcháng huì yǐngxiǎng rén de xīnqíng?", "날씨가 종종 기분에 영향을 준다는 걸 느낀 적 있나요?"],
+        ["阳光好的日子，大家都愿意出去散步，心情也特别愉快。", "Yángguāng hǎo de rìzi, dàjiā dōu yuànyì chūqu sànbù, xīnqíng yě tèbié yúkuài.", "햇살 좋은 날에는 모두 산책하러 나가고 싶어 하고 기분도 아주 상쾌해요."],
+        ["而连续几天下雨，很多人就会觉得无聊，甚至有点儿难过。", "Ér liánxù jǐ tiān xià yǔ, hěn duō rén jiù huì juéde wúliáo, shènzhì yǒudiǎnr nánguò.", "반면 며칠 연속 비가 오면 많은 사람이 지루해하고 심지어 조금 우울해져요."],
+        ["科学家解释说，这和阳光有关系，阳光可以让人更有精神。", "Kēxuéjiā jiěshì shuō, zhè hé yángguāng yǒu guānxi, yángguāng kěyǐ ràng rén gèng yǒu jīngshen.", "과학자들은 이것이 햇빛과 관련 있으며 햇빛이 사람을 더 활기차게 한다고 설명해요."],
+        ["所以，天气不好的时候，我们可以听听音乐、做做运动，让自己放松一下。", "Suǒyǐ, tiānqì bù hǎo de shíhou, wǒmen kěyǐ tīngting yīnyuè, zuòzuo yùndòng, ràng zìjǐ fàngsōng yíxià.", "그래서 날씨가 나쁠 때는 음악을 듣거나 운동을 하며 긴장을 풀 수 있어요."],
+        ["毕竟，天气我们无法改变，但是心情可以由自己决定。", "Bìjìng, tiānqì wǒmen wúfǎ gǎibiàn, dànshì xīnqíng kěyǐ yóu zìjǐ juédìng.", "어쨌든 날씨는 바꿀 수 없지만 기분은 스스로 정할 수 있어요."]
+      ],
+      w: [["心情", "xīnqíng", "기분"], ["愉快", "yúkuài", "즐겁다"], ["连续", "liánxù", "연속하다"], ["甚至", "shènzhì", "심지어"], ["放松", "fàngsōng", "긴장을 풀다"], ["毕竟", "bìjìng", "어쨌든, 결국"]]
+    },
+    "5": {
+      title: "二十四节气", ko: "24절기",
+      s: [
+        ["中国古人根据太阳的位置，把一年分成了二十四个节气。", "Zhōngguó gǔrén gēnjù tàiyáng de wèizhi, bǎ yì nián fēnchéng le èrshísì ge jiéqi.", "중국 옛사람들은 태양의 위치에 따라 한 해를 24절기로 나눴어요."],
+        ["每个节气大约相隔十五天，反映了气候、温度和农业活动的变化。", "Měi ge jiéqi dàyuē xiānggé shíwǔ tiān, fǎnyìng le qìhòu, wēndù hé nóngyè huódòng de biànhuà.", "절기는 약 15일 간격으로 기후·온도·농사의 변화를 반영해요."],
+        ["例如，“立春”意味着春天的开始，“冬至”是一年中白天最短的一天。", "Lìrú, “lìchūn” yìwèizhe chūntiān de kāishǐ, “dōngzhì” shì yì nián zhōng báitiān zuì duǎn de yì tiān.", "예를 들어 ‘입춘’은 봄의 시작, ‘동지’는 일 년 중 낮이 가장 짧은 날이에요."],
+        ["在没有天气预报的时代，农民依靠节气安排播种和收获。", "Zài méiyǒu tiānqì yùbào de shídài, nóngmín yīkào jiéqi ānpái bōzhǒng hé shōuhuò.", "일기예보가 없던 시대에 농민들은 절기에 따라 씨 뿌리기와 수확을 정했어요."],
+        ["2016年，二十四节气被列入了联合国教科文组织的非物质文化遗产名录。", "Èr líng yī liù nián, èrshísì jiéqi bèi lièrù le Liánhéguó Jiàokēwén Zǔzhī de fēiwùzhì wénhuà yíchǎn mínglù.", "2016년 24절기는 유네스코 인류무형문화유산 목록에 올랐어요."],
+        ["有趣的是，韩国也使用二十四节气，人们在冬至这天有喝红豆粥的习俗。", "Yǒuqù de shì, Hánguó yě shǐyòng èrshísì jiéqi, rénmen zài dōngzhì zhè tiān yǒu hē hóngdòu zhōu de xísú.", "흥미롭게도 한국도 24절기를 쓰고, 동짓날 팥죽을 먹는 풍습이 있어요."],
+        ["而中国北方的人在这一天习惯吃饺子。", "Ér Zhōngguó běifāng de rén zài zhè yì tiān xíguàn chī jiǎozi.", "반면 중국 북방 사람들은 이날 만두(자오쯔)를 먹는 습관이 있어요."]
+      ],
+      w: [["节气", "jiéqi", "절기"], ["相隔", "xiānggé", "사이를 두다"], ["意味着", "yìwèizhe", "의미하다"], ["依靠", "yīkào", "의지하다"], ["播种", "bōzhǒng", "씨를 뿌리다"], ["习俗", "xísú", "풍습"]]
+    }
+  },
+  "105": {
+    "3": {
+      title: "一起去饭馆", ko: "함께 식당에 가요",
+      s: [
+        ["今天是我的生日，朋友们请我去一家四川饭馆吃饭。", "Jīntiān shì wǒ de shēngrì, péngyoumen qǐng wǒ qù yì jiā Sìchuān fànguǎn chī fàn.", "오늘 제 생일이라 친구들이 쓰촨 식당에서 밥을 사 줬어요."],
+        ["服务员拿来菜单，问我们想吃什么。", "Fúwùyuán nálai càidān, wèn wǒmen xiǎng chī shénme.", "종업원이 메뉴판을 가져와 무엇을 먹고 싶은지 물었어요."],
+        ["我们不知道点什么好，就请服务员介绍一下。", "Wǒmen bù zhīdào diǎn shénme hǎo, jiù qǐng fúwùyuán jièshào yíxià.", "무엇을 시킬지 몰라서 종업원에게 추천해 달라고 했어요."],
+        ["她说：“水煮鱼是我们店的招牌菜，很多客人都喜欢。”", "Tā shuō: “Shuǐzhǔyú shì wǒmen diàn de zhāopáicài, hěn duō kèrén dōu xǐhuan.”", "그녀는 “수이주위가 저희 가게 대표 메뉴예요. 많은 손님이 좋아하세요.”라고 했어요."],
+        ["我们点了水煮鱼、一个青菜和四碗米饭。", "Wǒmen diǎn le shuǐzhǔyú, yí ge qīngcài hé sì wǎn mǐfàn.", "우리는 수이주위, 채소 요리 하나, 밥 네 그릇을 시켰어요."],
+        ["菜有点儿辣，可是非常好吃，我们吃得很饱。", "Cài yǒudiǎnr là, kěshì fēicháng hǎochī, wǒmen chī de hěn bǎo.", "음식이 좀 매웠지만 정말 맛있어서 배부르게 먹었어요."]
+      ],
+      w: [["菜单", "càidān", "메뉴판"], ["点菜", "diǎn cài", "주문하다"], ["招牌菜", "zhāopáicài", "대표 메뉴"], ["辣", "là", "맵다"], ["饱", "bǎo", "배부르다"]]
+    },
+    "4": {
+      title: "外卖改变了生活", ko: "배달 음식이 바꾼 생활",
+      s: [
+        ["在中国的大城市，点外卖已经成了很多人生活的一部分。", "Zài Zhōngguó de dà chéngshì, diǎn wàimài yǐjīng chéng le hěn duō rén shēnghuó de yí bùfen.", "중국 대도시에서 배달 음식 주문은 이미 많은 사람의 생활 일부가 되었어요."],
+        ["只要打开手机，几分钟就能选好饭菜，半个小时左右就能送到。", "Zhǐyào dǎkāi shǒujī, jǐ fēnzhōng jiù néng xuǎn hǎo fàncài, bàn ge xiǎoshí zuǒyòu jiù néng sòngdào.", "휴대폰만 열면 몇 분 만에 음식을 고를 수 있고 30분쯤이면 도착해요."],
+        ["很多饭馆为了吸引顾客，会在网上推荐自己的招牌菜，还经常打折。", "Hěn duō fànguǎn wèile xīyǐn gùkè, huì zài wǎng shang tuījiàn zìjǐ de zhāopáicài, hái jīngcháng dǎzhé.", "많은 식당이 손님을 끌기 위해 온라인에서 대표 메뉴를 추천하고 자주 할인도 해요."],
+        ["外卖虽然方便，但是也带来了一些问题。", "Wàimài suīrán fāngbiàn, dànshì yě dàilái le yìxiē wèntí.", "배달은 편리하지만 몇 가지 문제도 가져왔어요."],
+        ["比如，塑料盒子太多，对环境不好；经常吃外卖，对健康也没有好处。", "Bǐrú, sùliào hézi tài duō, duì huánjìng bù hǎo; jīngcháng chī wàimài, duì jiànkāng yě méiyǒu hǎochu.", "예를 들어 플라스틱 용기가 너무 많아 환경에 나쁘고, 자주 먹으면 건강에도 좋지 않아요."],
+        ["所以，我觉得忙的时候可以点外卖，但周末最好还是自己做饭或者去饭馆吃。", "Suǒyǐ, wǒ juéde máng de shíhou kěyǐ diǎn wàimài, dàn zhōumò zuìhǎo háishi zìjǐ zuò fàn huòzhě qù fànguǎn chī.", "그래서 바쁠 때는 배달을 시켜도 되지만 주말엔 직접 요리하거나 식당에 가는 게 좋다고 생각해요."]
+      ],
+      w: [["外卖", "wàimài", "배달 음식"], ["左右", "zuǒyòu", "~쯤"], ["吸引", "xīyǐn", "끌어당기다"], ["打折", "dǎzhé", "할인하다"], ["塑料", "sùliào", "플라스틱"], ["好处", "hǎochu", "좋은 점"]]
+    },
+    "5": {
+      title: "川菜为什么这么辣？", ko: "쓰촨 요리는 왜 이렇게 매울까?",
+      s: [
+        ["提起川菜，很多人首先想到的就是“麻”和“辣”。", "Tíqǐ chuāncài, hěn duō rén shǒuxiān xiǎngdào de jiù shì “má” hé “là”.", "쓰촨 요리를 말하면 많은 사람이 먼저 ‘얼얼함’과 ‘매움’을 떠올려요."],
+        ["水煮肉、麻婆豆腐、宫保鸡丁等名菜，几乎都离不开辣椒和花椒。", "Shuǐzhǔròu, mápó dòufu, gōngbǎo jīdīng děng míngcài, jīhū dōu lí bu kāi làjiāo hé huājiāo.", "수이주러우, 마파두부, 궁바오지딩 같은 유명 요리는 거의 모두 고추와 산초가 빠질 수 없어요."],
+        ["有人认为，四川盆地气候潮湿，吃辣可以帮助人们排出体内的湿气。", "Yǒu rén rènwéi, Sìchuān péndì qìhòu cháoshī, chī là kěyǐ bāngzhù rénmen páichū tǐnèi de shīqì.", "쓰촨 분지는 기후가 습해서 매운 것을 먹으면 몸 안의 습기를 내보내는 데 도움이 된다는 견해가 있어요."],
+        ["不过，辣椒是明朝末年才从美洲传入中国的，在那之前，四川人主要用花椒、姜等调味。", "Búguò, làjiāo shì Míngcháo mònián cái cóng Měizhōu chuánrù Zhōngguó de, zài nà zhīqián, Sìchuān rén zhǔyào yòng huājiāo, jiāng děng tiáowèi.", "하지만 고추는 명나라 말에야 아메리카에서 중국에 들어왔고, 그전에는 쓰촨 사람들이 주로 산초·생강 등으로 맛을 냈어요."],
+        ["其实，川菜并不只有辣味，它讲究“一菜一格，百菜百味”，酸、甜、咸、香的菜也很多。", "Qíshí, chuāncài bìng bù zhǐ yǒu là wèi, tā jiǎngjiu “yí cài yì gé, bǎi cài bǎi wèi”, suān, tián, xián, xiāng de cài yě hěn duō.", "사실 쓰촨 요리는 매운맛만 있는 게 아니라 ‘요리마다 개성, 백 가지 요리에 백 가지 맛’을 중시해서 시고 달고 짜고 향긋한 요리도 많아요."],
+        ["每家川菜馆都有自己的招牌菜，同一道菜，在不同的饭馆吃起来味道也各有特色。", "Měi jiā chuāncàiguǎn dōu yǒu zìjǐ de zhāopáicài, tóng yí dào cài, zài bùtóng de fànguǎn chī qilai wèidao yě gè yǒu tèsè.", "쓰촨 식당마다 대표 메뉴가 있고, 같은 요리라도 식당마다 맛에 특색이 있어요."]
+      ],
+      w: [["提起", "tíqǐ", "언급하다"], ["离不开", "lí bu kāi", "없어서는 안 되다"], ["潮湿", "cháoshī", "습하다"], ["传入", "chuánrù", "전해 들어오다"], ["调味", "tiáowèi", "맛을 내다"], ["讲究", "jiǎngjiu", "중시하다"]]
+    }
+  },
+  "106": {
+    "3": {
+      title: "去银行换钱", ko: "은행에 환전하러 가요",
+      s: [
+        ["我下个星期要去中国旅游，所以今天去银行换钱。", "Wǒ xià ge xīngqī yào qù Zhōngguó lǚyóu, suǒyǐ jīntiān qù yínháng huàn qián.", "다음 주에 중국 여행을 가서 오늘 은행에 환전하러 갔어요."],
+        ["银行里人很多，我等了二十分钟才到我。", "Yínháng li rén hěn duō, wǒ děng le èrshí fēnzhōng cái dào wǒ.", "은행에 사람이 많아서 20분을 기다려서야 제 차례가 됐어요."],
+        ["我告诉工作人员：“我想把韩币换成人民币。”", "Wǒ gàosu gōngzuò rényuán: “Wǒ xiǎng bǎ Hánbì huànchéng rénmínbì.”", "직원에게 “원화를 인민폐로 바꾸고 싶어요.”라고 말했어요."],
+        ["她让我写一张表，还要看我的护照。", "Tā ràng wǒ xiě yì zhāng biǎo, hái yào kàn wǒ de hùzhào.", "그녀는 서류를 한 장 쓰게 하고 여권도 보자고 했어요."],
+        ["我换了两千块人民币，又问她在中国能不能用银行卡。", "Wǒ huàn le liǎngqiān kuài rénmínbì, yòu wèn tā zài Zhōngguó néng bu néng yòng yínhángkǎ.", "인민폐 2천 위안을 바꾸고, 중국에서 은행 카드를 쓸 수 있는지도 물었어요."],
+        ["她说现在中国人买东西很少用现金，大多用手机付钱。", "Tā shuō xiànzài Zhōngguórén mǎi dōngxi hěn shǎo yòng xiànjīn, dàduō yòng shǒujī fù qián.", "그녀는 요즘 중국 사람들은 현금을 거의 안 쓰고 대부분 휴대폰으로 결제한다고 했어요."]
+      ],
+      w: [["银行", "yínháng", "은행"], ["换钱", "huàn qián", "환전하다"], ["护照", "hùzhào", "여권"], ["现金", "xiànjīn", "현금"], ["付钱", "fù qián", "돈을 내다"]]
+    },
+    "4": {
+      title: "手机支付", ko: "모바일 결제",
+      s: [
+        ["第一次去中国的外国人，常常会对中国的手机支付感到吃惊。", "Dì-yī cì qù Zhōngguó de wàiguórén, chángcháng huì duì Zhōngguó de shǒujī zhīfù gǎndào chījīng.", "중국에 처음 가는 외국인은 중국의 모바일 결제에 놀라곤 해요."],
+        ["不管是在超市买东西，还是在路边买水果，人们只要扫一下二维码就可以付款。", "Bùguǎn shì zài chāoshì mǎi dōngxi, háishi zài lùbiān mǎi shuǐguǒ, rénmen zhǐyào sǎo yíxià èrwéimǎ jiù kěyǐ fùkuǎn.", "마트든 길가 과일 노점이든 QR코드만 찍으면 결제할 수 있어요."],
+        ["这种方式又快又方便，也不用担心找零钱的麻烦。", "Zhè zhǒng fāngshì yòu kuài yòu fāngbiàn, yě búyòng dānxīn zhǎo língqián de máfan.", "이 방식은 빠르고 편리하며 거스름돈 걱정도 없어요."],
+        ["以前外国游客需要中国的银行卡才能使用，现在很多手机支付软件也可以绑定外国的信用卡了。", "Yǐqián wàiguó yóukè xūyào Zhōngguó de yínhángkǎ cái néng shǐyòng, xiànzài hěn duō shǒujī zhīfù ruǎnjiàn yě kěyǐ bǎngdìng wàiguó de xìnyòngkǎ le.", "예전엔 외국 관광객이 중국 은행 카드가 있어야 쓸 수 있었지만, 지금은 여러 결제 앱에 외국 신용카드도 연결할 수 있어요."],
+        ["不过，出国以前最好还是换一点儿现金，以防手机没电或者网络出问题。", "Búguò, chū guó yǐqián zuìhǎo háishi huàn yìdiǎnr xiànjīn, yǐfáng shǒujī méi diàn huòzhě wǎngluò chū wèntí.", "하지만 휴대폰 배터리가 없거나 인터넷에 문제가 생길 때를 대비해 출국 전에 현금을 조금 바꿔 두는 게 좋아요."],
+        ["看来，“带着手机就能出门”的生活，已经成为现实。", "Kànlái, “dàizhe shǒujī jiù néng chū mén” de shēnghuó, yǐjīng chéngwéi xiànshí.", "‘휴대폰만 있으면 외출할 수 있는’ 생활은 이미 현실이 된 것 같아요."]
+      ],
+      w: [["支付", "zhīfù", "지불하다"], ["吃惊", "chījīng", "놀라다"], ["二维码", "èrwéimǎ", "QR코드"], ["零钱", "língqián", "잔돈"], ["绑定", "bǎngdìng", "연동하다"], ["以防", "yǐfáng", "~에 대비하다"]]
+    },
+    "5": {
+      title: "汇率与留学生的钱包", ko: "환율과 유학생의 지갑",
+      s: [
+        ["对于在国外学习的留学生来说，汇率的变化会直接影响他们的生活费。", "Duìyú zài guówài xuéxí de liúxuéshēng lái shuō, huìlǜ de biànhuà huì zhíjiē yǐngxiǎng tāmen de shēnghuófèi.", "해외 유학생에게 환율 변화는 생활비에 직접 영향을 줘요."],
+        ["假如人民币升值，在中国留学的韩国学生就得花更多的韩币才能换到同样多的人民币。", "Jiǎrú rénmínbì shēngzhí, zài Zhōngguó liúxué de Hánguó xuésheng jiù děi huā gèng duō de Hánbì cái néng huàndào tóngyàng duō de rénmínbì.", "인민폐 가치가 오르면 중국에서 유학하는 한국 학생은 같은 양의 인민폐를 바꾸는 데 원화를 더 써야 해요."],
+        ["因此，不少留学生会密切关注汇率，选择在比较合适的时候换钱。", "Yīncǐ, bù shǎo liúxuéshēng huì mìqiè guānzhù huìlǜ, xuǎnzé zài bǐjiào héshì de shíhou huàn qián.", "그래서 많은 유학생이 환율을 주의 깊게 지켜보며 적당한 때에 환전해요."],
+        ["但是，专家提醒，汇率的走势很难准确预测，与其每天盯着数字，不如做好长期的预算。", "Dànshì, zhuānjiā tíxǐng, huìlǜ de zǒushì hěn nán zhǔnquè yùcè, yǔqí měi tiān dīngzhe shùzì, bùrú zuò hǎo chángqī de yùsuàn.", "하지만 전문가들은 환율 흐름은 정확히 예측하기 어려우니, 매일 숫자를 들여다보느니 장기 예산을 잘 짜는 게 낫다고 조언해요."],
+        ["另外，换钱的渠道也很重要：银行、机场和换钱所的手续费各不相同，有时差别相当大。", "Lìngwài, huàn qián de qúdào yě hěn zhòngyào: yínháng, jīchǎng hé huànqiánsuǒ de shǒuxùfèi gè bù xiāngtóng, yǒushí chābié xiāngdāng dà.", "또 환전 경로도 중요해요. 은행·공항·환전소의 수수료가 제각각이고 때로는 차이가 꽤 커요."],
+        ["一般来说，机场的汇率最不划算，最好提前在银行办理。", "Yìbān lái shuō, jīchǎng de huìlǜ zuì bú huásuàn, zuìhǎo tíqián zài yínháng bànlǐ.", "일반적으로 공항 환율이 가장 불리하니 미리 은행에서 처리하는 게 좋아요."],
+        ["学会管理自己的钱包，也是留学生活中重要的一课。", "Xuéhuì guǎnlǐ zìjǐ de qiánbāo, yě shì liúxué shēnghuó zhōng zhòngyào de yí kè.", "자기 지갑을 관리하는 법을 배우는 것도 유학 생활의 중요한 공부예요."]
+      ],
+      w: [["汇率", "huìlǜ", "환율"], ["升值", "shēngzhí", "가치가 오르다"], ["关注", "guānzhù", "관심을 갖다"], ["与其…不如…", "yǔqí…bùrú…", "~하느니 차라리 ~하다"], ["手续费", "shǒuxùfèi", "수수료"], ["划算", "huásuàn", "수지가 맞다"]]
+    }
+  },
+  "107": {
+    "3": {
+      title: "我感冒了", ko: "감기에 걸렸어요",
+      s: [
+        ["昨天晚上我觉得头很疼，还有点儿发烧。", "Zuótiān wǎnshang wǒ juéde tóu hěn téng, hái yǒudiǎnr fāshāo.", "어젯밤 머리가 아프고 열도 조금 났어요."],
+        ["今天早上我起床以后，嗓子也疼了，所以去了医院。", "Jīntiān zǎoshang wǒ qǐ chuáng yǐhòu, sǎngzi yě téng le, suǒyǐ qù le yīyuàn.", "오늘 아침 일어나니 목도 아파서 병원에 갔어요."],
+        ["医生问我：“你哪儿不舒服？”", "Yīshēng wèn wǒ: “Nǐ nǎr bù shūfu?”", "의사가 “어디가 불편하세요?”라고 물었어요."],
+        ["我告诉他我头疼、嗓子疼，还发烧。", "Wǒ gàosu tā wǒ tóuténg, sǎngzi téng, hái fāshāo.", "머리와 목이 아프고 열도 있다고 했어요."],
+        ["医生检查以后说我感冒了，让我吃药，多喝水，好好儿休息。", "Yīshēng jiǎnchá yǐhòu shuō wǒ gǎnmào le, ràng wǒ chī yào, duō hē shuǐ, hǎohāor xiūxi.", "의사는 진찰 후 감기라며 약을 먹고 물을 많이 마시고 푹 쉬라고 했어요."],
+        ["我回家睡了一下午，现在感觉好多了。", "Wǒ huí jiā shuì le yí xiàwǔ, xiànzài gǎnjué hǎo duō le.", "집에 와서 오후 내내 잤더니 지금은 훨씬 나아졌어요."]
+      ],
+      w: [["发烧", "fāshāo", "열이 나다"], ["嗓子", "sǎngzi", "목(구멍)"], ["舒服", "shūfu", "편안하다"], ["检查", "jiǎnchá", "검사하다"], ["感冒", "gǎnmào", "감기(에 걸리다)"]]
+    },
+    "4": {
+      title: "在中国看病", ko: "중국에서 진료받기",
+      s: [
+        ["在中国留学的时候，我第一次自己去医院看病。", "Zài Zhōngguó liúxué de shíhou, wǒ dì-yī cì zìjǐ qù yīyuàn kàn bìng.", "중국 유학 때 처음으로 혼자 병원에 진료받으러 갔어요."],
+        ["中国的大医院一般要先挂号，然后再去看医生。", "Zhōngguó de dà yīyuàn yìbān yào xiān guàhào, ránhòu zài qù kàn yīshēng.", "중국의 큰 병원은 보통 먼저 접수를 하고 나서 의사를 만나요."],
+        ["现在很多医院都可以在手机上提前挂号，节省了不少排队的时间。", "Xiànzài hěn duō yīyuàn dōu kěyǐ zài shǒujī shang tíqián guàhào, jiéshěng le bù shǎo páiduì de shíjiān.", "요즘은 많은 병원이 휴대폰으로 미리 접수할 수 있어서 줄 서는 시간이 크게 줄었어요."],
+        ["医生仔细地问了我的情况，又让我去做了一个血液检查。", "Yīshēng zǐxì de wèn le wǒ de qíngkuàng, yòu ràng wǒ qù zuò le yí ge xuèyè jiǎnchá.", "의사는 제 상태를 자세히 묻고 혈액 검사도 받게 했어요."],
+        ["结果出来以后，医生说问题不大，只是最近压力太大，没有休息好。", "Jiéguǒ chūlai yǐhòu, yīshēng shuō wèntí bú dà, zhǐshì zuìjìn yālì tài dà, méiyǒu xiūxi hǎo.", "결과가 나오자 의사는 큰 문제는 없고 요즘 스트레스가 커서 잘 쉬지 못한 것뿐이라고 했어요."],
+        ["他还建议我少喝咖啡，每天按时睡觉，适当地运动。", "Tā hái jiànyì wǒ shǎo hē kāfēi, měi tiān ànshí shuì jiào, shìdàng de yùndòng.", "커피를 줄이고 매일 제때 자고 적당히 운동하라고도 권했어요."],
+        ["这次经历让我明白，健康比什么都重要。", "Zhè cì jīnglì ràng wǒ míngbai, jiànkāng bǐ shénme dōu zhòngyào.", "이번 경험으로 건강이 무엇보다 중요하다는 걸 알았어요."]
+      ],
+      w: [["挂号", "guàhào", "접수하다"], ["节省", "jiéshěng", "절약하다"], ["仔细", "zǐxì", "꼼꼼하다"], ["压力", "yālì", "스트레스"], ["按时", "ànshí", "제때에"], ["适当", "shìdàng", "적당하다"]]
+    },
+    "5": {
+      title: "中医和西医", ko: "중의학과 서양 의학",
+      s: [
+        ["在中国，人们生病时既可以看西医，也可以看中医。", "Zài Zhōngguó, rénmen shēng bìng shí jì kěyǐ kàn xīyī, yě kěyǐ kàn zhōngyī.", "중국에서는 아플 때 서양 의학 진료도, 중의학 진료도 받을 수 있어요."],
+        ["西医重视检查数据，通过化验和仪器找出病因，治疗的效果往往比较快。", "Xīyī zhòngshì jiǎnchá shùjù, tōngguò huàyàn hé yíqì zhǎochū bìngyīn, zhìliáo de xiàoguǒ wǎngwǎng bǐjiào kuài.", "서양 의학은 검사 데이터를 중시해 검사와 기기로 원인을 찾고, 치료 효과가 대체로 빨라요."],
+        ["中医则强调整体平衡，医生通过“望、闻、问、切”四种方法了解病人的身体状况。", "Zhōngyī zé qiángdiào zhěngtǐ pínghéng, yīshēng tōngguò “wàng, wén, wèn, qiè” sì zhǒng fāngfǎ liǎojiě bìngrén de shēntǐ zhuàngkuàng.", "중의학은 몸 전체의 균형을 강조하고, 의사는 ‘보고, 듣고(냄새 맡고), 묻고, 짚는’ 네 가지 방법으로 환자 상태를 파악해요."],
+        ["其中“切”就是把脉，医生用手指感受病人的脉搏，从而判断病情。", "Qízhōng “qiè” jiù shì bǎmài, yīshēng yòng shǒuzhǐ gǎnshòu bìngrén de màibó, cóng'ér pànduàn bìngqíng.", "그중 ‘짚기’는 맥을 짚는 것으로, 손가락으로 맥박을 느껴 병세를 판단해요."],
+        ["很多人感冒发烧时选择西医，而调理慢性病或者改善体质时更愿意看中医。", "Hěn duō rén gǎnmào fāshāo shí xuǎnzé xīyī, ér tiáolǐ mànxìngbìng huòzhě gǎishàn tǐzhì shí gèng yuànyì kàn zhōngyī.", "감기나 열이 날 때는 서양 의학을, 만성병을 다스리거나 체질을 개선할 때는 중의학을 더 찾는 사람이 많아요."],
+        ["如今，不少医院采用中西医结合的方式，取长补短，为病人提供更全面的治疗。", "Rújīn, bù shǎo yīyuàn cǎiyòng zhōng-xīyī jiéhé de fāngshì, qǔcháng-bǔduǎn, wèi bìngrén tígōng gèng quánmiàn de zhìliáo.", "요즘은 중의학과 서양 의학을 결합해 서로의 장점을 살리고 단점을 보완하며 더 폭넓은 치료를 하는 병원이 많아요."]
+      ],
+      w: [["化验", "huàyàn", "(의학) 검사하다"], ["强调", "qiángdiào", "강조하다"], ["平衡", "pínghéng", "균형"], ["把脉", "bǎmài", "맥을 짚다"], ["体质", "tǐzhì", "체질"], ["取长补短", "qǔcháng-bǔduǎn", "장점을 살려 단점을 보완하다"]]
+    }
+  },
+  "108": {
+    "3": {
+      title: "爬长城", ko: "만리장성에 올라요",
+      s: [
+        ["去年夏天，我和家人一起去北京旅游。", "Qùnián xiàtiān, wǒ hé jiārén yìqǐ qù Běijīng lǚyóu.", "작년 여름 가족과 함께 베이징 여행을 갔어요."],
+        ["我们先去了故宫，那里的房子又大又漂亮，人也特别多。", "Wǒmen xiān qù le Gùgōng, nàli de fángzi yòu dà yòu piàoliang, rén yě tèbié duō.", "먼저 고궁에 갔는데 건물이 크고 아름다웠고 사람도 아주 많았어요."],
+        ["第二天，我们坐车去爬长城。", "Dì-èr tiān, wǒmen zuò chē qù pá Chángchéng.", "다음 날 차를 타고 만리장성을 오르러 갔어요."],
+        ["长城比我想的还要高，爬了一个小时，我累得不想走了。", "Chángchéng bǐ wǒ xiǎng de hái yào gāo, pá le yí ge xiǎoshí, wǒ lèi de bù xiǎng zǒu le.", "장성은 생각보다 높아서 한 시간을 오르니 너무 지쳐서 더 걷기 싫었어요."],
+        ["爸爸说：“不到长城非好汉！”我只好继续往上爬。", "Bàba shuō: “Bú dào Chángchéng fēi hǎohàn!” Wǒ zhǐhǎo jìxù wǎng shàng pá.", "아빠가 “장성에 오르지 않으면 사나이가 아니다!”라고 해서 계속 올라갈 수밖에 없었어요."],
+        ["到了上面，看到美丽的风景，我觉得一点儿也不累了。", "Dào le shàngmiàn, kàndào měilì de fēngjǐng, wǒ juéde yìdiǎnr yě bú lèi le.", "꼭대기에서 아름다운 풍경을 보니 하나도 피곤하지 않았어요."]
+      ],
+      w: [["旅游", "lǚyóu", "여행하다"], ["故宫", "Gùgōng", "고궁(자금성)"], ["爬", "pá", "오르다"], ["继续", "jìxù", "계속하다"], ["风景", "fēngjǐng", "풍경"]]
+    },
+    "4": {
+      title: "故宫里的猫", ko: "고궁의 고양이들",
+      s: [
+        ["故宫是明清两个朝代的皇宫，到现在已经有六百多年的历史了。", "Gùgōng shì Míng Qīng liǎng ge cháodài de huánggōng, dào xiànzài yǐjīng yǒu liùbǎi duō nián de lìshǐ le.", "고궁은 명·청 두 왕조의 황궁으로 지금까지 600여 년의 역사가 있어요."],
+        ["每年都有上千万的游客来这里参观。", "Měi nián dōu yǒu shàng qiānwàn de yóukè lái zhèli cānguān.", "해마다 천만 명이 넘는 관광객이 이곳을 찾아요."],
+        ["不过，除了美丽的建筑，故宫里还有一群特别受欢迎的“居民”——猫。", "Búguò, chúle měilì de jiànzhù, Gùgōng li hái yǒu yì qún tèbié shòu huānyíng de “jūmín” — māo.", "그런데 아름다운 건축물 말고도 고궁에는 아주 인기 많은 ‘주민’이 있어요. 바로 고양이예요."],
+        ["据说，故宫里生活着一百多只猫，它们每天在宫殿之间自由地散步、晒太阳。", "Jùshuō, Gùgōng li shēnghuózhe yìbǎi duō zhī māo, tāmen měi tiān zài gōngdiàn zhījiān zìyóu de sànbù, shài tàiyáng.", "고궁에는 고양이가 백여 마리 산다는데, 매일 궁전 사이를 자유롭게 거닐며 햇볕을 쬐어요."],
+        ["工作人员会定时给它们喂食，生病了还会带它们去看病。", "Gōngzuò rényuán huì dìngshí gěi tāmen wèishí, shēng bìng le hái huì dài tāmen qù kàn bìng.", "직원들이 시간 맞춰 먹이를 주고, 아프면 치료도 받게 해 줘요."],
+        ["很多游客专门来故宫找猫拍照，这些猫也成了网上的“明星”。", "Hěn duō yóukè zhuānmén lái Gùgōng zhǎo māo pāizhào, zhèxiē māo yě chéng le wǎng shang de “míngxīng”.", "많은 관광객이 일부러 고양이 사진을 찍으러 와서, 이 고양이들은 인터넷 ‘스타’가 되었어요."],
+        ["你去过故宫吗？下次去的时候，别忘了找找它们。", "Nǐ qù guo Gùgōng ma? Xià cì qù de shíhou, bié wàng le zhǎozhao tāmen.", "고궁에 가 본 적 있나요? 다음에 가면 고양이들을 찾아보는 걸 잊지 마세요."]
+      ],
+      w: [["朝代", "cháodài", "왕조"], ["参观", "cānguān", "견학하다, 둘러보다"], ["建筑", "jiànzhù", "건축물"], ["据说", "jùshuō", "듣자 하니"], ["晒太阳", "shài tàiyáng", "햇볕을 쬐다"], ["喂", "wèi", "먹이를 주다"]]
+    },
+    "5": {
+      title: "长城：从防御工程到文化符号", ko: "장성: 방어 시설에서 문화의 상징으로",
+      s: [
+        ["长城是中国古代规模最大的防御工程，修建的历史可以追溯到两千多年前。", "Chángchéng shì Zhōngguó gǔdài guīmó zuì dà de fángyù gōngchéng, xiūjiàn de lìshǐ kěyǐ zhuīsù dào liǎngqiān duō nián qián.", "장성은 중국 고대 최대 규모의 방어 시설로, 쌓기 시작한 역사는 2천여 년 전까지 거슬러 올라가요."],
+        ["秦始皇统一中国后，把各国原有的城墙连接起来，形成了“万里长城”的雏形。", "Qín Shǐhuáng tǒngyī Zhōngguó hòu, bǎ gè guó yuán yǒu de chéngqiáng liánjiē qilai, xíngchéng le “Wànlǐ Chángchéng” de chúxíng.", "진시황이 중국을 통일한 뒤 각 나라에 있던 성벽을 이어 ‘만리장성’의 원형을 만들었어요."],
+        ["我们今天看到的八达岭、慕田峪等段落，大多是明朝重新修建的。", "Wǒmen jīntiān kàndào de Bādálǐng, Mùtiányù děng duànluò, dàduō shì Míngcháo chóngxīn xiūjiàn de.", "오늘날 볼 수 있는 바다링·무톈위 등의 구간은 대부분 명나라 때 다시 쌓은 거예요."],
+        ["根据2012年公布的调查结果，历代长城的总长度超过两万一千公里。", "Gēnjù èr líng yī èr nián gōngbù de diàochá jiéguǒ, lìdài Chángchéng de zǒng chángdù chāoguò liǎngwàn yìqiān gōnglǐ.", "2012년에 발표된 조사 결과에 따르면 역대 장성의 총길이는 2만 1천 km가 넘어요."],
+        ["1987年，长城被列入《世界遗产名录》，成为全人类共同的财富。", "Yī jiǔ bā qī nián, Chángchéng bèi lièrù 《Shìjiè Yíchǎn Mínglù》, chéngwéi quán rénlèi gòngtóng de cáifù.", "1987년 장성은 세계유산 목록에 올라 인류 공동의 재산이 되었어요."],
+        ["如今，长城早已失去了军事作用，却成了中华民族坚韧精神的象征。", "Rújīn, Chángchéng zǎoyǐ shīqù le jūnshì zuòyòng, què chéng le Zhōnghuá mínzú jiānrèn jīngshen de xiàngzhēng.", "지금 장성은 군사적 역할을 잃은 지 오래지만, 중화 민족의 강인한 정신을 상징하게 되었어요."],
+        ["不过，由于游客过多和自然风化，部分长城正面临着保护的难题。", "Búguò, yóuyú yóukè guò duō hé zìrán fēnghuà, bùfen Chángchéng zhèng miànlínzhe bǎohù de nántí.", "하지만 너무 많은 관광객과 자연 풍화 때문에 일부 장성은 보존 문제에 부딪혀 있어요."]
+      ],
+      w: [["防御", "fángyù", "방어"], ["追溯", "zhuīsù", "거슬러 올라가다"], ["雏形", "chúxíng", "원형, 초기 형태"], ["财富", "cáifù", "재산, 부"], ["象征", "xiàngzhēng", "상징"], ["面临", "miànlín", "직면하다"]]
+    }
+  },
+  "109": {
+    "3": {
+      title: "我的手机", ko: "나의 휴대폰",
+      s: [
+        ["我每天用手机的时间很长。", "Wǒ měi tiān yòng shǒujī de shíjiān hěn cháng.", "저는 매일 휴대폰을 오래 써요."],
+        ["早上一起床，我就先看看朋友发的消息。", "Zǎoshang yì qǐ chuáng, wǒ jiù xiān kànkan péngyou fā de xiāoxi.", "아침에 일어나자마자 먼저 친구들이 보낸 메시지를 봐요."],
+        ["在地铁上，我不是听音乐，就是看短视频。", "Zài dìtiě shang, wǒ bú shì tīng yīnyuè, jiù shì kàn duǎn shìpín.", "지하철에서는 음악을 듣거나, 아니면 짧은 영상을 봐요."],
+        ["晚上回到家，我还会玩儿一会儿游戏。", "Wǎnshang huí dào jiā, wǒ hái huì wánr yíhuìr yóuxì.", "저녁에 집에 오면 게임도 잠깐 해요."],
+        ["上个星期，我的眼睛很不舒服，妈妈说是因为我看手机太多了。", "Shàng ge xīngqī, wǒ de yǎnjing hěn bù shūfu, māma shuō shì yīnwèi wǒ kàn shǒujī tài duō le.", "지난주 눈이 많이 불편했는데, 엄마는 휴대폰을 너무 많이 봐서라고 했어요."],
+        ["现在我每天晚上十点以后就不用手机了，睡得也比以前好。", "Xiànzài wǒ měi tiān wǎnshang shí diǎn yǐhòu jiù bú yòng shǒujī le, shuì de yě bǐ yǐqián hǎo.", "이제는 매일 밤 10시 이후엔 휴대폰을 안 쓰고, 잠도 전보다 잘 자요."]
+      ],
+      w: [["消息", "xiāoxi", "소식, 메시지"], ["不是…就是…", "bú shì…jiù shì…", "~아니면 ~이다"], ["短视频", "duǎn shìpín", "짧은 영상"], ["一会儿", "yíhuìr", "잠깐"], ["眼睛", "yǎnjing", "눈"]]
+    },
+    "4": {
+      title: "为什么大家都爱看短视频？", ko: "왜 다들 짧은 영상을 좋아할까?",
+      s: [
+        ["这几年，短视频在年轻人中越来越流行。", "Zhè jǐ nián, duǎn shìpín zài niánqīngrén zhōng yuè lái yuè liúxíng.", "요 몇 년 짧은 영상이 젊은이들 사이에서 점점 유행하고 있어요."],
+        ["一个视频往往只有几十秒，却能让人笑，也能让人学到新知识。", "Yí ge shìpín wǎngwǎng zhǐ yǒu jǐ shí miǎo, què néng ràng rén xiào, yě néng ràng rén xuédào xīn zhīshi.", "영상 하나가 보통 수십 초뿐인데도 사람을 웃게 하고 새 지식도 배우게 해요."],
+        ["很多人在排队、坐车的时候刷短视频，觉得这样能放松一下。", "Hěn duō rén zài páiduì, zuò chē de shíhou shuā duǎn shìpín, juéde zhèyàng néng fàngsōng yíxià.", "많은 사람이 줄을 서거나 차를 탈 때 짧은 영상을 넘겨 보며 쉰다고 느껴요."],
+        ["可是，有的人一刷就是两三个小时，连饭都忘了吃。", "Kěshì, yǒu de rén yì shuā jiù shì liǎng-sān ge xiǎoshí, lián fàn dōu wàng le chī.", "그런데 어떤 사람은 한번 보기 시작하면 두세 시간씩 보고 밥 먹는 것도 잊어요."],
+        ["专家提醒，长时间看短视频会让人很难集中注意力，连读一本书都变得困难。", "Zhuānjiā tíxǐng, cháng shíjiān kàn duǎn shìpín huì ràng rén hěn nán jízhōng zhùyìlì, lián dú yì běn shū dōu biàn de kùnnan.", "전문가들은 짧은 영상을 오래 보면 집중하기 어려워져 책 한 권 읽는 것조차 힘들어진다고 경고해요."],
+        ["所以，我们应该给自己规定时间，让手机成为工具，而不是让自己成为手机的“奴隶”。", "Suǒyǐ, wǒmen yīnggāi gěi zìjǐ guīdìng shíjiān, ràng shǒujī chéngwéi gōngjù, ér bú shì ràng zìjǐ chéngwéi shǒujī de “núlì”.", "그래서 스스로 시간을 정해 휴대폰을 도구로 써야지, 휴대폰의 ‘노예’가 되어서는 안 돼요."]
+      ],
+      w: [["流行", "liúxíng", "유행하다"], ["秒", "miǎo", "초"], ["刷", "shuā", "(화면을) 넘겨 보다"], ["连…都…", "lián…dōu…", "~조차도"], ["集中", "jízhōng", "집중하다"], ["规定", "guīdìng", "정하다"]]
+    },
+    "5": {
+      title: "“数字排毒”", ko: "‘디지털 디톡스’",
+      s: [
+        ["当你发现自己一有空就忍不住拿起手机，不是刷微博，就是看短视频时，也许该考虑“数字排毒”了。", "Dāng nǐ fāxiàn zìjǐ yì yǒu kòng jiù rěn bu zhù ná qǐ shǒujī, bú shì shuā Wēibó, jiù shì kàn duǎn shìpín shí, yěxǔ gāi kǎolǜ “shùzì páidú” le.", "틈만 나면 참지 못하고 휴대폰을 들어 웨이보를 보거나 짧은 영상을 보는 자신을 발견했다면, ‘디지털 디톡스’를 생각해 볼 때일지도 몰라요."],
+        ["所谓“数字排毒”，就是在一段时间内主动远离手机、电脑等电子设备。", "Suǒwèi “shùzì páidú”, jiù shì zài yí duàn shíjiān nèi zhǔdòng yuǎnlí shǒujī, diànnǎo děng diànzǐ shèbèi.", "‘디지털 디톡스’란 일정 기간 휴대폰·컴퓨터 같은 전자 기기를 스스로 멀리하는 거예요."],
+        ["研究表明，频繁地查看社交媒体，容易使人焦虑，还会降低睡眠质量。", "Yánjiū biǎomíng, pínfán de chákàn shèjiāo méitǐ, róngyì shǐ rén jiāolǜ, hái huì jiàngdī shuìmián zhìliàng.", "연구에 따르면 SNS를 자주 확인하면 불안해지기 쉽고 수면의 질도 떨어져요."],
+        ["尤其是看到别人晒出的精彩生活，不少人会不自觉地和自己比较，产生失落感。", "Yóuqí shì kàndào biérén shài chū de jīngcǎi shēnghuó, bù shǎo rén huì bú zìjué de hé zìjǐ bǐjiào, chǎnshēng shīluògǎn.", "특히 남이 올린 멋진 일상을 보면 자기도 모르게 비교하며 상실감을 느끼는 사람이 많아요."],
+        ["实行“数字排毒”并不意味着完全放弃手机，而是要找回对时间的控制权。", "Shíxíng “shùzì páidú” bìng bú yìwèizhe wánquán fàngqì shǒujī, ér shì yào zhǎohuí duì shíjiān de kòngzhìquán.", "디지털 디톡스는 휴대폰을 완전히 포기하는 게 아니라, 시간을 스스로 다스리는 힘을 되찾는 거예요."],
+        ["比如，吃饭时把手机放在一边，睡前一小时不看屏幕，周末安排一些户外活动。", "Bǐrú, chī fàn shí bǎ shǒujī fàng zài yìbiān, shuì qián yì xiǎoshí bú kàn píngmù, zhōumò ānpái yìxiē hùwài huódòng.", "예를 들어 식사 때 휴대폰을 치워 두고, 자기 전 한 시간은 화면을 보지 않고, 주말엔 야외 활동을 계획하는 거예요."],
+        ["坚持一段时间后，你可能会惊喜地发现，生活其实可以更加从容。", "Jiānchí yí duàn shíjiān hòu, nǐ kěnéng huì jīngxǐ de fāxiàn, shēnghuó qíshí kěyǐ gèngjiā cóngróng.", "한동안 꾸준히 하면 삶이 사실 더 여유로울 수 있다는 걸 기쁘게 발견할지도 몰라요."]
+      ],
+      w: [["忍不住", "rěn bu zhù", "참지 못하다"], ["所谓", "suǒwèi", "이른바"], ["频繁", "pínfán", "잦다"], ["焦虑", "jiāolǜ", "초조하다, 불안하다"], ["失落感", "shīluògǎn", "상실감"], ["从容", "cóngróng", "여유롭다"]]
+    }
+  }
+};
