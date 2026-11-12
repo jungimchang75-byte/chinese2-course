@@ -241,11 +241,13 @@
     if (sy && !live) {
       var wsum = 0;
       sy.forEach(function (s) { wsum += s.tone === 0 ? 0.55 : 1; });
-      var x = L;
+      var x = L, seg = box._seg;
       g.textAlign = "center";
       g.textBaseline = "alphabetic";
       sy.forEach(function (s, k) {
         var w = ((s.tone === 0 ? 0.55 : 1) / wsum) * (R - L);
+        /* 녹음이 있으면 실제로 그 글자를 읽은 시간 위치에 그림 */
+        if (seg && seg[k]) { x = xOf(seg[k].t0); w = Math.max(4, xOf(seg[k].t1) - x); }
         var sh = shape(s, sy[k - 1]);
         g.strokeStyle = "rgba(120, 140, 170, 0.35)";
         g.lineWidth = 9;
@@ -263,8 +265,9 @@
           g.beginPath(); g.moveTo(x, T); g.lineTo(x, B); g.stroke();
           g.setLineDash([]);
         }
-        g.fillStyle = css("--text", "#3b2f25");
-        g.font = "15px sans-serif";
+        var mk = box._marks && box._marks[k];
+        g.fillStyle = mk === "ok" ? "#2f8a55" : mk === "half" ? "#c98a12" : mk === "miss" ? "#d2463a" : css("--text", "#3b2f25");
+        g.font = (mk ? "bold " : "") + "15px sans-serif";
         g.fillText(s.ch, x + w / 2, B + 19);
         g.fillStyle = ink;
         g.font = "11px sans-serif";
@@ -302,6 +305,140 @@
     }
   }
 
+  /* ---------- 글자 나누기: 쉰 곳·소리가 약해진 곳을 글자 경계로 ---------- */
+  var BW = 2, DW = 2;
+  function segment(box) {
+    var sy = box._sy, cur = box._curve, fr = box._frames;
+    if (!sy || !cur || !fr) return null;
+    var i0 = -1, i1 = -1, i;
+    for (i = 0; i < cur.length; i++) if (cur[i] != null) { if (i0 < 0) i0 = i; i1 = i; }
+    var N = sy.length, n = i1 - i0 + 1;
+    if (i0 < 0 || n < N * 2) return null;
+    var wt = sy.map(function (s, k) { return s.tone === 0 ? 0.6 : s.end && k < N - 1 ? 1.25 : 1; });
+    var W = wt.reduce(function (a, b) { return a + b; }, 0);
+    var E = wt.map(function (w) { return (n * w) / W; });
+    /* 경계 비용: 소리가 없는 곳 0, 약해진 곳은 낮게, 또렷한 소리 한가운데는 높게 */
+    var bc = new Float32Array(n + 1);
+    for (var j = 0; j <= n; j++) {
+      var f = i0 + j;
+      if (j === 0 || j === n || cur[f] == null) { bc[j] = 0; continue; }
+      var mx = 0;
+      for (var q = Math.max(i0, f - 6); q <= Math.min(i1, f + 6); q++) mx = Math.max(mx, fr[q].e || 0);
+      var re = mx ? (fr[f].e || 0) / mx : 1;
+      bc[j] = BW * (0.1 + 0.9 * re * re);
+    }
+    /* 글자 안쪽에 소리가 끊긴 곳(3프레임 이상)이 있으면 경계를 놓친 것: 그 개수를 셀 수 있게 누적 */
+    var gs = new Int32Array(n + 1);
+    for (j = 0; j < n; j++) {
+      var f2 = i0 + j, st = cur[f2] == null && j > 0 && cur[f2 - 1] != null && cur[f2 + 1] == null && cur[f2 + 2] == null;
+      gs[j + 1] = gs[j] + (st ? 1 : 0);
+    }
+    var INF = 1e9, D = [], P = [];
+    for (var k = 0; k <= N; k++) { D.push(new Float64Array(n + 1).fill(INF)); P.push(new Int32Array(n + 1)); }
+    D[0][0] = 0;
+    for (k = 1; k <= N; k++) {
+      var e = E[k - 1], mn = Math.max(2, Math.floor(0.35 * e)), mxl = Math.max(mn + 1, Math.ceil(2.6 * e));
+      var endPh = sy[k - 1].end && k < N;
+      for (j = 1; j <= n; j++) {
+        var b = k < N ? bc[j] * (endPh ? 3 : 1) : 0;
+        for (var len = mn; len <= mxl && len <= j; len++) {
+          var pv = D[k - 1][j - len];
+          if (pv >= INF) continue;
+          var r = (len - e) / e, c = pv + DW * r * r + b + (gs[j - 1] - gs[j - len + 1]);
+          if (c < D[k][j]) { D[k][j] = c; P[k][j] = j - len; }
+        }
+      }
+    }
+    if (D[N][n] >= INF) return null;
+    var cuts = [n];
+    for (k = N, j = n; k > 0; k--) { j = P[k][j]; cuts.unshift(j); }
+    var tOf = function (j) { return fr[Math.min(i1, i0 + j)].t; };
+    var out = [];
+    for (k = 0; k < N; k++) out.push({ a: i0 + cuts[k], b: i0 + cuts[k + 1], t0: tOf(cuts[k]), t1: tOf(cuts[k + 1]) });
+    return out;
+  }
+
+  /* ---------- 성조 채점 (너그럽게, 참고용) ---------- */
+  function judge(box) {
+    var sy = box._sy, cur = box._curve, seg = box._seg, fr = box._frames;
+    box._marks = null;
+    if (!sy || !cur || !seg) return null;
+    var all = cur.filter(function (v) { return v != null; }).sort(function (a, b) { return a - b; });
+    var lo = all[Math.floor(all.length * 0.05)], hi = all[Math.floor(all.length * 0.95)], span = hi - lo;
+    if (span < 6) { var md = (hi + lo) / 2; lo = md - 3; hi = md + 3; }
+    var lv = function (v) { return 1 + (4 * (v - lo)) / (hi - lo); };
+    var avg = function (a) { return a.reduce(function (x, y) { return x + y; }, 0) / a.length; };
+    var marks = [], issues = {}, pts = 0, cnt = 0;
+    sy.forEach(function (s, k) {
+      var g = seg[k], v = [];
+      var a = g.a + Math.floor((g.b - g.a) * 0.15), b = g.b - Math.floor((g.b - g.a) * 0.1);
+      for (var i = a; i < b; i++) if (cur[i] != null) v.push(cur[i]);
+      if (s.tone === 0 || v.length < 3) { marks.push(null); return; }
+      var th = Math.max(1, Math.floor(v.length / 3));
+      var st = avg(v.slice(0, th)), en = avg(v.slice(-th)), d = en - st;
+      var mean = lv(avg(v)), low = lv(Math.min.apply(null, v));
+      var m = "miss", why = null;
+      if (s.tone === 1) {
+        if (Math.abs(d) < 2.5 && mean >= 3) m = "ok";
+        else if (Math.abs(d) < 4 && mean >= 2.3) m = "half";
+        why = mean < 3 ? "t1low" : "t1move";
+      } else if (s.tone === 2) {
+        m = d >= 1.8 ? "ok" : d >= 0.7 ? "half" : "miss"; why = "t2";
+      } else if (s.tone === 4) {
+        m = d <= -2.5 ? "ok" : d <= -1.2 ? "half" : "miss"; why = "t4";
+      } else if (s.tone === 3) {
+        if (s.half) m = mean <= 2.6 && d < 2.5 ? "ok" : mean <= 3.3 ? "half" : "miss";
+        else m = low <= 2.2 ? "ok" : low <= 3 ? "half" : "miss";
+        why = "t3";
+      }
+      marks.push(m);
+      cnt++;
+      pts += m === "ok" ? 1 : m === "half" ? 0.6 : 0;
+      if (m !== "ok") { issues[why] = issues[why] || []; if (issues[why].indexOf(s.ch) < 0) issues[why].push(s.ch); }
+    });
+    box._marks = marks;
+    var toned = sy.filter(function (s) { return s.tone !== 0; }).length;
+    if (!cnt || cnt < toned / 2) return { none: true };
+    var ratio = pts / cnt;
+    var score = ratio >= 0.85 ? 5 : ratio >= 0.7 ? 4 : ratio >= 0.5 ? 3 : ratio >= 0.3 ? 2 : 1;
+    var TIP = {
+      t4: "4성: 높은 데서 시작해 아래로 '뚝' 떨어뜨려 보세요.",
+      t2: "2성: 중간에서 시작해 위로 쭉 올려 보세요. (\"응?\" 하고 되묻듯이)",
+      t1low: "1성: 처음부터 끝까지 높게 유지해 보세요.",
+      t1move: "1성: 높이가 흔들렸어요. 높은 음을 평평하게 끌어 보세요.",
+      t3: "3성: 더 낮게 눌러 읽어 보세요. 뒤에 다른 글자가 오면 낮게만 내고 올리지 않아요.",
+    };
+    var tips = Object.keys(issues).sort(function (x, y) { return issues[y].length - issues[x].length; }).slice(0, 3).map(function (key) {
+      return TIP[key] + " (" + issues[key].join(", ") + ")";
+    });
+    var i0 = -1;
+    for (var i = 0; i < cur.length; i++) if (cur[i] != null) { i0 = i; break; }
+    if (i0 >= 0 && fr[i0].t < 0.25) tips.push("첫 글자가 잘렸을 수 있어요. 🎙️을 누르고 '읽어 보세요'가 나온 뒤 읽어 주세요.");
+    if (span < 5 && score < 5) tips.push("목소리 높낮이 폭이 좁아요. 1성은 더 높게, 3성은 더 낮게 조금 과장해서 읽어 보세요.");
+    var dur = seg[seg.length - 1].t1 - seg[0].t0;
+    if (dur / sy.length < 0.13) tips.push("조금 더 천천히, 한 글자씩 또박또박 읽으면 더 정확하게 잡혀요.");
+    var COMMENT = {
+      5: "아주 좋아요! 성조 모양이 교과서와 거의 같아요.",
+      4: "잘했어요. 몇 글자만 다듬으면 완벽해요.",
+      3: "성조 흐름은 잘 잡혔어요. 색이 다른 글자를 원어민 소리와 비교해 보세요.",
+      2: "성조가 조금 평평하게 들려요. 높낮이를 더 크게 넣어 보세요.",
+      1: "원어민 소리를 몇 번 더 듣고, 천천히 따라 읽어 보세요.",
+    };
+    return { score: score, comment: COMMENT[score], tips: tips };
+  }
+  function showScore(box, r) {
+    var el = box.querySelector(".sp-score");
+    if (!el) return;
+    if (!r) { el.hidden = true; el.innerHTML = ""; return; }
+    el.hidden = false;
+    if (r.none) { el.innerHTML = '<p class="sp-sc-cmt">목소리가 충분히 잡히지 않아 점수를 매기지 못했어요. 마이크 가까이에서 천천히 다시 읽어 보세요.</p>'; return; }
+    el.innerHTML =
+      '<div class="sp-sc-head"><b>성조 점수</b> <span class="sp-stars" aria-hidden="true">' + "★★★★★".slice(0, r.score) + '<i>' + "★★★★★".slice(r.score) + "</i></span> <b>" + r.score + " / 5</b></div>" +
+      '<p class="sp-sc-cmt">' + esc(r.comment) + "</p>" +
+      (r.tips.length ? '<div class="sp-sc-tips"><b>주의할 점</b><ul>' + r.tips.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul></div>" : "") +
+      '<p class="sp-sc-note">글자 색: <span style="color:#2f8a55">맞음</span> · <span style="color:#c98a12">조금 아쉬움</span> · <span style="color:#d2463a">다시 연습</span> · 참고용 점수예요(마이크·주변 소리에 따라 달라질 수 있어요).</p>';
+  }
+
   /* ---------- 녹음 ---------- */
   var active = null;
   function stopRec(box) {
@@ -312,11 +449,13 @@
     if (box._stream) box._stream.getTracks().forEach(function (t) { t.stop(); });
     if (box._ctx) box._ctx.close();
     box._curve = clean(box._frames || []);
+    box._seg = segment(box);
+    showScore(box, judge(box));
     var btn = box.querySelector(".sp-rec");
     btn.textContent = "🎙️ 다시 녹음";
     btn.classList.remove("is-on");
     box.querySelector(".sp-msg").textContent = box._curve.some(function (v) { return v != null; })
-      ? "회색 띠 = 교과서 성조 모양, 빨간 선 = 내 목소리. 모양이 비슷한지 비교해 보세요."
+      ? "회색 띠 = 교과서 성조 모양, 빨간 선 = 내 목소리. 아래에서 점수와 주의할 점을 확인하세요."
       : "";
     draw(box);
     active = null;
@@ -338,7 +477,8 @@
       an.fftSize = 2048;
       src.connect(an);
       var buf = new Float32Array(an.fftSize);
-      box._stream = stream; box._ctx = ctx; box._frames = []; box._curve = []; box._range = null;
+      box._stream = stream; box._ctx = ctx; box._frames = []; box._curve = []; box._range = null; box._seg = null; box._marks = null;
+      showScore(box, null);
       box._recording = true;
       active = box;
       var chunks = [];
@@ -362,7 +502,9 @@
         an.getFloatTimeDomainData(buf);
         var t = ctx.currentTime - t0;
         var hz = detect(buf, ctx.sampleRate);
-        box._frames.push({ t: t, hz: hz });
+        var en = 0;
+        for (var q = 0; q < buf.length; q++) en += buf[q] * buf[q];
+        box._frames.push({ t: t, hz: hz, e: Math.sqrt(en / buf.length) });
         if (hz) { lastVoice = t; everVoice = true; }
         box._curve = clean(box._frames);
         if (!box._range) {
@@ -468,10 +610,12 @@
       "</div>" +
       '<div class="sp-cvwrap"><canvas class="sp-cv"></canvas></div>' +
       '<p class="sp-msg" aria-live="polite"></p>' +
+      '<div class="sp-score" aria-live="polite" hidden></div>' +
       '<details class="sp-help"><summary>그래프 읽는 법</summary><ul>' +
       "<li>세로 1~5는 성조의 높낮이(5도 표기)예요. 1성 55(높고 평평), 2성 35(올라감), 3성 214(내려갔다 올라감), 4성 51(뚝 떨어짐).</li>" +
       "<li>3성 뒤에 3성이 오면 앞의 것을 2성으로, 3성 뒤에 다른 성조가 오면 낮게만(21) 읽어요. 그래프에 이미 반영돼 있어요.</li>" +
-      "<li>글자 위치는 목소리가 난 시간을 글자 수로 나눠 어림한 거예요. 천천히 고르게 읽을수록 잘 맞아요.</li>" +
+      "<li>글자 위치는 쉬거나 소리가 약해진 곳을 찾아 어림한 거예요. 천천히 또박또박 읽을수록 잘 맞아요.</li>" +
+      "<li>점수는 글자마다 성조 모양(올라감·떨어짐·높이)이 맞는지 너그럽게 본 참고용이에요.</li>" +
       "<li>녹음은 이 컴퓨터 안에서만 쓰이고 어디에도 올라가지 않아요.</li>" +
       "</ul></details>" +
       "</section>" +
@@ -499,7 +643,8 @@
     if (!s) return;
     box._s = s;
     box._sy = syllables(s.zh, s.pinyin);
-    box._frames = null; box._curve = null;
+    box._frames = null; box._curve = null; box._seg = null; box._marks = null;
+    showScore(box, null);
     box.querySelector(".sp-mine").disabled = true;
     box.querySelector(".sp-rec").textContent = "🎙️ 녹음";
     box.querySelector(".sp-msg").textContent = "";
@@ -578,7 +723,13 @@
     ".sp-hint{font-size:12px;color:#4a6584;margin-left:22px}" +
     ".sp-time{font-size:13px;font-weight:600;color:#b2362b}" +
     ".sp-text{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--line,#e6dccb);border-radius:12px;background:var(--surface,#fff);color:inherit;font-size:17px;line-height:1.6;resize:vertical}" +
-    ".sp-count{font-size:12px;color:var(--text-soft,#7a6a5a);margin-right:auto}";
+    ".sp-count{font-size:12px;color:var(--text-soft,#7a6a5a);margin-right:auto}" +
+    ".sp-score{margin-top:8px;padding:12px 14px;border-radius:12px;background:#f3f8f4;border:1px solid #d6eadc}" +
+    ".sp-sc-head{font-size:15px;display:flex;align-items:center;gap:8px}" +
+    ".sp-stars{color:#e0a21b;font-size:18px;letter-spacing:1px}.sp-stars i{font-style:normal;color:#d9d2c5}" +
+    ".sp-sc-cmt{margin:4px 0 0;font-size:14px}" +
+    ".sp-sc-tips{margin-top:8px;font-size:13px}.sp-sc-tips ul{margin:4px 0 0;padding-left:18px}" +
+    ".sp-sc-note{margin:8px 0 0;font-size:12px;color:var(--text-soft,#7a6a5a)}";
   document.head.appendChild(st);
 
   window.SPEAKING = {
@@ -587,7 +738,8 @@
     mount: mount,
     stop: function () { if (active) stopRec(active); },
     /* 점검용: 가짜 음높이 프레임으로 그래프 그려 보기 */
-    _test: function (box, frames) { box._frames = frames; box._curve = clean(frames); draw(box); },
+    _test: function (box, frames) { box._frames = frames; box._curve = clean(frames); box._seg = segment(box); var r = judge(box); showScore(box, r); draw(box); return r; },
     _detect: detect,
+    _tune: function (bw, dw) { BW = bw; DW = dw; },
   };
 })();
