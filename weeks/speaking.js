@@ -890,8 +890,6 @@
     var ss = sentenceList(c), ps = PROMPTS[String(n)] || [];
     return (
       '<div class="sp">' +
-      '<div class="sp-modebar"><select class="sp-mode wa-rate" aria-label="말하기 연습 고르기">' +
-      '<option value="read">🎵 성조 곡선 낭독</option><option value="free">💬 자유 말하기</option></select></div>' +
       '<section class="sp-part sp-read">' +
       '<h5>🎵 성조 곡선 낭독 <span class="sp-tag">참고용</span></h5>' +
       '<p class="sp-desc">문장을 골라 원어민 소리를 듣고, 🎙️ 녹음을 눌러 따라 읽어 보세요. 내 목소리의 높낮이가 빨간 선으로 그려져요.</p>' +
@@ -965,18 +963,16 @@
     var box = el.querySelector(".sp");
     if (!box) return;
     box._list = sentenceList(c);
-    /* 드롭다운: 성조 곡선 낭독 / 자유 말하기 중 하나만 보여 줌 (탭 버튼 아래로 옮겨져도 작동하게 직접 연결) */
-    var mode = box.querySelector(".sp-mode");
+    /* 말하기 탭 버튼의 메뉴(성조 곡선 낭독 / 자유 말하기)에서 고른 것 하나만 보여 줌 */
     var setMode = function (m) {
       if (active === box) stopRec(box);
       if (box._talk && box._talk.on) stopTalk(box);
       box.querySelector(".sp-read").hidden = m !== "read";
       box.querySelector(".sp-free").hidden = m !== "free";
-      mode.value = m;
       lastMode = m;
       if (m === "read") draw(box);
     };
-    mode.addEventListener("change", function () { setMode(mode.value); });
+    box._setMode = setMode;
     setMode(lastMode);
     showSentence(box);
     keyInfo(box);
@@ -1088,6 +1084,12 @@
     html: html,
     mount: mount,
     stop: function () { if (active) stopRec(active); },
+    /* m: "read"(성조 곡선 낭독) | "free"(자유 말하기). el 안에 열린 말하기가 있으면 바로 바꿈 */
+    setMode: function (el, m) {
+      lastMode = m === "free" ? "free" : "read";
+      var b = el && el.querySelector(".sp");
+      if (b && b._setMode) b._setMode(lastMode);
+    },
     /* 점검용: 가짜 음높이 프레임으로 그래프 그려 보기 */
     _test: function (box, frames) { box._frames = frames; box._curve = clean(frames); box._seg = segment(box); var r = judge(box); showScore(box, r); draw(box); return r; },
     _detect: detect,

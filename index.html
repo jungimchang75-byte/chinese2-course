@@ -2076,7 +2076,10 @@ a { color: var(--green-700); }
 .wa-br { flex-basis: 100%; height: 0; }
 .wa-dock { flex-basis: 100%; margin: 2px 0 4px; }
 .wa-dock .rd-bar { margin-bottom: 0; }
-.wa-dock > .sp-modebar { display: inline-flex; max-width: 100%; }
+.wa-tabs { position: relative; }
+.wa-menu { position: absolute; z-index: 20; display: grid; min-width: 170px; padding: 4px; border: 1px solid #dcd5c6; border-radius: 12px; background: var(--surface, #fff); box-shadow: 0 8px 24px rgba(60, 40, 20, .16); }
+.wa-menu button { display: block; text-align: left; min-height: 36px; padding: 0 12px; border: 0; border-radius: 8px; background: none; font: inherit; font-size: 14px; font-weight: 600; color: inherit; cursor: pointer; }
+.wa-menu button:hover, .wa-menu button:focus-visible { background: #f6e3e0; color: #a3271c; outline: none; }
 .wa-tabs button { min-height: 36px; padding: 0 12px; border: 0; border-radius: 999px; font: inherit; font-size: 14px; font-weight: 700; color: var(--green-700, #6246ea); background: var(--surface); box-shadow: var(--raise, var(--shadow)); cursor: pointer; }
 .wa-tabs button.is-on { color: #fff; background: var(--green-700, #6246ea); }
 .wa-body h5 { margin: 4px 0 8px; font-size: 16px; color: var(--green-800, #241b55); }
@@ -2692,10 +2695,10 @@ a { color: var(--green-700); }
 
   <button class="to-top" type="button" aria-label="맨 위로 이동">↑</button>
 
-<script src="weeks/content.js?v=1.9.4"></script>
-<script src="weeks/readings.js?v=1.9.4"></script>
-<script src="weeks/readings6.js?v=1.9.4"></script>
-<script src="weeks/speaking.js?v=1.9.4"></script>
+<script src="weeks/content.js?v=1.9.5"></script>
+<script src="weeks/readings.js?v=1.9.5"></script>
+<script src="weeks/readings6.js?v=1.9.5"></script>
+<script src="weeks/speaking.js?v=1.9.5"></script>
 <script>
 /* ===== config ===== */
 /* CONFIG-START */
@@ -2714,7 +2717,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.9.4",
+    version: "v1.9.5",
     logoText: "漢",
   },
 
@@ -7202,7 +7205,7 @@ window.SiteStore = (function () {
     { id: "culture", label: "🎞️ 문화 슬라이드", row: 1 },
     { id: "liveQuiz", label: "⚡ 실시간 퀴즈", row: 2 },
     { id: "onlineQuiz", label: "✅ self-check", row: 2 }, // 예전 이름: 온라인 퀴즈
-    { id: "speaking", label: "🎙️ 말하기", row: 2 }, // 성조 곡선 낭독·자유 말하기 (weeks/speaking.js, 시험판: 제1~9과)
+    { id: "speaking", label: "🎙️ 말하기 ▾", row: 2, menu: [["read", "🎵 성조 곡선 낭독"], ["free", "💬 자유 말하기"]] }, // 성조 곡선 낭독·자유 말하기 (weeks/speaking.js, 시험판: 제1~9과)
     { id: "readings", label: "📖 독해연습", row: 2 }, // HSK 3·4·5급 읽기 자료 (weeks/readings.js)
     { id: "assignment", label: "📌 과제", row: 3 },
     { id: "videos", label: "🎬 영상", row: 3 },
@@ -7875,7 +7878,7 @@ window.SiteStore = (function () {
       adminHTML(n, c) +
       (tabs.length
         ? '<div class="wa-tabs" role="tablist">' + list(tabs, function (t, i) {
-            return (i && t.row !== tabs[i - 1].row ? '<span class="wa-br" aria-hidden="true"></span>' : "") + '<button type="button" role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === cur) + '" class="' + (t.id === cur ? "is-on" : "") + '">' + t.label + "</button>";
+            return (i && t.row !== tabs[i - 1].row ? '<span class="wa-br" aria-hidden="true"></span>' : "") + '<button' + (t.menu ? ' aria-haspopup="menu" aria-expanded="false"' : "") + ' type="button" role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === cur) + '" class="' + (t.id === cur ? "is-on" : "") + '">' + t.label + "</button>";
           }) + "</div>" +
           editBarHTML(el, cur) +
           '<div class="wa-body">' + (el._editing === cur ? editorHTML(el, cur) : tabBody(cur, c, w, n)) + "</div>"
@@ -7886,10 +7889,38 @@ window.SiteStore = (function () {
       var rdBox = el.querySelector(".rd");
       if (rdBox) { rdBox._bar = rdBox.querySelector(".rd-bar"); dock(el, "readings", rdBox._bar); }
     }
-    if (cur === "speaking" && window.SPEAKING) { SPEAKING.mount(el, n, c); dock(el, "speaking", el.querySelector(".sp-modebar")); }
+    if (cur === "speaking" && window.SPEAKING) SPEAKING.mount(el, n, c);
   }
   /* 독해연습: 등급·병음·번역·전체 듣기 줄을 '📖 독해연습' 탭 버튼 바로 밑에 맞춤 (좁은 화면에서는 왼쪽) */
-  /* 탭 안의 조작 줄(독해 등급·듣기, 말하기 고르기)을 그 탭 버튼이 있는 줄 바로 아래로 옮김 */
+  /* 탭 버튼 아래로 펼쳐지는 작은 메뉴 (말하기) */
+  function closeMenus() {
+    document.querySelectorAll(".wa-menu").forEach(function (m) { m.remove(); });
+    document.querySelectorAll('.wa-tabs [aria-expanded="true"]').forEach(function (b) { b.setAttribute("aria-expanded", "false"); });
+  }
+  function toggleMenu(el, btn) {
+    var open = btn.getAttribute("aria-expanded") === "true";
+    closeMenus();
+    if (open) return;
+    var def = TABS.filter(function (x) { return x.id === btn.getAttribute("data-tab"); })[0];
+    var tabs = btn.parentElement;
+    var m = document.createElement("div");
+    m.className = "wa-menu";
+    m.setAttribute("role", "menu");
+    m.setAttribute("data-for", def.id);
+    m.innerHTML = def.menu.map(function (x) { return '<button type="button" role="menuitem" data-mode="' + x[0] + '">' + x[1] + "</button>"; }).join("");
+    tabs.appendChild(m);
+    var bb = btn.getBoundingClientRect(), tb = tabs.getBoundingClientRect();
+    m.style.left = Math.max(0, Math.min(bb.left - tb.left, tb.width - m.offsetWidth)) + "px";
+    m.style.top = (bb.bottom - tb.top + 4) + "px";
+    btn.setAttribute("aria-expanded", "true");
+    m.querySelector("button").focus();
+  }
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".wa-menu, .wa-tabs [aria-expanded]")) closeMenus();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeMenus(); });
+
+  /* 탭 안의 조작 줄(독해 등급·듣기)을 그 탭 버튼이 있는 줄 바로 아래로 옮김 */
   function dock(el, id, node) {
     var tab = el.querySelector('.wa-tabs [data-tab="' + id + '"]');
     if (!tab || !node) return;
@@ -8379,8 +8410,20 @@ window.SiteStore = (function () {
     var el = t.closest(".week-ai");
     if (!el) return;
     var n = el.getAttribute("data-week");
+    /* 말하기 버튼: 누르면 메뉴(성조 곡선 낭독 / 자유 말하기)를 펼치고, 고르면 그 연습을 엶 */
+    var mi = t.closest(".wa-menu [data-mode]");
+    if (mi) {
+      closeMenus();
+      var mtab = mi.closest(".wa-menu").getAttribute("data-for");
+      if (mtab === "speaking" && window.SPEAKING) SPEAKING.setMode(el, mi.getAttribute("data-mode"));
+      if (el._tab === mtab) return;
+      t = el.querySelector('.wa-tabs [data-tab="' + mtab + '"]');
+    } else if (t.closest(".wa-tabs [data-tab]") && TABS.some(function (x) { return x.menu && x.id === t.closest("[data-tab]").getAttribute("data-tab"); })) {
+      return toggleMenu(el, t.closest("[data-tab]"));
+    }
     var tab = t.closest(".wa-tabs [data-tab]");
     if (tab) {
+      closeMenus();
       stopSpeak();
       stopSlides(el.querySelector(".cs"));
       if (el._editing && !confirm("편집 중인 내용이 저장되지 않았습니다. 탭을 바꿀까요?")) return;
