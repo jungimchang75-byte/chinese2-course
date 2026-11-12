@@ -493,7 +493,7 @@
   }
 
   /* ---------- 녹음 ---------- */
-  var active = null;
+  var active = null, lastMode = "read";
   function stopRec(box) {
     if (!box || !box._recording) return;
     box._recording = false;
@@ -890,6 +890,8 @@
     var ss = sentenceList(c), ps = PROMPTS[String(n)] || [];
     return (
       '<div class="sp">' +
+      '<div class="sp-modebar"><select class="sp-mode wa-rate" aria-label="말하기 연습 고르기">' +
+      '<option value="read">🎵 성조 곡선 낭독</option><option value="free">💬 자유 말하기</option></select></div>' +
       '<section class="sp-part sp-read">' +
       '<h5>🎵 성조 곡선 낭독 <span class="sp-tag">참고용</span></h5>' +
       '<p class="sp-desc">문장을 골라 원어민 소리를 듣고, 🎙️ 녹음을 눌러 따라 읽어 보세요. 내 목소리의 높낮이가 빨간 선으로 그려져요.</p>' +
@@ -913,7 +915,7 @@
       "<li>녹음은 이 컴퓨터 안에서만 쓰이고 어디에도 올라가지 않아요.</li>" +
       "</ul></details>" +
       "</section>" +
-      '<section class="sp-part sp-free">' +
+      '<section class="sp-part sp-free" hidden>' +
       '<h5>💬 자유 말하기 <span class="sp-tag">30초~1분</span></h5>' +
       '<p class="sp-desc">아래 질문 중 하나를 골라 중국어로 자유롭게 말해 보세요. 말한 내용이 글자로 받아 적혀요.</p>' +
       '<ol class="sp-prompts">' +
@@ -963,6 +965,19 @@
     var box = el.querySelector(".sp");
     if (!box) return;
     box._list = sentenceList(c);
+    /* 드롭다운: 성조 곡선 낭독 / 자유 말하기 중 하나만 보여 줌 (탭 버튼 아래로 옮겨져도 작동하게 직접 연결) */
+    var mode = box.querySelector(".sp-mode");
+    var setMode = function (m) {
+      if (active === box) stopRec(box);
+      if (box._talk && box._talk.on) stopTalk(box);
+      box.querySelector(".sp-read").hidden = m !== "read";
+      box.querySelector(".sp-free").hidden = m !== "free";
+      mode.value = m;
+      lastMode = m;
+      if (m === "read") draw(box);
+    };
+    mode.addEventListener("change", function () { setMode(mode.value); });
+    setMode(lastMode);
     showSentence(box);
     keyInfo(box);
     box.addEventListener("keydown", function (e) {
@@ -1008,6 +1023,7 @@
   var st = document.createElement("style");
   st.textContent =
     ".sp{display:grid;gap:18px}" +
+    ".sp-part[hidden]{display:none}" +
     ".sp-part{padding:16px 18px;border:1px solid var(--line,#e6dccb);border-radius:14px;background:var(--surface,#fff)}" +
     ".sp-part h5{margin:0 0 6px;font-size:16px;color:var(--brown-700,#6b4a2e);display:flex;align-items:center;gap:8px}" +
     ".sp-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef3f8;color:#4a6584}" +

@@ -2074,6 +2074,8 @@ a { color: var(--green-700); }
 .wa-empty { margin: 0; padding: 14px; border-radius: 12px; text-align: center; color: var(--text-soft); background: var(--cream-100, #efe9df); }
 .wa-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
 .wa-br { flex-basis: 100%; height: 0; }
+.wa-dock { flex-basis: 100%; margin: 2px 0 4px; }
+.wa-dock .rd-bar { margin-bottom: 0; }
 .wa-tabs button { min-height: 36px; padding: 0 12px; border: 0; border-radius: 999px; font: inherit; font-size: 14px; font-weight: 700; color: var(--green-700, #6246ea); background: var(--surface); box-shadow: var(--raise, var(--shadow)); cursor: pointer; }
 .wa-tabs button.is-on { color: #fff; background: var(--green-700, #6246ea); }
 .wa-body h5 { margin: 4px 0 8px; font-size: 16px; color: var(--green-800, #241b55); }
@@ -2711,7 +2713,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.9.1",
+    version: "v1.9.2",
     logoText: "漢",
   },
 
@@ -7545,11 +7547,13 @@ window.SiteStore = (function () {
       "</div>"
     );
   }
+  /* 독해 조작 줄은 탭 버튼 바로 아래(wa-dock)로 옮겨지므로 box._bar에서도 찾음 */
+  function rdq(box, sel) { return (box._bar && box._bar.querySelector(sel)) || box.querySelector(sel); }
   function rdStop(box) {
     box._playing = false;
     if (synth) synth.cancel();
     box.querySelectorAll(".rd-s.is-speaking").forEach(function (s) { s.classList.remove("is-speaking"); });
-    box.querySelector(".rd-stop").hidden = true;
+    rdq(box, ".rd-stop").hidden = true;
   }
   function rdPlay(box) {
     stopSpeak();
@@ -7557,7 +7561,7 @@ window.SiteStore = (function () {
     var ss = Array.prototype.slice.call(box.querySelectorAll(".rd-s"));
     var i = 0;
     box._playing = true;
-    box.querySelector(".rd-stop").hidden = false;
+    rdq(box, ".rd-stop").hidden = false;
     (function next() {
       if (!box._playing || !document.body.contains(box)) return;
       ss.forEach(function (s) { s.classList.remove("is-speaking"); });
@@ -7877,22 +7881,37 @@ window.SiteStore = (function () {
         : '<p class="wa-empty">아직 만든 자료가 없습니다. 위의 버튼으로 만들어 보세요.</p>') +
       "</div>";
     if (cur === "culture" || cur === "notes") startSlides(el.querySelector(".cs"));
-    if (cur === "readings") rdAlign(el);
-    if (cur === "speaking" && window.SPEAKING) SPEAKING.mount(el, n, c);
+    if (cur === "readings") {
+      var rdBox = el.querySelector(".rd");
+      if (rdBox) { rdBox._bar = rdBox.querySelector(".rd-bar"); dock(el, "readings", rdBox._bar); }
+    }
+    if (cur === "speaking" && window.SPEAKING) { SPEAKING.mount(el, n, c); dock(el, "speaking", el.querySelector(".sp-modebar")); }
   }
   /* 독해연습: 등급·병음·번역·전체 듣기 줄을 '📖 독해연습' 탭 버튼 바로 밑에 맞춤 (좁은 화면에서는 왼쪽) */
-  function rdAlign(el) {
-    var tab = el.querySelector('.wa-tabs [data-tab="readings"]');
-    var bar = el.querySelector(".rd-bar");
-    if (!tab || !bar) return;
-    bar.style.marginLeft = "0px";
-    var box = bar.parentElement.getBoundingClientRect();
+  /* 탭 안의 조작 줄(독해 등급·듣기, 말하기 고르기)을 그 탭 버튼이 있는 줄 바로 아래로 옮김 */
+  function dock(el, id, node) {
+    var tab = el.querySelector('.wa-tabs [data-tab="' + id + '"]');
+    if (!tab || !node) return;
+    var d = document.createElement("div");
+    d.className = "wa-dock";
+    var nx = tab.nextElementSibling;
+    while (nx && !nx.classList.contains("wa-br")) nx = nx.nextElementSibling;
+    tab.parentElement.insertBefore(d, nx);
+    d.appendChild(node);
+    dockAlign(el);
+  }
+  function dockAlign(el) {
+    var d = el.querySelector(".wa-dock"), tab = el.querySelector(".wa-tabs .is-on");
+    if (!d || !tab || !d.firstChild) return;
+    var node = d.firstChild;
+    node.style.marginLeft = "0px";
+    var box = d.getBoundingClientRect();
     var left = tab.getBoundingClientRect().left - box.left;
-    var room = box.width - bar.scrollWidth;
-    bar.style.marginLeft = Math.max(0, Math.min(left, room)) + "px";
+    var room = box.width - node.scrollWidth;
+    node.style.marginLeft = Math.max(0, Math.min(left, room)) + "px";
   }
   window.addEventListener("resize", function () {
-    document.querySelectorAll("#curriculum .week-ai").forEach(function (el) { if (el._tab === "readings") rdAlign(el); });
+    document.querySelectorAll("#curriculum .week-ai").forEach(dockAlign);
   });
   function tabBody(id, c, w, n) {
     if (id === "notes") return notesHTML(c.notes, n);
@@ -8381,7 +8400,7 @@ window.SiteStore = (function () {
     }
     var lqp = t.closest(".lqp");
     if (lqp) return lqpClick(lqp, t, n);
-    var rd = t.closest(".rd");
+    var rd = t.closest(".rd") || (t.closest(".wa-dock .rd-bar") ? el.querySelector(".rd") : null);
     if (rd) {
       if (t.closest(".rd-play")) return rdPlay(rd);
       if (t.closest(".rd-stop")) return rdStop(rd);
@@ -8477,7 +8496,7 @@ window.SiteStore = (function () {
     if (e.target.classList.contains("wa-show-ko")) el.querySelector(".wa-sent").classList.toggle("hide-ko", !e.target.checked);
     if (e.target.classList.contains("wa-show-gram")) el.querySelector(".wa-sent").classList.toggle("hide-gram", !e.target.checked);
     /* 독해연습: 등급 바꾸기, 병음·번역 켜고 끄기 */
-    var rd = e.target.closest(".rd");
+    var rd = e.target.closest(".rd") || (e.target.closest(".wa-dock .rd-bar") ? el.querySelector(".rd") : null);
     if (rd) {
       if (e.target.classList.contains("rd-level")) {
         rdStop(rd);
