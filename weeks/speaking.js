@@ -4,13 +4,26 @@
       - 서버 없이 브라우저 안에서만 계산하고, 녹음은 어디에도 올리지 않습니다.
       - 음절 위치는 목소리가 난 구간을 글자 수로 나눠 어림한 것이라 '참고용'입니다.
    ② 자유 말하기: 크롬의 음성 인식으로 말한 내용을 글자로 받아 적습니다.
-      받아 적은 글은 복사해서 'AI 평가(시험판)' 페이지에 붙여 넣어 평가받을 수 있어요.
+      학생이 자기 API 키(학교 발급)를 한 번 넣으면 🤖 AI 평가 받기로 바로 평가받아요.
    index.html이 SPEAKING.has(n) / SPEAKING.html(n, c) / SPEAKING.mount(el, n, c)를 부릅니다. */
 (function () {
   "use strict";
 
-  /* AI 평가 시험판 (claude.ai 아티팩트, 선생님 계정에서 작동) */
-  var AI_URL = "https://claude.ai/artifact/KGXEDxW2KsGtk7n2mbqAUG";
+  /* AI 평가: 학생이 학교에서 받은 자기 API 키를 넣으면 브라우저에서 바로 평가 (서버 없음)
+     키 모양으로 회사를 고름: sk-ant-… Claude · AIza… Gemini · sk-… ChatGPT
+     키는 이 브라우저(localStorage, '계속 저장'을 끄면 sessionStorage)에만 저장 */
+  var KEY_NAME = "sp-ai-key";
+  var LESSON_INFO = {
+    "101": ["제1과 你选好课了吗？", "결과보어(选好·记住·做完·买到), 是不是 확인 의문문, 형용사 중첩(雪白雪白的), 连……都/也, 추측의 应该, 동량보어(去过两次), 시량보어(学了两个小时), 离, 有点儿/一点儿, 一……就……"],
+    "102": ["제2과 路上辛苦了！", "동태조사 着(穿着·放着·挂着, 走着去), 겸어문(让·叫·请·派), 정도보어(说得很流利, 唱歌唱得很好听), 因为……所以……, 결과보어 在(住在)"],
+    "103": ["제3과 你在打什么工？", "진행 在, 이합사(打工·见面·睡觉: 见过一次面·睡了十个小时觉), 是……的 강조, 把자문(发给·放在·换成·打扫得), 得/不用, 该……了, 还是……吧, 형용사 중첩(辛辛苦苦·好好儿)"],
+    "104": ["제4과 今天天气怎么样？", "날씨 표현(刮风·下雨·雾霾), 방향보어(拿出来·下起雨来·笑起来), 가능보어(听得懂·看不完·买不起·起不来·坐得下), 比 비교문(比……一些/得多/更), 没有……那么, 跟……一样, 一边……一边……, 어림수 多"],
+    "105": ["제5과 水煮肉是我们店的招牌菜", "의문사 임의지시(什么都·谁都·哪儿都·谁……谁……), 의문사 불특정(想吃点儿什么), 虽然……但是……, 不但……而且……, 就/才, 适合/合适, 为了, 来(我来介绍)"],
+    "106": ["제6과 我想换钱", "对(对……感兴趣), 除了……以外, 越……越……/越来越, 左右·多 어림, 以为, 把……换成/还给, 길 안내(一直往前走·往左拐), 正好, 的话"],
+    "107": ["제7과 您哪儿不舒服？", "증상 표현(发烧·咳嗽·头疼), 一点儿……也不……, 什么都, 조동사 应该·该·得·不得, 가능보어 了(做不了·忘不了·上不了), 是……的"],
+    "108": ["제8과 你去过故宫和长城吗？", "경험 过(去过·没吃过·看过两次), 既……又……, 差点儿/差点儿没, 只要……就……, 只有……才……, 被자문, 先……再……最后……, 既然……就……, 难道, A倒是A, 不过"],
+    "109": ["제9과 不是刷微博，就是看短视频", "不是……就是……, 不是……而是……, 从来不/没, 于(毕业于·位于·沉迷于), 정도 표현(热死了·好极了·累得要命), 越来越, 什么的, 下去(学下去), 吃不消, 不仅……也……"],
+  };
 
   /* 과별 자유 말하기 제시어 */
   var PROMPTS = {
@@ -628,6 +641,202 @@
     time.textContent = "⏱ 0초 / " + LIMIT + "초";
   }
 
+  /* ---------- AI 평가 (학생 자기 API 키) ---------- */
+  function store(keep) {
+    try { return keep ? window.localStorage : window.sessionStorage; } catch (e) { return null; }
+  }
+  function getKey() {
+    var k = null;
+    try { k = window.localStorage.getItem(KEY_NAME); } catch (e) {}
+    if (!k) try { k = window.sessionStorage.getItem(KEY_NAME); } catch (e) {}
+    return k || "";
+  }
+  function setKey(k, keep) {
+    try { window.localStorage.removeItem(KEY_NAME); } catch (e) {}
+    try { window.sessionStorage.removeItem(KEY_NAME); } catch (e) {}
+    var st = store(keep);
+    if (k && st) try { st.setItem(KEY_NAME, k); } catch (e) {}
+    MEMKEY = k || "";
+  }
+  var MEMKEY = "";
+  function key() { return getKey() || MEMKEY; }
+  function vendor(k) {
+    if (/^sk-ant-/.test(k)) return "claude";
+    if (/^AIza/.test(k)) return "gemini";
+    if (/^sk-/.test(k)) return "openai";
+    return "";
+  }
+  var VNAME = { claude: "Claude", openai: "ChatGPT", gemini: "Gemini" };
+
+  function evalPrompt(n, q, text) {
+    var L = LESSON_INFO[String(n)] || ["교양중국어2", ""];
+    return [
+      "당신은 한국 대학생에게 중국어를 가르치는 친절한 교수입니다. 교양중국어2(초중급, HSK 2~3급 정도) 학생의 말하기를 평가하세요.",
+      "",
+      "[이번 과] " + L[0],
+      "[이번 과 핵심 표현] " + L[1],
+      "[질문] " + (q ? q.zh + " (" + q.ko + ")" : "자유 주제"),
+      "[학생이 말한 내용 — 음성 인식으로 받아 적은 글]",
+      text,
+      "",
+      "평가 규칙:",
+      "- 점수는 이 학생의 단계(교양중국어2) 기준으로 매기세요. 질문에 맞게 이 단계에서 기대만큼 말했으면 4점, 이번 과 표현을 잘 쓰고 거의 틀리지 않았으면 5점, 3점 이하는 뜻이 잘 통하지 않을 때만 주세요. 작은 실수는 점수 대신 errors에서 짚으세요.",
+      "- 이 글은 음성 인식 결과입니다. 문맥상 어색한 글자는 발음·성조 때문에 잘못 인식됐을 가능성이 큽니다. 그런 곳은 type을 \"발음 추정\"으로 하고, 말하려던 단어와 병음(성조 표시)을 fixed·pinyin에, 헷갈렸을 소리를 why에 짧게 적으세요. 문법 오류로 세지 마세요.",
+      "- 발음·성조 점수는 소리를 직접 듣지 않고 인식 결과로 추정한 것임을 comment에 드러내세요.",
+      "- 문장부호가 없거나 띄어쓰기가 이상한 것은 음성 인식 때문이므로 지적하지 마세요.",
+      "- original은 학생 글에서 그대로 옮긴 구절, fixed는 고친 구절, pinyin은 고친 구절의 병음(성조 표시)입니다.",
+      "- type은 다음 중 하나: 문법, 어순, 어휘, 양사, 호응, 발음 추정, 내용",
+      "- 이번 과 핵심 표현을 썼으면 good에서 칭찬하고, 쓰지 않았으면 summary에서 하나쯤 권하세요.",
+      "- 설명은 모두 쉬운 한국어로, 학생에게 직접 말하듯 짧게 쓰세요.",
+      "- better는 학생 내용을 살려 자연스럽게 다듬은 전체 답변(같은 수준의 어휘)입니다.",
+      "",
+      "다음 JSON 하나만 답하세요(다른 글 없이):",
+      '{"level":"HSK n급 수준 같은 한 줄","summary":"두세 문장 총평","scores":[{"label":"발음·성조 (추정)","score":1~5,"comment":"..."},{"label":"어휘","score":1~5,"comment":"..."},{"label":"단어 정확도","score":1~5,"comment":"..."},{"label":"문법 정확도","score":1~5,"comment":"..."}],"errors":[{"type":"...","original":"...","fixed":"...","pinyin":"...","why":"..."}],"good":["..."],"better":{"zh":"...","pinyin":"...","ko":"..."}}',
+    ].join("\n");
+  }
+
+  function AIError(code, status) { this.code = code; this.status = status; }
+  function httpErr(r) {
+    return r.text().then(function (t) {
+      var code = r.status === 401 || r.status === 403 ? "key" : r.status === 429 ? "limit" : r.status === 404 || /model/i.test(t) && r.status === 400 ? "model" : "server";
+      if (r.status === 400 && /api[_ ]?key|API key not valid/i.test(t)) code = "key";
+      throw new AIError(code, r.status);
+    });
+  }
+  /* 회사별로 부르기. 모델 이름이 없다고 하면 다음 후보로 */
+  var MODELS = {
+    claude: ["claude-sonnet-5-5", "claude-haiku-5-5", "claude-sonnet-4-5", "claude-haiku-4-5"],
+    openai: ["gpt-5-mini", "gpt-4.1-mini", "gpt-4o-mini"],
+    gemini: ["gemini-2.5-flash", "gemini-2.0-flash"],
+  };
+  function callOnce(v, k, model, prompt, signal) {
+    var req;
+    if (v === "claude") {
+      req = fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST", signal: signal,
+        headers: { "content-type": "application/json", "x-api-key": k, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+        body: JSON.stringify({ model: model, max_tokens: 2000, messages: [{ role: "user", content: prompt }] }),
+      }).then(function (r) { return r.ok ? r.json() : httpErr(r); }).then(function (j) {
+        return (j.content || []).map(function (c) { return c.text || ""; }).join("");
+      });
+    } else if (v === "openai") {
+      req = fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST", signal: signal,
+        headers: { "content-type": "application/json", authorization: "Bearer " + k },
+        body: JSON.stringify({ model: model, response_format: { type: "json_object" }, messages: [{ role: "user", content: prompt }] }),
+      }).then(function (r) { return r.ok ? r.json() : httpErr(r); }).then(function (j) {
+        return ((j.choices || [])[0] || {}).message ? j.choices[0].message.content : "";
+      });
+    } else {
+      req = fetch("https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent", {
+        method: "POST", signal: signal,
+        headers: { "content-type": "application/json", "x-goog-api-key": k },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: "application/json" } }),
+      }).then(function (r) { return r.ok ? r.json() : httpErr(r); }).then(function (j) {
+        var c = (j.candidates || [])[0];
+        return c && c.content ? (c.content.parts || []).map(function (p) { return p.text || ""; }).join("") : "";
+      });
+    }
+    return req.catch(function (e) {
+      if (e instanceof AIError || (e && e.name === "AbortError")) throw e;
+      throw new AIError("net");
+    });
+  }
+  function callAI(k, prompt, signal) {
+    var v = vendor(k), list = MODELS[v] || [], i = 0;
+    function next() {
+      return callOnce(v, k, list[i], prompt, signal).catch(function (e) {
+        if (e && e.code === "model" && ++i < list.length) return next();
+        throw e;
+      });
+    }
+    return next().then(function (txt) {
+      var m = String(txt || "").match(/\{[\s\S]*\}/);
+      if (!m) throw new AIError("json");
+      try { return JSON.parse(m[0]); } catch (e) { throw new AIError("json"); }
+    });
+  }
+  function renderResult(r) {
+    var scores = Array.isArray(r.scores) ? r.scores : [], errs = Array.isArray(r.errors) ? r.errors : [];
+    var good = Array.isArray(r.good) ? r.good : [], b = r.better || {};
+    return '<div class="sp-res">' +
+      '<div class="sp-res-lv">' + esc(r.level || "") + "</div>" +
+      '<p class="sp-res-sum">' + esc(r.summary || "") + "</p>" +
+      '<div class="sp-res-scores">' + scores.map(function (x) {
+        var n = Math.max(0, Math.min(5, Math.round(Number(x.score) || 0)));
+        return '<div class="sp-rs"><span class="sp-rs-lab">' + esc(x.label) + '</span><span class="sp-rs-bar"><span style="width:' + n * 20 + '%"></span></span><b>' + n + '/5</b><span class="sp-rs-cmt">' + esc(x.comment) + "</span></div>";
+      }).join("") + "</div>" +
+      "<h6>고칠 곳 " + errs.length + "개</h6>" +
+      (errs.length ? '<ul class="sp-errs">' + errs.map(function (e) {
+        return '<li><div class="sp-err-type">' + esc(e.type) + '</div><div class="sp-err-from" lang="zh-CN">' + esc(e.original) + '</div><div class="sp-err-to" lang="zh-CN">→ ' + esc(e.fixed) + "</div>" +
+          (e.pinyin ? '<div class="sp-err-py">' + esc(e.pinyin) + "</div>" : "") + '<div class="sp-err-why">' + esc(e.why) + "</div></li>";
+      }).join("") + "</ul>" : '<p class="sp-desc">틀린 곳이 없어요. 아주 잘했어요!</p>') +
+      (good.length ? "<h6>잘한 점</h6><ul class=\"sp-good\">" + good.map(function (g) { return "<li>" + esc(g) + "</li>"; }).join("") + "</ul>" : "") +
+      (b.zh ? '<h6>이렇게 말하면 더 자연스러워요</h6><div class="sp-better" lang="zh-CN">' + esc(b.zh) + '</div><div class="sp-err-py">' + esc(b.pinyin) + '</div><div class="sp-desc">' + esc(b.ko) + "</div>" : "") +
+      "</div>";
+  }
+  function keyInfo(box) {
+    var k = key(), el = box.querySelector(".sp-keyinfo");
+    if (!el) return;
+    el.innerHTML = k
+      ? '🔑 키 저장됨 (' + esc(VNAME[vendor(k)] || "?") + " …" + esc(k.slice(-4)) + ') <button type="button" class="sp-link sp-keyedit">바꾸기</button> <button type="button" class="sp-link sp-keydel">지우기</button>'
+      : '<button type="button" class="sp-link sp-keyedit">🔑 내 API 키 넣기</button>';
+  }
+  function openKey(box, msg) {
+    var kb = box.querySelector(".sp-keybox");
+    kb.hidden = false;
+    var inp = kb.querySelector(".sp-keyin");
+    inp.value = "";
+    inp.focus();
+    box.querySelector(".sp-eval-msg").textContent = msg || "";
+  }
+  function saveKey(box) {
+    var kb = box.querySelector(".sp-keybox");
+    var k = kb.querySelector(".sp-keyin").value.trim().replace(/\s+/g, "");
+    var msg = box.querySelector(".sp-eval-msg");
+    if (!k) { msg.textContent = "키를 붙여 넣어 주세요."; return false; }
+    if (!vendor(k)) { msg.textContent = "키 모양을 알아볼 수 없어요. sk-ant-… (Claude), sk-… (ChatGPT), AIza… (Gemini)로 시작하는 키를 넣어 주세요."; return false; }
+    setKey(k, kb.querySelector(".sp-keykeep").checked);
+    kb.hidden = true;
+    msg.textContent = "키를 저장했어요. (" + VNAME[vendor(k)] + ")";
+    document.querySelectorAll(".sp").forEach(keyInfo);
+    return true;
+  }
+  function runEval(box, n) {
+    var msg = box.querySelector(".sp-eval-msg"), out = box.querySelector(".sp-result"), btn = box.querySelector(".sp-eval");
+    if (box._evalCtl) { box._evalCtl.abort(); return; }
+    var text = box.querySelector(".sp-text").value.trim();
+    if ((text.match(/[㐀-鿿]/g) || []).length < 5) { msg.textContent = "먼저 중국어로 조금 더 말해 주세요. (한자 5자 이상)"; return; }
+    var k = key();
+    if (!k) { box._pendingEval = true; openKey(box, "평가를 받으려면 먼저 학교에서 받은 API 키를 한 번 넣어 주세요."); return; }
+    if (box._talk && box._talk.on) stopTalk(box);
+    var p = box.querySelector(".sp-prompts input:checked");
+    var q = p ? (PROMPTS[String(n)] || [])[Number(p.value)] : null;
+    var ctl = window.AbortController ? new AbortController() : null;
+    box._evalCtl = ctl || { abort: function () {} };
+    btn.textContent = "⏹ 평가 멈추기";
+    msg.textContent = "평가하는 중… (" + VNAME[vendor(k)] + ", 10~40초쯤 걸려요)";
+    out.innerHTML = "";
+    callAI(k, evalPrompt(n, q, text), ctl && ctl.signal).then(function (r) {
+      out.innerHTML = renderResult(r);
+      msg.textContent = "평가를 마쳤어요.";
+      out.scrollIntoView({ behavior: "smooth", block: "start" });
+    }).catch(function (e) {
+      var c = e && e.code;
+      msg.textContent =
+        e && e.name === "AbortError" ? "평가를 멈췄어요." :
+        c === "key" ? "키가 맞지 않거나 쓸 수 없는 키예요. '바꾸기'를 눌러 다시 넣어 주세요." :
+        c === "limit" ? "사용 한도에 걸렸어요. 잠시 뒤에 다시 눌러 주세요." :
+        c === "model" ? "이 키로 쓸 수 있는 AI 모델을 찾지 못했어요. 선생님께 알려 주세요." :
+        c === "json" ? "평가 결과를 읽지 못했어요. 한 번 더 눌러 주세요." :
+        c === "net" ? "AI에 연결하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요." :
+        "평가 중에 문제가 생겼어요" + (e && e.status ? " (" + e.status + ")" : "") + ". 다시 눌러 주세요.";
+    }).then(function () {
+      box._evalCtl = null;
+      btn.textContent = "🤖 AI 평가 받기";
+    });
+  }
+
   /* ---------- 화면 ---------- */
   function sentenceList(c) {
     return (c.sentences || []).filter(function (s) { return s && s.zh && s.pinyin && syllables(s.zh, s.pinyin); });
@@ -671,9 +880,19 @@
       '<p class="sp-talk-msg" aria-live="polite"></p>' +
       '<textarea class="sp-text" lang="zh-CN" rows="5" placeholder="여기에 받아 적은 글이 나와요. 잘못 적힌 글자는 직접 고쳐도 돼요."></textarea>' +
       '<div class="sp-bar"><span class="sp-count"></span><button type="button" class="sp-btn sp-copy">📋 복사</button><button type="button" class="sp-btn sp-clear">지우기</button>' +
-      (AI_URL ? '<a class="sp-btn sp-ai" href="' + esc(AI_URL) + '" target="_blank" rel="noopener">🤖 AI 평가 받기 (시험판)</a>' : "") +
       "</div>" +
-      (AI_URL ? '<p class="sp-desc sp-ainote">🤖 AI 평가 시험판은 선생님 claude.ai 계정에서 작동해요. 받아 적은 글을 복사해 붙여 넣으면 어휘·문법·발음(추정)을 평가하고 틀린 곳을 짚어 줘요.</p>' : "") +
+      '<div class="sp-aibox">' +
+      '<div class="sp-bar"><button type="button" class="sp-btn sp-ai sp-eval">🤖 AI 평가 받기</button><span class="sp-keyinfo"></span></div>' +
+      '<div class="sp-keybox" hidden>' +
+      '<label class="sp-keylab">🔑 학교에서 받은 API 키를 붙여 넣으세요</label>' +
+      '<div class="sp-bar"><input type="password" class="sp-keyin" autocomplete="off" spellcheck="false" placeholder="sk-ant-… / sk-… / AIza…">' +
+      '<button type="button" class="sp-btn sp-keysave">저장</button><button type="button" class="sp-btn sp-keycancel">닫기</button></div>' +
+      '<label class="sp-keykeep-lab"><input type="checkbox" class="sp-keykeep" checked> 이 기기에 계속 저장 (여러 사람이 쓰는 컴퓨터에서는 끄세요)</label>' +
+      '<p class="sp-desc">키는 이 브라우저에만 저장되고, 평가할 때 해당 AI 회사(Claude·ChatGPT·Gemini)로만 보내져요.</p>' +
+      "</div>" +
+      '<p class="sp-eval-msg" aria-live="polite"></p>' +
+      '<div class="sp-result" aria-live="polite"></div>' +
+      "</div>" +
       "</section>" +
       "</div>"
     );
@@ -699,6 +918,10 @@
     if (!box) return;
     box._list = sentenceList(c);
     showSentence(box);
+    keyInfo(box);
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && e.target.closest(".sp-keyin")) { e.preventDefault(); box.querySelector(".sp-keysave").click(); }
+    });
     box.addEventListener("change", function (e) {
       if (e.target.closest(".sp-pick")) { if (active === box) stopRec(box); showSentence(box); }
     });
@@ -710,6 +933,11 @@
       if (t.closest(".sp-mine")) { if (box._url) new Audio(box._url).play(); return; }
       if (t.closest(".sp-talk")) return box._talk && box._talk.on ? stopTalk(box) : startTalk(box);
       if (t.closest(".sp-clear")) { stopTalk(box); box.querySelector(".sp-text").value = ""; box._talk = null; return count(box); }
+      if (t.closest(".sp-eval")) return runEval(box, n);
+      if (t.closest(".sp-keyedit")) return openKey(box, "");
+      if (t.closest(".sp-keycancel")) { box.querySelector(".sp-keybox").hidden = true; box._pendingEval = false; return; }
+      if (t.closest(".sp-keysave")) { if (saveKey(box) && box._pendingEval) { box._pendingEval = false; runEval(box, n); } return; }
+      if (t.closest(".sp-keydel")) { setKey("", false); keyInfo(box); box.querySelector(".sp-eval-msg").textContent = "이 브라우저에서 키를 지웠어요."; return; }
       if (t.closest(".sp-copy")) {
         var ta = box.querySelector(".sp-text");
         var p = box.querySelector(".sp-prompts input:checked");
@@ -769,7 +997,28 @@
     ".sp-stars{color:#e0a21b;font-size:18px;letter-spacing:1px}.sp-stars i{font-style:normal;color:#d9d2c5}" +
     ".sp-sc-cmt{margin:4px 0 0;font-size:14px}" +
     ".sp-sc-tips{margin-top:8px;font-size:13px}.sp-sc-tips ul{margin:4px 0 0;padding-left:18px}" +
-    ".sp-sc-note{margin:8px 0 0;font-size:12px;color:var(--text-soft,#7a6a5a)}";
+    ".sp-sc-note{margin:8px 0 0;font-size:12px;color:var(--text-soft,#7a6a5a)}" +
+    ".sp-aibox{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line,#e6dccb)}" +
+    ".sp-keyinfo{font-size:13px;color:var(--text-soft,#7a6a5a)}" +
+    ".sp-link{border:0;background:none;padding:0;font:inherit;font-size:13px;color:#355a85;text-decoration:underline;cursor:pointer}" +
+    ".sp-keybox{margin:6px 0;padding:12px 14px;border:1px solid #c9d8ea;border-radius:12px;background:#f4f8fc}" +
+    ".sp-keylab{font-weight:700;font-size:14px}" +
+    ".sp-keyin{flex:1;min-width:200px;height:34px;padding:0 10px;border:1px solid var(--line,#e6dccb);border-radius:10px;font:inherit;font-size:14px;background:var(--surface,#fff);color:inherit}" +
+    ".sp-keykeep-lab{display:block;font-size:13px;margin:2px 0 6px;cursor:pointer}" +
+    ".sp-eval-msg{min-height:1em;margin:6px 0 0;font-size:13px;color:#b2362b}" +
+    ".sp-res{margin-top:8px;padding:14px 16px;border-radius:12px;border:1px solid #d6eadc;background:#f8fbf9}" +
+    ".sp-res h6{margin:14px 0 6px;font-size:14px}" +
+    ".sp-res-lv{font-size:18px;font-weight:700}.sp-res-sum{margin:4px 0 10px;font-size:14px}" +
+    ".sp-res-scores{display:grid;gap:8px}" +
+    ".sp-rs{display:grid;grid-template-columns:8.5em 1fr 2.6em;gap:2px 10px;align-items:center;font-size:14px}" +
+    ".sp-rs-lab{font-weight:600}.sp-rs-bar{height:9px;border-radius:999px;background:#e3e0d8;overflow:hidden}.sp-rs-bar span{display:block;height:100%;background:#2f8a55}" +
+    ".sp-rs b{text-align:right}.sp-rs-cmt{grid-column:2/4;font-size:13px;color:var(--text-soft,#7a6a5a)}" +
+    ".sp-errs{margin:0;padding:0;list-style:none;display:grid;gap:8px}" +
+    ".sp-errs li{border-left:3px solid #d2463a;background:#fdf1ef;padding:8px 12px;border-radius:0 10px 10px 0}" +
+    ".sp-err-type{font-size:12px;font-weight:700;color:#b2362b}.sp-err-from{font-size:16px;text-decoration:line-through;text-decoration-color:#d2463a}" +
+    ".sp-err-to{font-size:16px;font-weight:700}.sp-err-py{font-size:13px;color:#4a6584}.sp-err-why{font-size:14px}" +
+    ".sp-good{margin:0;padding-left:20px;font-size:14px}.sp-better{font-size:17px}" +
+    "@media (max-width:520px){.sp-rs{grid-template-columns:1fr 2.6em}.sp-rs-bar{grid-column:1/3;grid-row:2}.sp-rs-cmt{grid-column:1/3}}";
   document.head.appendChild(st);
 
   window.SPEAKING = {
@@ -781,5 +1030,6 @@
     _test: function (box, frames) { box._frames = frames; box._curve = clean(frames); box._seg = segment(box); var r = judge(box); showScore(box, r); draw(box); return r; },
     _detect: detect,
     _tune: function (bw, dw) { BW = bw; DW = dw; },
+    _ai: { vendor: vendor, call: callAI, prompt: evalPrompt, render: renderResult },
   };
 })();
