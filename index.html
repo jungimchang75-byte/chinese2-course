@@ -2709,7 +2709,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.5.2",
+    version: "v1.5.3",
     logoText: "漢",
   },
 
@@ -7512,6 +7512,7 @@ window.SiteStore = (function () {
       var right = box.querySelectorAll(".rd-q.is-ok").length;
       box.querySelector(".rd-score").textContent = "🎯 " + total + "문제 중 " + right + "문제 맞혔어요!" + (right === total ? " 만점이에요 🎉" : "");
       box.querySelector(".rd-end").hidden = false;
+      if (right === total && typeof fireworks === "function") fireworks(); /* 독해 확인 문제 만점이면 폭죽 */
     }
   }
   function rdRetry(box) {
