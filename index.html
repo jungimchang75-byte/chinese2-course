@@ -2073,6 +2073,7 @@ a { color: var(--green-700); }
 .wa-title { margin: 0; font-family: var(--font); font-size: 18px; color: var(--green-800, #241b55); }
 .wa-empty { margin: 0; padding: 14px; border-radius: 12px; text-align: center; color: var(--text-soft); background: var(--cream-100, #efe9df); }
 .wa-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.wa-br { flex-basis: 100%; height: 0; }
 .wa-tabs button { min-height: 36px; padding: 0 12px; border: 0; border-radius: 999px; font: inherit; font-size: 14px; font-weight: 700; color: var(--green-700, #6246ea); background: var(--surface); box-shadow: var(--raise, var(--shadow)); cursor: pointer; }
 .wa-tabs button.is-on { color: #fff; background: var(--green-700, #6246ea); }
 .wa-body h5 { margin: 4px 0 8px; font-size: 16px; color: var(--green-800, #241b55); }
@@ -2710,7 +2711,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.7.0",
+    version: "v1.7.1",
     logoText: "漢",
   },
 
@@ -7192,16 +7193,17 @@ window.SiteStore = (function () {
   ];
   var IMG_KIND = { noteimages: "notes", cultureimages: "culture" };
   var TABS = [
-    { id: "notes", label: "📒 강의 노트" },
-    { id: "sentences", label: "🗣️ 문장" },
-    { id: "liveQuiz", label: "⚡ 실시간 퀴즈" },
-    { id: "onlineQuiz", label: "✅ self-check" }, // 예전 이름: 온라인 퀴즈
-    { id: "readings", label: "📖 독해연습" }, // HSK 3·4·5급 읽기 자료 (weeks/readings.js)
-    { id: "speaking", label: "🎙️ 말하기" }, // 성조 곡선 낭독·자유 말하기 (weeks/speaking.js, 시험판: 제1과)
-    { id: "culture", label: "🎞️ 문화 슬라이드" },
-    { id: "assignment", label: "📌 과제" },
-    { id: "videos", label: "🎬 영상" },
-    { id: "songs", label: "🎵 노래" },
+    /* row: 탭 버튼 줄 (1줄 배우기 · 2줄 연습 · 3줄 과제) */
+    { id: "notes", label: "📒 강의 노트", row: 1 },
+    { id: "sentences", label: "🗣️ 문장", row: 1 },
+    { id: "culture", label: "🎞️ 문화 슬라이드", row: 1 },
+    { id: "liveQuiz", label: "⚡ 실시간 퀴즈", row: 2 },
+    { id: "onlineQuiz", label: "✅ self-check", row: 2 }, // 예전 이름: 온라인 퀴즈
+    { id: "speaking", label: "🎙️ 말하기", row: 2 }, // 성조 곡선 낭독·자유 말하기 (weeks/speaking.js, 시험판: 제1과)
+    { id: "readings", label: "📖 독해연습", row: 2 }, // HSK 3·4·5급 읽기 자료 (weeks/readings.js)
+    { id: "assignment", label: "📌 과제", row: 3 },
+    { id: "videos", label: "🎬 영상", row: 3 },
+    { id: "songs", label: "🎵 노래", row: 3 },
   ];
 
   fetch("/api/health", { cache: "no-store" })
@@ -7867,8 +7869,8 @@ window.SiteStore = (function () {
       '<h4 class="wa-title">📚 ' + (Number(n) > 100 ? "제" + (n - 100) + "과 학습 자료" : "주차 학습 자료") + "</h4>" +
       adminHTML(n, c) +
       (tabs.length
-        ? '<div class="wa-tabs" role="tablist">' + list(tabs, function (t) {
-            return '<button type="button" role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === cur) + '" class="' + (t.id === cur ? "is-on" : "") + '">' + t.label + "</button>";
+        ? '<div class="wa-tabs" role="tablist">' + list(tabs, function (t, i) {
+            return (i && t.row !== tabs[i - 1].row ? '<span class="wa-br" aria-hidden="true"></span>' : "") + '<button type="button" role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === cur) + '" class="' + (t.id === cur ? "is-on" : "") + '">' + t.label + "</button>";
           }) + "</div>" +
           editBarHTML(el, cur) +
           '<div class="wa-body">' + (el._editing === cur ? editorHTML(el, cur) : tabBody(cur, c, w, n)) + "</div>"
