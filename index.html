@@ -2691,6 +2691,7 @@ a { color: var(--green-700); }
 <script src="weeks/content.js"></script>
 <script src="weeks/readings.js"></script>
 <script src="weeks/readings6.js"></script>
+<script src="weeks/speaking.js"></script>
 <script>
 /* ===== config ===== */
 /* CONFIG-START */
@@ -2709,7 +2710,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.5.3",
+    version: "v1.6.0",
     logoText: "漢",
   },
 
@@ -7196,6 +7197,7 @@ window.SiteStore = (function () {
     { id: "liveQuiz", label: "⚡ 실시간 퀴즈" },
     { id: "onlineQuiz", label: "✅ self-check" }, // 예전 이름: 온라인 퀴즈
     { id: "readings", label: "📖 독해연습" }, // HSK 3·4·5급 읽기 자료 (weeks/readings.js)
+    { id: "speaking", label: "🎙️ 말하기" }, // 성조 곡선 낭독·자유 말하기 (weeks/speaking.js, 시험판: 제1과)
     { id: "culture", label: "🎞️ 문화 슬라이드" },
     { id: "assignment", label: "📌 과제" },
     { id: "videos", label: "🎬 영상" },
@@ -7853,7 +7855,7 @@ window.SiteStore = (function () {
     var c = content(n);
     el.setAttribute("data-ready", "1");
     el._admin = isAdmin();
-    var tabs = TABS.filter(function (t) { return has(c, t.id); });
+    var tabs = TABS.filter(function (t) { return t.id === "speaking" ? !!(window.SPEAKING && SPEAKING.has(n, c)) : has(c, t.id); });
     if (!tabs.length && !isAdmin()) {
       el.innerHTML = "";
       return;
@@ -7874,6 +7876,7 @@ window.SiteStore = (function () {
       "</div>";
     if (cur === "culture" || cur === "notes") startSlides(el.querySelector(".cs"));
     if (cur === "readings") rdAlign(el);
+    if (cur === "speaking" && window.SPEAKING) SPEAKING.mount(el, n, c);
   }
   /* 독해연습: 등급·병음·번역·전체 듣기 줄을 '📖 독해연습' 탭 버튼 바로 밑에 맞춤 (좁은 화면에서는 왼쪽) */
   function rdAlign(el) {
@@ -7896,6 +7899,7 @@ window.SiteStore = (function () {
     if (id === "onlineQuiz") return onlineQuizHTML(c.onlineQuiz, Number(n));
     if (id === "liveQuiz") return liveQuizHTML(c.liveQuiz);
     if (id === "readings") return readingsHTML(c.readings);
+    if (id === "speaking") return window.SPEAKING ? SPEAKING.html(n, c) : "";
     if (id === "culture") return cultureHTML(c.culture);
     if (id === "videos") return ytGrid(c.videos, "영상");
     if (id === "songs") return ytGrid(c.songs, "노래");
