@@ -10,7 +10,7 @@
   "use strict";
 
   /* AI 평가: 학생이 학교에서 받은 자기 API 키를 넣으면 브라우저에서 바로 평가 (서버 없음)
-     키 모양으로 회사를 고름: sk-ant-… Claude · AIza… Gemini · sk-… ChatGPT
+     키 모양으로 회사를 고름: baze… 고려대 API Gateway(OpenAI 호환) · sk-ant-… Claude · AIza… Gemini · sk-… ChatGPT
      키는 이 브라우저(localStorage, '계속 저장'을 끄면 sessionStorage)에만 저장 */
   var KEY_NAME = "sp-ai-key";
   var LESSON_INFO = {
@@ -661,12 +661,17 @@
   var MEMKEY = "";
   function key() { return getKey() || MEMKEY; }
   function vendor(k) {
+    if (/^baze/i.test(k)) return "baze";
     if (/^sk-ant-/.test(k)) return "claude";
     if (/^AIza/.test(k)) return "gemini";
     if (/^sk-/.test(k)) return "openai";
     return "";
   }
-  var VNAME = { claude: "Claude", openai: "ChatGPT", gemini: "Gemini" };
+  var VNAME = { baze: "고려대 AI", claude: "Claude", openai: "ChatGPT", gemini: "Gemini" };
+  /* 고려대학교 API Gateway (llm.korea.ac.kr, OpenAI 호환) */
+  var BAZE_URL = "https://api.baze.co/v1/gateway";
+  /* 모델 목록에서 고를 순서: 빠르고 가벼운 모델 먼저 (학생 크레딧 절약) */
+  var BAZE_PREFER = [/gpt-?5[.\d]*-mini/i, /gpt-?4\.1-mini/i, /gemini[-\w.]*flash(?!-lite)/i, /claude[-\w.]*haiku/i, /claude[-\w.]*sonnet/i, /gpt-?4o-mini/i, /gpt/i, /claude/i, /gemini/i];
 
   function evalPrompt(n, q, text) {
     var L = LESSON_INFO[String(n)] || ["교양중국어2", ""];
@@ -698,7 +703,7 @@
   function AIError(code, status) { this.code = code; this.status = status; }
   function httpErr(r) {
     return r.text().then(function (t) {
-      var code = r.status === 401 || r.status === 403 ? "key" : r.status === 429 ? "limit" : r.status === 404 || /model/i.test(t) && r.status === 400 ? "model" : "server";
+      var code = r.status === 401 || r.status === 403 ? "key" : r.status === 429 || r.status === 402 ? "limit" : r.status === 404 || /model/i.test(t) && r.status === 400 ? "model" : "server";
       if (r.status === 400 && /api[_ ]?key|API key not valid/i.test(t)) code = "key";
       throw new AIError(code, r.status);
     });
@@ -708,7 +713,46 @@
     claude: ["claude-sonnet-5-5", "claude-haiku-5-5", "claude-sonnet-4-5", "claude-haiku-4-5"],
     openai: ["gpt-5-mini", "gpt-4.1-mini", "gpt-4o-mini"],
     gemini: ["gemini-2.5-flash", "gemini-2.0-flash"],
+    baze: ["gpt-4.1-mini", "gpt-4o-mini", "gemini-2.5-flash", "claude-haiku-4-5"],
   };
+  /* 학교 게이트웨이: 쓸 수 있는 모델 목록을 물어 하나 고름 (고른 것은 기억) */
+  function bazeModels(k, signal) {
+    var saved = "";
+    try { saved = window.localStorage.getItem("sp-ai-baze-model") || ""; } catch (e) {}
+    if (saved) return Promise.resolve([saved].concat(MODELS.baze));
+    return fetch(BAZE_URL + "/models", { signal: signal, headers: { authorization: "Bearer " + k } })
+      .then(function (r) { return r.ok ? r.json() : httpErr(r); })
+      .then(function (j) {
+        var ids = (j.data || j.models || []).map(function (m) { return typeof m === "string" ? m : m.id || m.name; }).filter(Boolean);
+        var pick = [];
+        BAZE_PREFER.forEach(function (re) { ids.forEach(function (id) { if (re.test(id) && pick.indexOf(id) < 0 && !/embed|image|audio|tts|whisper|realtime|vision-only/i.test(id)) pick.push(id); }); });
+        return pick.length ? pick.slice(0, 4) : MODELS.baze;
+      }, function (e) {
+        if (e && (e.code === "key" || e.name === "AbortError")) throw e;
+        return MODELS.baze;
+      });
+  }
+  function openaiCompat(url, k, model, prompt, signal, json) {
+    var body = { model: model, messages: [{ role: "user", content: prompt }] };
+    if (json) body.response_format = { type: "json_object" };
+    return fetch(url, {
+      method: "POST", signal: signal,
+      headers: { "content-type": "application/json", authorization: "Bearer " + k },
+      body: JSON.stringify(body),
+    }).then(function (r) {
+      if (r.ok) return r.json();
+      /* response_format을 모르는 모델이면 빼고 다시 */
+      if (json && r.status === 400) return r.text().then(function (t) {
+        if (/response_format|json_object/i.test(t)) return openaiCompat(url, k, model, prompt, signal, false).then(function (x) { return { _text: x }; });
+        throw new AIError(/model/i.test(t) ? "model" : /api[_ ]?key/i.test(t) ? "key" : "server", 400);
+      });
+      return httpErr(r);
+    }).then(function (j) {
+      if (j && j._text != null) return j._text;
+      var c = (j.choices || [])[0];
+      return c && c.message ? c.message.content || "" : "";
+    });
+  }
   function callOnce(v, k, model, prompt, signal) {
     var req;
     if (v === "claude") {
@@ -720,13 +764,9 @@
         return (j.content || []).map(function (c) { return c.text || ""; }).join("");
       });
     } else if (v === "openai") {
-      req = fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST", signal: signal,
-        headers: { "content-type": "application/json", authorization: "Bearer " + k },
-        body: JSON.stringify({ model: model, response_format: { type: "json_object" }, messages: [{ role: "user", content: prompt }] }),
-      }).then(function (r) { return r.ok ? r.json() : httpErr(r); }).then(function (j) {
-        return ((j.choices || [])[0] || {}).message ? j.choices[0].message.content : "";
-      });
+      req = openaiCompat("https://api.openai.com/v1/chat/completions", k, model, prompt, signal, true);
+    } else if (v === "baze") {
+      req = openaiCompat(BAZE_URL + "/chat/completions", k, model, prompt, signal, true);
     } else {
       req = fetch("https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent", {
         method: "POST", signal: signal,
@@ -745,12 +785,17 @@
   function callAI(k, prompt, signal) {
     var v = vendor(k), list = MODELS[v] || [], i = 0;
     function next() {
-      return callOnce(v, k, list[i], prompt, signal).catch(function (e) {
+      return callOnce(v, k, list[i], prompt, signal).then(function (t) {
+        if (v === "baze") try { window.localStorage.setItem("sp-ai-baze-model", list[i]); } catch (e) {}
+        return t;
+      }, function (e) {
         if (e && e.code === "model" && ++i < list.length) return next();
+        if (v === "baze" && e && e.code === "model") try { window.localStorage.removeItem("sp-ai-baze-model"); } catch (x) {}
         throw e;
       });
     }
-    return next().then(function (txt) {
+    var start = v === "baze" ? bazeModels(k, signal).then(function (l) { list = l; }) : Promise.resolve();
+    return start.then(next).then(function (txt) {
       var m = String(txt || "").match(/\{[\s\S]*\}/);
       if (!m) throw new AIError("json");
       try { return JSON.parse(m[0]); } catch (e) { throw new AIError("json"); }
@@ -795,7 +840,7 @@
     var k = kb.querySelector(".sp-keyin").value.trim().replace(/\s+/g, "");
     var msg = box.querySelector(".sp-eval-msg");
     if (!k) { msg.textContent = "키를 붙여 넣어 주세요."; return false; }
-    if (!vendor(k)) { msg.textContent = "키 모양을 알아볼 수 없어요. sk-ant-… (Claude), sk-… (ChatGPT), AIza… (Gemini)로 시작하는 키를 넣어 주세요."; return false; }
+    if (!vendor(k)) { msg.textContent = "키 모양을 알아볼 수 없어요. 학교(llm.korea.ac.kr)에서 받은 baze… 키, 또는 sk-ant-… (Claude), sk-… (ChatGPT), AIza… (Gemini) 키를 넣어 주세요."; return false; }
     setKey(k, kb.querySelector(".sp-keykeep").checked);
     kb.hidden = true;
     msg.textContent = "키를 저장했어요. (" + VNAME[vendor(k)] + ")";
@@ -826,10 +871,10 @@
       msg.textContent =
         e && e.name === "AbortError" ? "평가를 멈췄어요." :
         c === "key" ? "키가 맞지 않거나 쓸 수 없는 키예요. '바꾸기'를 눌러 다시 넣어 주세요." :
-        c === "limit" ? "사용 한도에 걸렸어요. 잠시 뒤에 다시 눌러 주세요." :
+        c === "limit" ? "사용 한도에 걸렸어요(크레딧이 부족할 수도 있어요). 잠시 뒤에 다시 눌러 주세요." :
         c === "model" ? "이 키로 쓸 수 있는 AI 모델을 찾지 못했어요. 선생님께 알려 주세요." :
         c === "json" ? "평가 결과를 읽지 못했어요. 한 번 더 눌러 주세요." :
-        c === "net" ? "AI에 연결하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요." :
+        c === "net" ? "AI에 연결하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요." + (vendor(k) === "baze" ? " (계속 안 되면 선생님께 알려 주세요)" : "") :
         "평가 중에 문제가 생겼어요" + (e && e.status ? " (" + e.status + ")" : "") + ". 다시 눌러 주세요.";
     }).then(function () {
       box._evalCtl = null;
@@ -884,8 +929,9 @@
       '<div class="sp-aibox">' +
       '<div class="sp-bar"><button type="button" class="sp-btn sp-ai sp-eval">🤖 AI 평가 받기</button><span class="sp-keyinfo"></span></div>' +
       '<div class="sp-keybox" hidden>' +
-      '<label class="sp-keylab">🔑 학교에서 받은 API 키를 붙여 넣으세요</label>' +
-      '<div class="sp-bar"><input type="password" class="sp-keyin" autocomplete="off" spellcheck="false" placeholder="sk-ant-… / sk-… / AIza…">' +
+      '<label class="sp-keylab">🔑 학교에서 받은 API 키(baze…)를 붙여 넣으세요</label>' +
+      '<p class="sp-desc">키 받는 곳: llm.korea.ac.kr → API Gateway → API 키 → 새 키 만들기 (키는 만든 직후 한 번만 보이니 바로 복사하세요)</p>' +
+      '<div class="sp-bar"><input type="password" class="sp-keyin" autocomplete="off" spellcheck="false" placeholder="baze…">' +
       '<button type="button" class="sp-btn sp-keysave">저장</button><button type="button" class="sp-btn sp-keycancel">닫기</button></div>' +
       '<label class="sp-keykeep-lab"><input type="checkbox" class="sp-keykeep" checked> 이 기기에 계속 저장 (여러 사람이 쓰는 컴퓨터에서는 끄세요)</label>' +
       '<p class="sp-desc">키는 이 브라우저에만 저장되고, 평가할 때 해당 AI 회사(Claude·ChatGPT·Gemini)로만 보내져요.</p>' +
