@@ -230,7 +230,7 @@ window.READINGS = {
         ["假如人民币升值，在中国留学的韩国学生就得花更多的韩币才能换到同样多的人民币。", "Jiǎrú rénmínbì shēngzhí, zài Zhōngguó liúxué de Hánguó xuésheng jiù děi huā gèng duō de Hánbì cái néng huàndào tóngyàng duō de rénmínbì.", "인민폐 가치가 오르면 중국에서 유학하는 한국 학생은 같은 양의 인민폐를 바꾸는 데 원화를 더 써야 해요."],
         ["因此，不少留学生会密切关注汇率，选择在比较合适的时候换钱。", "Yīncǐ, bù shǎo liúxuéshēng huì mìqiè guānzhù huìlǜ, xuǎnzé zài bǐjiào héshì de shíhou huàn qián.", "그래서 많은 유학생이 환율을 주의 깊게 지켜보며 적당한 때에 환전해요."],
         ["但是，专家提醒，汇率的走势很难准确预测，与其每天盯着数字，不如做好长期的预算。", "Dànshì, zhuānjiā tíxǐng, huìlǜ de zǒushì hěn nán zhǔnquè yùcè, yǔqí měi tiān dīngzhe shùzì, bùrú zuò hǎo chángqī de yùsuàn.", "하지만 전문가들은 환율 흐름은 정확히 예측하기 어려우니, 매일 숫자를 들여다보느니 장기 예산을 잘 짜는 게 낫다고 조언해요."],
-        ["另外，换钱的渠道也很重要：银行、机场和换钱所的手续费各不相同，有时差别相当大。", "Lìngwài, huàn qián de qúdào yě hěn zhòngyào: yínháng, jīchǎng hé huànqiánsuǒ de shǒuxùfèi gè bù xiāngtóng, yǒushí chābié xiāngdāng dà.", "또 환전 경로도 중요해요. 은행·공항·환전소의 수수료가 제각각이고 때로는 차이가 꽤 커요."],
+        ["另外，换钱的渠道也很重要：银行、机场和外币兑换处的手续费各不相同，有时差别相当大。", "Lìngwài, huàn qián de qúdào yě hěn zhòngyào: yínháng, jīchǎng hé wàibì duìhuànchù de shǒuxùfèi gè bù xiāngtóng, yǒushí chābié xiāngdāng dà.", "또 환전 경로도 중요해요. 은행·공항·환전소의 수수료가 제각각이고 때로는 차이가 꽤 커요."],
         ["一般来说，机场的汇率最不划算，最好提前在银行办理。", "Yìbān lái shuō, jīchǎng de huìlǜ zuì bú huásuàn, zuìhǎo tíqián zài yínháng bànlǐ.", "일반적으로 공항 환율이 가장 불리하니 미리 은행에서 처리하는 게 좋아요."],
         ["学会管理自己的钱包，也是留学生活中重要的一课。", "Xuéhuì guǎnlǐ zìjǐ de qiánbāo, yě shì liúxué shēnghuó zhōng zhòngyào de yí kè.", "자기 지갑을 관리하는 법을 배우는 것도 유학 생활의 중요한 공부예요."]
       ],
@@ -307,10 +307,10 @@ window.READINGS = {
       s: [
         ["长城是中国古代规模最大的防御工程，修建的历史可以追溯到两千多年前。", "Chángchéng shì Zhōngguó gǔdài guīmó zuì dà de fángyù gōngchéng, xiūjiàn de lìshǐ kěyǐ zhuīsù dào liǎngqiān duō nián qián.", "장성은 중국 고대 최대 규모의 방어 시설로, 쌓기 시작한 역사는 2천여 년 전까지 거슬러 올라가요."],
         ["秦始皇统一中国后，把各国原有的城墙连接起来，形成了“万里长城”的雏形。", "Qín Shǐhuáng tǒngyī Zhōngguó hòu, bǎ gè guó yuán yǒu de chéngqiáng liánjiē qilai, xíngchéng le “Wànlǐ Chángchéng” de chúxíng.", "진시황이 중국을 통일한 뒤 각 나라에 있던 성벽을 이어 ‘만리장성’의 원형을 만들었어요."],
-        ["我们今天看到的八达岭、慕田峪等段落，大多是明朝重新修建的。", "Wǒmen jīntiān kàndào de Bādálǐng, Mùtiányù děng duànluò, dàduō shì Míngcháo chóngxīn xiūjiàn de.", "오늘날 볼 수 있는 바다링·무톈위 등의 구간은 대부분 명나라 때 다시 쌓은 거예요."],
+        ["我们今天看到的八达岭、慕田峪等地段，大多是明朝重新修建的。", "Wǒmen jīntiān kàndào de Bādálǐng, Mùtiányù děng dìduàn, dàduō shì Míngcháo chóngxīn xiūjiàn de.", "오늘날 볼 수 있는 바다링·무톈위 등의 구간은 대부분 명나라 때 다시 쌓은 거예요."],
         ["根据2012年公布的调查结果，历代长城的总长度超过两万一千公里。", "Gēnjù èr líng yī èr nián gōngbù de diàochá jiéguǒ, lìdài Chángchéng de zǒng chángdù chāoguò liǎngwàn yìqiān gōnglǐ.", "2012년에 발표된 조사 결과에 따르면 역대 장성의 총길이는 2만 1천 km가 넘어요."],
         ["1987年，长城被列入《世界遗产名录》，成为全人类共同的财富。", "Yī jiǔ bā qī nián, Chángchéng bèi lièrù 《Shìjiè Yíchǎn Mínglù》, chéngwéi quán rénlèi gòngtóng de cáifù.", "1987년 장성은 세계유산 목록에 올라 인류 공동의 재산이 되었어요."],
-        ["如今，长城早已失去了军事作用，却成了中华民族坚韧精神的象征。", "Rújīn, Chángchéng zǎoyǐ shīqù le jūnshì zuòyòng, què chéng le Zhōnghuá mínzú jiānrèn jīngshen de xiàngzhēng.", "지금 장성은 군사적 역할을 잃은 지 오래지만, 중화 민족의 강인한 정신을 상징하게 되었어요."],
+        ["如今，长城早已失去了军事作用，却成了中华民族坚韧精神的象征。", "Rújīn, Chángchéng zǎoyǐ shīqù le jūnshì zuòyòng, què chéng le Zhōnghuá mínzú jiānrèn jīngshén de xiàngzhēng.", "지금 장성은 군사적 역할을 잃은 지 오래지만, 중화 민족의 강인한 정신을 상징하게 되었어요."],
         ["不过，由于游客过多和自然风化，部分长城正面临着保护的难题。", "Búguò, yóuyú yóukè guò duō hé zìrán fēnghuà, bùfen Chángchéng zhèng miànlínzhe bǎohù de nántí.", "하지만 너무 많은 관광객과 자연 풍화 때문에 일부 장성은 보존 문제에 부딪혀 있어요."]
       ],
       w: [["防御", "fángyù", "방어"], ["追溯", "zhuīsù", "거슬러 올라가다"], ["雏形", "chúxíng", "원형, 초기 형태"], ["财富", "cáifù", "재산, 부"], ["象征", "xiàngzhēng", "상징"], ["面临", "miànlín", "직면하다"]]
@@ -436,7 +436,7 @@ window.READING_QUIZ = {
     ],
     "4": [
       ["点外卖大概多长时间能送到？", ["五分钟", "半个小时左右", "两个小时", "一天"], 1],
-      ["文中提到外卖有什么问题？", ["太贵了", "不好吃", "送得太慢", "塑料盒子太多，对健康也不好"], 3],
+      ["文中提到外卖有什么问题？", ["太贵了", "不好吃", "送得太慢", "塑料盒子太多，经常吃对健康也不好"], 3],
       ["作者建议周末怎么吃饭？", ["一直点外卖", "不吃饭", "自己做饭或者去饭馆", "只吃水果"], 2]
     ],
     "5": [
@@ -459,7 +459,7 @@ window.READING_QUIZ = {
     "5": [
       ["如果人民币升值，韩国留学生会怎么样？", ["需要花更多的韩币", "可以少花韩币", "生活费不变", "不能换钱"], 0],
       ["专家建议留学生怎么做？", ["每天盯着汇率", "做好长期的预算", "只在机场换钱", "不要换钱"], 1],
-      ["根据短文，哪里的汇率最不划算？", ["银行", "换钱所", "机场", "网上"], 2]
+      ["根据短文，哪里的汇率最不划算？", ["银行", "外币兑换处", "机场", "网上"], 2]
     ]
   },
   "107": {

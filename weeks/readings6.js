@@ -81,7 +81,7 @@
         ["然而，同一道菜，换了水土、换了食材，味道总会有微妙的差别，这种“似是而非”反倒让乡愁更加浓烈。", "Rán'ér, tóng yí dào cài, huàn le shuǐtǔ, huàn le shícái, wèidao zǒng huì yǒu wēimiào de chābié, zhè zhǒng “sìshì'érfēi” fǎndào ràng xiāngchóu gèngjiā nóngliè.", "하지만 같은 요리라도 물과 땅, 재료가 바뀌면 맛이 미묘하게 달라지고, 이 ‘비슷한 듯 다른’ 맛이 오히려 향수를 더 짙게 해요."],
         ["或许，我们怀念的并不只是食物本身，而是那段有家人陪伴的时光。", "Huòxǔ, wǒmen huáiniàn de bìng bù zhǐ shì shíwù běnshēn, ér shì nà duàn yǒu jiārén péibàn de shíguāng.", "어쩌면 우리가 그리워하는 것은 음식 자체가 아니라 가족과 함께했던 그 시간일 거예요."]
       ],
-      w: [["离乡背井", "líxiāng-bèijǐng", "고향을 떠나다"], ["割舍", "gēshě", "떨쳐 버리다"], ["地道", "dìdao", "본고장의, 정통의"], ["尘封", "chénfēng", "오래 묻어 두다"], ["怀旧", "huáijiù", "옛날을 그리워하다"], ["似是而非", "sìshì'érfēi", "비슷한 듯 다르다"]],
+      w: [["离乡背井", "líxiāng-bèijǐng", "고향을 떠나다"], ["割舍", "gēshě", "떨쳐 버리다"], ["地道", "dìdao", "본고장의, 정통의"], ["尘封", "chénfēng", "오래 묻어 두다"], ["怀旧", "huáijiù", "옛날을 그리워하다"], ["似是而非", "sìshì'érfēi", "그럴듯하지만 실제로는 다르다"]],
       q: [
         ["对离乡背井的人来说，最难割舍的往往是什么？", ["家乡的风景", "家乡的味道", "家乡的房子", "家乡的天气"], 1],
         ["为什么食物最容易引发怀旧之情？", ["因为味觉和嗅觉与负责情感和记忆的大脑区域联系紧密", "因为食物很贵", "因为餐馆很多", "因为人们每天都吃饭"], 0],
@@ -126,7 +126,7 @@
       title: "让故宫“活”起来", ko: "고궁을 ‘살아 있게’ 하기",
       s: [
         ["提起故宫，人们脑海中浮现的往往是庄严肃穆的宫殿和陈列在玻璃柜里的珍贵文物。", "Tíqǐ Gùgōng, rénmen nǎohǎi zhōng fúxiàn de wǎngwǎng shì zhuāngyán sùmù de gōngdiàn hé chénliè zài bōli guì li de zhēnguì wénwù.", "고궁 하면 사람들 머릿속에 떠오르는 것은 흔히 장엄한 궁전과 유리 진열장 속의 귀한 유물이에요."],
-        ["然而近十年来，这座拥有六百年历史的博物馆却频频“出圈”，成了年轻人追捧的文化品牌。", "Rán'ér jìn shí nián lái, zhè zuò yōngyǒu liùbǎi nián lìshǐ de bówùguǎn què pínpín “chūquān”, chéng le niánqīngrén zhuīpěng de wénhuà pǐnpái.", "그런데 최근 10년 동안 600년 역사의 이 박물관은 자주 큰 화제가 되며 젊은이들이 열광하는 문화 브랜드가 되었어요."],
+        ["然而近十年来，这座拥有六百年历史的皇家宫殿却频频“出圈”，成了年轻人追捧的文化品牌。", "Rán'ér jìn shí nián lái, zhè zuò yōngyǒu liùbǎi nián lìshǐ de huángjiā gōngdiàn què pínpín “chūquān”, chéng le niánqīngrén zhuīpěng de wénhuà pǐnpái.", "그런데 최근 10년 동안 600년 역사의 이 황궁은 자주 큰 화제가 되며 젊은이들이 열광하는 문화 브랜드가 되었어요."],
         ["从印有宫廷图案的文具到以文物为原型的手机游戏，文创产品让古老的文化以轻松有趣的方式走进日常生活。", "Cóng yìn yǒu gōngtíng tú'àn de wénjù dào yǐ wénwù wéi yuánxíng de shǒujī yóuxì, wénchuàng chǎnpǐn ràng gǔlǎo de wénhuà yǐ qīngsōng yǒuqù de fāngshì zǒujìn rìcháng shēnghuó.", "궁중 문양을 넣은 문구부터 유물을 본뜬 휴대폰 게임까지, 문화 상품은 오래된 문화를 가볍고 재미있게 일상 속으로 데려왔어요."],
         ["与此同时，故宫还通过数字技术，把大量文物高清影像放到网上，让人足不出户就能“云游”紫禁城。", "Yǔ cǐ tóngshí, Gùgōng hái tōngguò shùzì jìshù, bǎ dàliàng wénwù gāoqīng yǐngxiàng fàng dào wǎng shang, ràng rén zúbùchūhù jiù néng “yúnyóu” Zǐjìnchéng.", "동시에 고궁은 디지털 기술로 많은 유물의 고화질 영상을 인터넷에 올려, 집 밖에 나가지 않고도 자금성을 ‘온라인으로 여행’할 수 있게 했어요."],
         ["不过，也有学者提醒，商业开发应把握分寸，避免过度娱乐化而冲淡了文物本身的历史价值。", "Búguò, yě yǒu xuézhě tíxǐng, shāngyè kāifā yīng bǎwò fēncun, bìmiǎn guòdù yúlèhuà ér chōngdàn le wénwù běnshēn de lìshǐ jiàzhí.", "하지만 상업 개발은 적당한 선을 지켜야 하며, 지나치게 오락으로 흘러 유물의 역사적 가치가 흐려지지 않게 해야 한다고 경고하는 학자도 있어요."],
