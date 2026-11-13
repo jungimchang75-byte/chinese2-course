@@ -72,14 +72,14 @@ window.READINGS = {
       title: "“辛苦了”里的人情味", ko: "“수고했어요”에 담긴 정",
       s: [
         ["在中国，朋友远道而来，主人见面的第一句话往往是“路上辛苦了”。", "Zài Zhōngguó, péngyou yuǎndào ér lái, zhǔrén jiàn miàn de dì-yī jù huà wǎngwǎng shì “lùshang xīnkǔ le”.", "중국에서는 친구가 먼 길을 오면 주인이 만나서 하는 첫마디가 흔히 “오느라 수고했어”예요."],
-        ["这句话看似简单，却包含着对客人的关心和体谅。", "Zhè jù huà kànsì jiǎndān, què bāohánzhe duì kèrén de guānxīn hé tǐliàng.", "이 말은 단순해 보이지만 손님에 대한 관심과 배려가 담겨 있어요."],
-        ["过去交通不发达，从一个城市到另一个城市可能要花好几天，旅途的确非常辛苦。", "Guòqù jiāotōng bù fādá, cóng yí ge chéngshì dào lìng yí ge chéngshì kěnéng yào huā hǎo jǐ tiān, lǚtú díquè fēicháng xīnkǔ.", "예전에는 교통이 발달하지 않아 도시 사이를 오가는 데 며칠씩 걸리기도 해서 여정이 정말 고됐어요."],
+        ["这句话看起来简单，却包含着对客人的关心。", "Zhè jù huà kàn qilai jiǎndān, què bāohánzhe duì kèrén de guānxīn.", "이 말은 단순해 보이지만 손님에 대한 관심과 배려가 담겨 있어요."],
+        ["过去交通不发达，从一个城市到另一个城市可能要花好几天，路上的确非常辛苦。", "Guòqù jiāotōng bù fādá, cóng yí ge chéngshì dào lìng yí ge chéngshì kěnéng yào huā hǎo jǐ tiān, lùshang díquè fēicháng xīnkǔ.", "예전에는 교통이 발달하지 않아 도시 사이를 오가는 데 며칠씩 걸리기도 해서 오가는 길이 정말 고됐어요."],
         ["如今有了高铁和飞机，几个小时就能到达，可人们仍然习惯这样问候。", "Rújīn yǒu le gāotiě hé fēijī, jǐ ge xiǎoshí jiù néng dàodá, kě rénmen réngrán xíguàn zhèyàng wènhòu.", "지금은 고속철도와 비행기로 몇 시간이면 도착하지만 사람들은 여전히 이렇게 인사해요."],
-        ["除了口头问候，主人通常还会主动帮客人提行李，安排好吃住。", "Chúle kǒutóu wènhòu, zhǔrén tōngcháng hái huì zhǔdòng bāng kèrén tí xíngli, ānpái hǎo chī zhù.", "말로 하는 인사 외에도 주인은 보통 먼저 나서서 짐을 들어 주고 숙식을 마련해요."],
-        ["韩国也有意思相近的问候语，可见两国文化都重视对客人的照顾。", "Hánguó yě yǒu yìsi xiāngjìn de wènhòuyǔ, kějiàn liǎng guó wénhuà dōu zhòngshì duì kèrén de zhàogù.", "한국에도 뜻이 비슷한 인사말이 있으니, 두 나라 문화 모두 손님을 챙기는 것을 중시함을 알 수 있어요."],
+        ["除了说这句话，主人通常还会主动帮客人提行李，安排好吃住。", "Chúle shuō zhè jù huà, zhǔrén tōngcháng hái huì zhǔdòng bāng kèrén tí xíngli, ānpái hǎo chī zhù.", "이 말을 하는 것 외에도 주인은 보통 먼저 나서서 짐을 들어 주고 숙식을 마련해요."],
+        ["韩国也有意思差不多的问候语，可见两国文化都重视对客人的照顾。", "Hánguó yě yǒu yìsi chàbuduō de wènhòuyǔ, kějiàn liǎng guó wénhuà dōu zhòngshì duì kèrén de zhàogù.", "한국에도 뜻이 비슷한 인사말이 있으니, 두 나라 문화 모두 손님을 챙기는 것을 중시함을 알 수 있어요."],
         ["一句“辛苦了”，拉近了人与人之间的距离，也体现了中国人热情好客的传统。", "Yí jù “xīnkǔ le”, lājìn le rén yǔ rén zhījiān de jùlí, yě tǐxiàn le Zhōngguórén rèqíng hàokè de chuántǒng.", "“수고했어” 한마디가 사람 사이의 거리를 좁히고, 손님을 반기는 중국인의 전통도 보여 줘요."]
       ],
-      w: [["远道而来", "yuǎndào ér lái", "먼 길을 오다"], ["体谅", "tǐliàng", "헤아리다, 배려하다"], ["旅途", "lǚtú", "여정"], ["仍然", "réngrán", "여전히"], ["问候", "wènhòu", "안부를 묻다"], ["热情好客", "rèqíng hàokè", "손님을 반기다"]]
+      w: [["远道而来", "yuǎndào ér lái", "먼 길을 오다"], ["看起来", "kàn qilai", "~해 보이다"], ["的确", "díquè", "정말, 확실히"], ["仍然", "réngrán", "여전히"], ["问候", "wènhòu", "안부를 묻다"], ["热情好客", "rèqíng hàokè", "손님을 반기다"]]
     }
   },
   "103": {
@@ -149,15 +149,15 @@ window.READINGS = {
     "5": {
       title: "二十四节气", ko: "24절기",
       s: [
-        ["中国古人根据太阳的位置，把一年分成了二十四个节气。", "Zhōngguó gǔrén gēnjù tàiyáng de wèizhi, bǎ yì nián fēnchéng le èrshísì ge jiéqi.", "중국 옛사람들은 태양의 위치에 따라 한 해를 24절기로 나눴어요."],
+        ["古代的中国人根据太阳的位置，把一年分成了二十四个节气。", "Gǔdài de Zhōngguórén gēnjù tàiyáng de wèizhi, bǎ yì nián fēnchéng le èrshísì ge jiéqi.", "옛날 중국 사람들은 태양의 위치에 따라 한 해를 24절기로 나눴어요."],
         ["每个节气大约相隔十五天，反映了气候、温度和农业活动的变化。", "Měi ge jiéqi dàyuē xiānggé shíwǔ tiān, fǎnyìng le qìhòu, wēndù hé nóngyè huódòng de biànhuà.", "절기는 약 15일 간격으로 기후·온도·농사의 변화를 반영해요."],
         ["例如，“立春”意味着春天的开始，“冬至”是一年中白天最短的一天。", "Lìrú, “lìchūn” yìwèizhe chūntiān de kāishǐ, “dōngzhì” shì yì nián zhōng báitiān zuì duǎn de yì tiān.", "예를 들어 ‘입춘’은 봄의 시작, ‘동지’는 일 년 중 낮이 가장 짧은 날이에요."],
-        ["在没有天气预报的时代，农民依靠节气安排播种和收获。", "Zài méiyǒu tiānqì yùbào de shídài, nóngmín yīkào jiéqi ānpái bōzhǒng hé shōuhuò.", "일기예보가 없던 시대에 농민들은 절기에 따라 씨 뿌리기와 수확을 정했어요."],
-        ["2016年，二十四节气被列入了联合国教科文组织的非物质文化遗产名录。", "Èr líng yī liù nián, èrshísì jiéqi bèi lièrù le Liánhéguó Jiàokēwén Zǔzhī de fēiwùzhì wénhuà yíchǎn mínglù.", "2016년 24절기는 유네스코 인류무형문화유산 목록에 올랐어요."],
-        ["有趣的是，韩国也使用二十四节气，人们在冬至这天有喝红豆粥的习俗。", "Yǒuqù de shì, Hánguó yě shǐyòng èrshísì jiéqi, rénmen zài dōngzhì zhè tiān yǒu hē hóngdòu zhōu de xísú.", "흥미롭게도 한국도 24절기를 쓰고, 동짓날 팥죽을 먹는 풍습이 있어요."],
+        ["在没有天气预报的时代，农民依靠节气安排农业生产。", "Zài méiyǒu tiānqì yùbào de shídài, nóngmín yīkào jiéqi ānpái nóngyè shēngchǎn.", "일기예보가 없던 시대에 농민들은 절기에 따라 농사일을 정했어요."],
+        ["2016年，二十四节气被列入了世界非物质文化遗产名录。", "Èr líng yī liù nián, èrshísì jiéqi bèi lièrù le shìjiè fēiwùzhì wénhuà yíchǎn mínglù.", "2016년 24절기는 세계 무형문화유산 목록(유네스코)에 올랐어요."],
+        ["有趣的是，韩国也使用二十四节气，人们在冬至这天有喝红豆粥的习惯。", "Yǒuqù de shì, Hánguó yě shǐyòng èrshísì jiéqi, rénmen zài dōngzhì zhè tiān yǒu hē hóngdòu zhōu de xíguàn.", "흥미롭게도 한국도 24절기를 쓰고, 동짓날 팥죽을 먹는 풍습이 있어요."],
         ["而中国北方的人在这一天习惯吃饺子。", "Ér Zhōngguó běifāng de rén zài zhè yì tiān xíguàn chī jiǎozi.", "반면 중국 북방 사람들은 이날 만두(자오쯔)를 먹는 습관이 있어요."]
       ],
-      w: [["节气", "jiéqi", "절기"], ["相隔", "xiānggé", "사이를 두다"], ["意味着", "yìwèizhe", "의미하다"], ["依靠", "yīkào", "의지하다"], ["播种", "bōzhǒng", "씨를 뿌리다"], ["习俗", "xísú", "풍습"]]
+      w: [["节气", "jiéqi", "절기"], ["相隔", "xiānggé", "사이를 두다"], ["意味着", "yìwèizhe", "의미하다"], ["依靠", "yīkào", "의지하다"], ["农业", "nóngyè", "농업"], ["红豆粥", "hóngdòu zhōu", "팥죽"]]
     }
   },
   "105": {
@@ -190,12 +190,12 @@ window.READINGS = {
       s: [
         ["提起川菜，很多人首先想到的就是“麻”和“辣”。", "Tíqǐ chuāncài, hěn duō rén shǒuxiān xiǎngdào de jiù shì “má” hé “là”.", "쓰촨 요리를 말하면 많은 사람이 먼저 ‘얼얼함’과 ‘매움’을 떠올려요."],
         ["水煮肉、麻婆豆腐、宫保鸡丁等名菜，几乎都离不开辣椒和花椒。", "Shuǐzhǔròu, mápó dòufu, gōngbǎo jīdīng děng míngcài, jīhū dōu lí bu kāi làjiāo hé huājiāo.", "수이주러우, 마파두부, 궁바오지딩 같은 유명 요리는 거의 모두 고추와 산초가 빠질 수 없어요."],
-        ["有人认为，四川盆地气候潮湿，吃辣可以帮助人们排出体内的湿气。", "Yǒu rén rènwéi, Sìchuān péndì qìhòu cháoshī, chī là kěyǐ bāngzhù rénmen páichū tǐnèi de shīqì.", "쓰촨 분지는 기후가 습해서 매운 것을 먹으면 몸 안의 습기를 내보내는 데 도움이 된다는 견해가 있어요."],
-        ["不过，辣椒是明朝末年才从美洲传入中国的，在那之前，四川人主要用花椒、姜等调味。", "Búguò, làjiāo shì Míngcháo mònián cái cóng Měizhōu chuánrù Zhōngguó de, zài nà zhīqián, Sìchuān rén zhǔyào yòng huājiāo, jiāng děng tiáowèi.", "하지만 고추는 명나라 말에야 아메리카에서 중국에 들어왔고, 그전에는 쓰촨 사람들이 주로 산초·생강 등으로 맛을 냈어요."],
+        ["有人认为，四川的气候比较湿，吃辣可以帮助人们排出体内的湿气。", "Yǒu rén rènwéi, Sìchuān de qìhòu bǐjiào shī, chī là kěyǐ bāngzhù rénmen páichū tǐnèi de shīqì.", "쓰촨은 기후가 습한 편이라 매운 것을 먹으면 몸 안의 습기를 내보내는 데 도움이 된다는 견해가 있어요."],
+        ["不过，辣椒是明朝末年才从美洲传入中国的，在那之前，四川人主要用花椒等调味。", "Búguò, làjiāo shì Míngcháo mònián cái cóng Měizhōu chuánrù Zhōngguó de, zài nà zhīqián, Sìchuān rén zhǔyào yòng huājiāo děng tiáowèi.", "하지만 고추는 명나라 말에야 아메리카에서 중국에 들어왔고, 그전에는 쓰촨 사람들이 주로 산초 등으로 맛을 냈어요."],
         ["其实，川菜并不只有辣味，它讲究“一菜一格，百菜百味”，酸、甜、咸、香的菜也很多。", "Qíshí, chuāncài bìng bù zhǐ yǒu là wèi, tā jiǎngjiu “yí cài yì gé, bǎi cài bǎi wèi”, suān, tián, xián, xiāng de cài yě hěn duō.", "사실 쓰촨 요리는 매운맛만 있는 게 아니라 ‘요리마다 개성, 백 가지 요리에 백 가지 맛’을 중시해서 시고 달고 짜고 향긋한 요리도 많아요."],
         ["每家川菜馆都有自己的招牌菜，同一道菜，在不同的饭馆吃起来味道也各有特色。", "Měi jiā chuāncàiguǎn dōu yǒu zìjǐ de zhāopáicài, tóng yí dào cài, zài bùtóng de fànguǎn chī qilai wèidao yě gè yǒu tèsè.", "쓰촨 식당마다 대표 메뉴가 있고, 같은 요리라도 식당마다 맛에 특색이 있어요."]
       ],
-      w: [["提起", "tíqǐ", "언급하다"], ["离不开", "lí bu kāi", "없어서는 안 되다"], ["潮湿", "cháoshī", "습하다"], ["传入", "chuánrù", "전해 들어오다"], ["调味", "tiáowèi", "맛을 내다"], ["讲究", "jiǎngjiu", "중시하다"]]
+      w: [["提起", "tíqǐ", "언급하다"], ["离不开", "lí bu kāi", "없어서는 안 되다"], ["湿", "shī", "습하다"], ["传入", "chuánrù", "전해 들어오다"], ["调味", "tiáowèi", "맛을 내다"], ["讲究", "jiǎngjiu", "중시하다"]]
     }
   },
   "106": {
@@ -229,8 +229,8 @@ window.READINGS = {
         ["对于在国外学习的留学生来说，汇率的变化会直接影响他们的生活费。", "Duìyú zài guówài xuéxí de liúxuéshēng lái shuō, huìlǜ de biànhuà huì zhíjiē yǐngxiǎng tāmen de shēnghuófèi.", "해외 유학생에게 환율 변화는 생활비에 직접 영향을 줘요."],
         ["假如人民币升值，在中国留学的韩国学生就得花更多的韩币才能换到同样多的人民币。", "Jiǎrú rénmínbì shēngzhí, zài Zhōngguó liúxué de Hánguó xuésheng jiù děi huā gèng duō de Hánbì cái néng huàndào tóngyàng duō de rénmínbì.", "인민폐 가치가 오르면 중국에서 유학하는 한국 학생은 같은 양의 인민폐를 바꾸는 데 원화를 더 써야 해요."],
         ["因此，不少留学生会密切关注汇率，选择在比较合适的时候换钱。", "Yīncǐ, bù shǎo liúxuéshēng huì mìqiè guānzhù huìlǜ, xuǎnzé zài bǐjiào héshì de shíhou huàn qián.", "그래서 많은 유학생이 환율을 주의 깊게 지켜보며 적당한 때에 환전해요."],
-        ["但是，专家提醒，汇率的走势很难准确预测，与其每天盯着数字，不如做好长期的预算。", "Dànshì, zhuānjiā tíxǐng, huìlǜ de zǒushì hěn nán zhǔnquè yùcè, yǔqí měi tiān dīngzhe shùzì, bùrú zuò hǎo chángqī de yùsuàn.", "하지만 전문가들은 환율 흐름은 정확히 예측하기 어려우니, 매일 숫자를 들여다보느니 장기 예산을 잘 짜는 게 낫다고 조언해요."],
-        ["另外，换钱的渠道也很重要：银行、机场和外币兑换处的手续费各不相同，有时差别相当大。", "Lìngwài, huàn qián de qúdào yě hěn zhòngyào: yínháng, jīchǎng hé wàibì duìhuànchù de shǒuxùfèi gè bù xiāngtóng, yǒushí chābié xiāngdāng dà.", "또 환전 경로도 중요해요. 은행·공항·환전소의 수수료가 제각각이고 때로는 차이가 꽤 커요."],
+        ["但是，专家提醒，汇率的变化很难准确预测，与其每天看着数字，不如做好长期的预算。", "Dànshì, zhuānjiā tíxǐng, huìlǜ de biànhuà hěn nán zhǔnquè yùcè, yǔqí měi tiān kànzhe shùzì, bùrú zuò hǎo chángqī de yùsuàn.", "하지만 전문가들은 환율 변화는 정확히 예측하기 어려우니, 매일 숫자를 들여다보느니 장기 예산을 잘 짜는 게 낫다고 조언해요."],
+        ["另外，在哪儿换钱也很重要：银行和机场的手续费各不相同，有时差别相当大。", "Lìngwài, zài nǎr huàn qián yě hěn zhòngyào: yínháng hé jīchǎng de shǒuxùfèi gè bù xiāngtóng, yǒushí chābié xiāngdāng dà.", "또 어디에서 환전하느냐도 중요해요. 은행과 공항의 수수료가 서로 다르고 때로는 차이가 꽤 커요."],
         ["一般来说，机场的汇率最不划算，最好提前在银行办理。", "Yìbān lái shuō, jīchǎng de huìlǜ zuì bú huásuàn, zuìhǎo tíqián zài yínháng bànlǐ.", "일반적으로 공항 환율이 가장 불리하니 미리 은행에서 처리하는 게 좋아요."],
         ["学会管理自己的钱包，也是留学生活中重要的一课。", "Xuéhuì guǎnlǐ zìjǐ de qiánbāo, yě shì liúxué shēnghuó zhōng zhòngyào de yí kè.", "자기 지갑을 관리하는 법을 배우는 것도 유학 생활의 중요한 공부예요."]
       ],
@@ -267,13 +267,13 @@ window.READINGS = {
       title: "中医和西医", ko: "중의학과 서양 의학",
       s: [
         ["在中国，人们生病时既可以看西医，也可以看中医。", "Zài Zhōngguó, rénmen shēng bìng shí jì kěyǐ kàn xīyī, yě kěyǐ kàn zhōngyī.", "중국에서는 아플 때 서양 의학 진료도, 중의학 진료도 받을 수 있어요."],
-        ["西医重视检查数据，通过化验和仪器找出病因，治疗的效果往往比较快。", "Xīyī zhòngshì jiǎnchá shùjù, tōngguò huàyàn hé yíqì zhǎochū bìngyīn, zhìliáo de xiàoguǒ wǎngwǎng bǐjiào kuài.", "서양 의학은 검사 데이터를 중시해 검사와 기기로 원인을 찾고, 치료 효과가 대체로 빨라요."],
-        ["中医则强调整体平衡，医生通过“望、闻、问、切”四种方法了解病人的身体状况。", "Zhōngyī zé qiángdiào zhěngtǐ pínghéng, yīshēng tōngguò “wàng, wén, wèn, qiè” sì zhǒng fāngfǎ liǎojiě bìngrén de shēntǐ zhuàngkuàng.", "중의학은 몸 전체의 균형을 강조하고, 의사는 ‘보고, 듣고(냄새 맡고), 묻고, 짚는’ 네 가지 방법으로 환자 상태를 파악해요."],
+        ["西医重视检查数据，通过各种检查找出病因，治疗的效果往往比较快。", "Xīyī zhòngshì jiǎnchá shùjù, tōngguò gè zhǒng jiǎnchá zhǎochū bìngyīn, zhìliáo de xiàoguǒ wǎngwǎng bǐjiào kuài.", "서양 의학은 검사 데이터를 중시해 여러 가지 검사로 원인을 찾고, 치료 효과가 대체로 빨라요."],
+        ["而中医强调整体平衡，医生通过“望、闻、问、切”四种方法了解病人的身体状况。", "Ér zhōngyī qiángdiào zhěngtǐ pínghéng, yīshēng tōngguò “wàng, wén, wèn, qiè” sì zhǒng fāngfǎ liǎojiě bìngrén de shēntǐ zhuàngkuàng.", "반면 중의학은 몸 전체의 균형을 강조하고, 의사는 ‘보고, 듣고(냄새 맡고), 묻고, 짚는’ 네 가지 방법으로 환자 상태를 파악해요."],
         ["其中“切”就是把脉，医生用手指感受病人的脉搏，从而判断病情。", "Qízhōng “qiè” jiù shì bǎmài, yīshēng yòng shǒuzhǐ gǎnshòu bìngrén de màibó, cóng'ér pànduàn bìngqíng.", "그중 ‘짚기’는 맥을 짚는 것으로, 손가락으로 맥박을 느껴 병세를 판단해요."],
         ["很多人感冒发烧时选择西医，而调理慢性病或者改善体质时更愿意看中医。", "Hěn duō rén gǎnmào fāshāo shí xuǎnzé xīyī, ér tiáolǐ mànxìngbìng huòzhě gǎishàn tǐzhì shí gèng yuànyì kàn zhōngyī.", "감기나 열이 날 때는 서양 의학을, 만성병을 다스리거나 체질을 개선할 때는 중의학을 더 찾는 사람이 많아요."],
         ["如今，不少医院采用中西医结合的方式，取长补短，为病人提供更全面的治疗。", "Rújīn, bù shǎo yīyuàn cǎiyòng zhōng-xīyī jiéhé de fāngshì, qǔcháng-bǔduǎn, wèi bìngrén tígōng gèng quánmiàn de zhìliáo.", "요즘은 중의학과 서양 의학을 결합해 서로의 장점을 살리고 단점을 보완하며 더 폭넓은 치료를 하는 병원이 많아요."]
       ],
-      w: [["化验", "huàyàn", "(의학) 검사하다"], ["强调", "qiángdiào", "강조하다"], ["平衡", "pínghéng", "균형"], ["把脉", "bǎmài", "맥을 짚다"], ["体质", "tǐzhì", "체질"], ["取长补短", "qǔcháng-bǔduǎn", "장점을 살려 단점을 보완하다"]]
+      w: [["病因", "bìngyīn", "병의 원인"], ["强调", "qiángdiào", "강조하다"], ["平衡", "pínghéng", "균형"], ["把脉", "bǎmài", "맥을 짚다"], ["体质", "tǐzhì", "체질"], ["取长补短", "qǔcháng-bǔduǎn", "장점을 살려 단점을 보완하다"]]
     }
   },
   "108": {
@@ -305,15 +305,15 @@ window.READINGS = {
     "5": {
       title: "长城：从防御工程到文化符号", ko: "장성: 방어 시설에서 문화의 상징으로",
       s: [
-        ["长城是中国古代规模最大的防御工程，修建的历史可以追溯到两千多年前。", "Chángchéng shì Zhōngguó gǔdài guīmó zuì dà de fángyù gōngchéng, xiūjiàn de lìshǐ kěyǐ zhuīsù dào liǎngqiān duō nián qián.", "장성은 중국 고대 최대 규모의 방어 시설로, 쌓기 시작한 역사는 2천여 년 전까지 거슬러 올라가요."],
-        ["秦始皇统一中国后，把各国原有的城墙连接起来，形成了“万里长城”的雏形。", "Qín Shǐhuáng tǒngyī Zhōngguó hòu, bǎ gè guó yuán yǒu de chéngqiáng liánjiē qilai, xíngchéng le “Wànlǐ Chángchéng” de chúxíng.", "진시황이 중국을 통일한 뒤 각 나라에 있던 성벽을 이어 ‘만리장성’의 원형을 만들었어요."],
-        ["我们今天看到的八达岭、慕田峪等地段，大多是明朝重新修建的。", "Wǒmen jīntiān kàndào de Bādálǐng, Mùtiányù děng dìduàn, dàduō shì Míngcháo chóngxīn xiūjiàn de.", "오늘날 볼 수 있는 바다링·무톈위 등의 구간은 대부분 명나라 때 다시 쌓은 거예요."],
-        ["根据2012年公布的调查结果，历代长城的总长度超过两万一千公里。", "Gēnjù èr líng yī èr nián gōngbù de diàochá jiéguǒ, lìdài Chángchéng de zǒng chángdù chāoguò liǎngwàn yìqiān gōnglǐ.", "2012년에 발표된 조사 결과에 따르면 역대 장성의 총길이는 2만 1천 km가 넘어요."],
+        ["长城是中国古代规模最大的防御工程，修建的历史已经有两千多年了。", "Chángchéng shì Zhōngguó gǔdài guīmó zuì dà de fángyù gōngchéng, xiūjiàn de lìshǐ yǐjīng yǒu liǎngqiān duō nián le.", "장성은 중국 고대 최대 규모의 방어 시설로, 쌓기 시작한 지 벌써 2천 년이 넘었어요."],
+        ["秦始皇统一中国后，把各国原有的墙连接起来，形成了“万里长城”的雏形。", "Qín Shǐhuáng tǒngyī Zhōngguó hòu, bǎ gè guó yuán yǒu de qiáng liánjiē qilai, xíngchéng le “Wànlǐ Chángchéng” de chúxíng.", "진시황이 중국을 통일한 뒤 각 나라에 있던 성벽을 이어 ‘만리장성’의 원형을 만들었어요."],
+        ["我们今天看到的八达岭、慕田峪等地方的长城，大多是明朝重新修建的。", "Wǒmen jīntiān kàndào de Bādálǐng, Mùtiányù děng dìfang de Chángchéng, dàduō shì Míngcháo chóngxīn xiūjiàn de.", "오늘날 볼 수 있는 바다링·무톈위 등지의 장성은 대부분 명나라 때 다시 쌓은 거예요."],
+        ["根据2012年公布的调查结果，各个时期长城的总长度超过两万一千公里。", "Gēnjù èr líng yī èr nián gōngbù de diàochá jiéguǒ, gège shíqī Chángchéng de zǒng chángdù chāoguò liǎngwàn yìqiān gōnglǐ.", "2012년에 발표된 조사 결과에 따르면 여러 시대에 쌓은 장성의 총길이는 2만 1천 km가 넘어요."],
         ["1987年，长城被列入《世界遗产名录》，成为全人类共同的财富。", "Yī jiǔ bā qī nián, Chángchéng bèi lièrù 《Shìjiè Yíchǎn Mínglù》, chéngwéi quán rénlèi gòngtóng de cáifù.", "1987년 장성은 세계유산 목록에 올라 인류 공동의 재산이 되었어요."],
-        ["如今，长城早已失去了军事作用，却成了中华民族坚韧精神的象征。", "Rújīn, Chángchéng zǎoyǐ shīqù le jūnshì zuòyòng, què chéng le Zhōnghuá mínzú jiānrèn jīngshén de xiàngzhēng.", "지금 장성은 군사적 역할을 잃은 지 오래지만, 중화 민족의 강인한 정신을 상징하게 되었어요."],
+        ["如今，长城早已失去了军事作用，却成了中华民族精神的象征。", "Rújīn, Chángchéng zǎoyǐ shīqù le jūnshì zuòyòng, què chéng le Zhōnghuá mínzú jīngshén de xiàngzhēng.", "지금 장성은 군사적 역할을 잃은 지 오래지만, 중화 민족의 정신을 상징하게 되었어요."],
         ["不过，由于游客过多和自然风化，部分长城正面临着保护的难题。", "Búguò, yóuyú yóukè guò duō hé zìrán fēnghuà, bùfen Chángchéng zhèng miànlínzhe bǎohù de nántí.", "하지만 너무 많은 관광객과 자연 풍화 때문에 일부 장성은 보존 문제에 부딪혀 있어요."]
       ],
-      w: [["防御", "fángyù", "방어"], ["追溯", "zhuīsù", "거슬러 올라가다"], ["雏形", "chúxíng", "원형, 초기 형태"], ["财富", "cáifù", "재산, 부"], ["象征", "xiàngzhēng", "상징"], ["面临", "miànlín", "직면하다"]]
+      w: [["防御", "fángyù", "방어"], ["修建", "xiūjiàn", "쌓다, 건설하다"], ["雏形", "chúxíng", "원형, 초기 형태"], ["财富", "cáifù", "재산, 부"], ["象征", "xiàngzhēng", "상징"], ["面临", "miànlín", "직면하다"]]
     }
   },
   "109": {
@@ -345,14 +345,14 @@ window.READINGS = {
       title: "“数字排毒”", ko: "‘디지털 디톡스’",
       s: [
         ["当你发现自己一有空就忍不住拿起手机，不是刷微博，就是看短视频时，也许该考虑“数字排毒”了。", "Dāng nǐ fāxiàn zìjǐ yì yǒu kòng jiù rěn bu zhù ná qǐ shǒujī, bú shì shuā Wēibó, jiù shì kàn duǎn shìpín shí, yěxǔ gāi kǎolǜ “shùzì páidú” le.", "틈만 나면 참지 못하고 휴대폰을 들어 웨이보를 보거나 짧은 영상을 보는 자신을 발견했다면, ‘디지털 디톡스’를 생각해 볼 때일지도 몰라요."],
-        ["所谓“数字排毒”，就是在一段时间内主动远离手机、电脑等电子设备。", "Suǒwèi “shùzì páidú”, jiù shì zài yí duàn shíjiān nèi zhǔdòng yuǎnlí shǒujī, diànnǎo děng diànzǐ shèbèi.", "‘디지털 디톡스’란 일정 기간 휴대폰·컴퓨터 같은 전자 기기를 스스로 멀리하는 거예요."],
-        ["研究表明，频繁地查看社交媒体，容易使人焦虑，还会降低睡眠质量。", "Yánjiū biǎomíng, pínfán de chákàn shèjiāo méitǐ, róngyì shǐ rén jiāolǜ, hái huì jiàngdī shuìmián zhìliàng.", "연구에 따르면 SNS를 자주 확인하면 불안해지기 쉽고 수면의 질도 떨어져요."],
+        ["“数字排毒”的意思是，在一段时间内主动远离手机、电脑等电子设备。", "“Shùzì páidú” de yìsi shì, zài yí duàn shíjiān nèi zhǔdòng yuǎnlí shǒujī, diànnǎo děng diànzǐ shèbèi.", "‘디지털 디톡스’란 일정 기간 휴대폰·컴퓨터 같은 전자 기기를 스스로 멀리하는 거예요."],
+        ["研究表明，经常查看社交媒体，容易使人焦虑，还会降低睡眠质量。", "Yánjiū biǎomíng, jīngcháng chákàn shèjiāo méitǐ, róngyì shǐ rén jiāolǜ, hái huì jiàngdī shuìmián zhìliàng.", "연구에 따르면 SNS를 자주 확인하면 불안해지기 쉽고 수면의 질도 떨어져요."],
         ["尤其是看到别人晒出的精彩生活，不少人会不自觉地和自己比较，产生失落感。", "Yóuqí shì kàndào biérén shài chū de jīngcǎi shēnghuó, bù shǎo rén huì bú zìjué de hé zìjǐ bǐjiào, chǎnshēng shīluògǎn.", "특히 남이 올린 멋진 일상을 보면 자기도 모르게 비교하며 상실감을 느끼는 사람이 많아요."],
         ["实行“数字排毒”并不意味着完全放弃手机，而是要找回对时间的控制权。", "Shíxíng “shùzì páidú” bìng bú yìwèizhe wánquán fàngqì shǒujī, ér shì yào zhǎohuí duì shíjiān de kòngzhìquán.", "디지털 디톡스는 휴대폰을 완전히 포기하는 게 아니라, 시간을 스스로 다스리는 힘을 되찾는 거예요."],
         ["比如，吃饭时把手机放在一边，睡前一小时不看屏幕，周末安排一些户外活动。", "Bǐrú, chī fàn shí bǎ shǒujī fàng zài yìbiān, shuì qián yì xiǎoshí bú kàn píngmù, zhōumò ānpái yìxiē hùwài huódòng.", "예를 들어 식사 때 휴대폰을 치워 두고, 자기 전 한 시간은 화면을 보지 않고, 주말엔 야외 활동을 계획하는 거예요."],
         ["坚持一段时间后，你可能会惊喜地发现，生活其实可以更加从容。", "Jiānchí yí duàn shíjiān hòu, nǐ kěnéng huì jīngxǐ de fāxiàn, shēnghuó qíshí kěyǐ gèngjiā cóngróng.", "한동안 꾸준히 하면 삶이 사실 더 여유로울 수 있다는 걸 기쁘게 발견할지도 몰라요."]
       ],
-      w: [["忍不住", "rěn bu zhù", "참지 못하다"], ["所谓", "suǒwèi", "이른바"], ["频繁", "pínfán", "잦다"], ["焦虑", "jiāolǜ", "초조하다, 불안하다"], ["失落感", "shīluògǎn", "상실감"], ["从容", "cóngróng", "여유롭다"]]
+      w: [["忍不住", "rěn bu zhù", "참지 못하다"], ["远离", "yuǎnlí", "멀리하다"], ["社交媒体", "shèjiāo méitǐ", "SNS, 소셜 미디어"], ["焦虑", "jiāolǜ", "초조하다, 불안하다"], ["失落感", "shīluògǎn", "상실감"], ["从容", "cóngróng", "여유롭다"]]
     }
   }
 };
@@ -389,8 +389,8 @@ window.READING_QUIZ = {
       ["这次旅行让他们感受到了什么？", ["陌生人的友好", "上海的寒冷", "旅行很便宜", "机场很大"], 0]
     ],
     "5": [
-      ["“路上辛苦了”这句话包含着什么？", ["对天气的抱怨", "对客人的关心和体谅", "对交通的不满", "对主人的感谢"], 1],
-      ["为什么过去的旅途非常辛苦？", ["行李太多", "人们不喜欢旅行", "交通不发达，要花好几天", "城市太大"], 2],
+      ["“路上辛苦了”这句话包含着什么？", ["对天气的抱怨", "对客人的关心", "对交通的不满", "对主人的感谢"], 1],
+      ["为什么过去在路上非常辛苦？", ["行李太多", "人们不喜欢旅行", "交通不发达，要花好几天", "城市太大"], 2],
       ["根据短文，下面哪一项是正确的？", ["现在人们已经不说“辛苦了”", "韩国没有类似的问候语", "只有中国人重视客人", "主人常常会帮客人提行李"], 3]
     ]
   },
@@ -458,8 +458,8 @@ window.READING_QUIZ = {
     ],
     "5": [
       ["如果人民币升值，韩国留学生会怎么样？", ["需要花更多的韩币", "可以少花韩币", "生活费不变", "不能换钱"], 0],
-      ["专家建议留学生怎么做？", ["每天盯着汇率", "做好长期的预算", "只在机场换钱", "不要换钱"], 1],
-      ["根据短文，哪里的汇率最不划算？", ["银行", "外币兑换处", "机场", "网上"], 2]
+      ["专家建议留学生怎么做？", ["每天看着汇率", "做好长期的预算", "只在机场换钱", "不要换钱"], 1],
+      ["根据短文，哪里的汇率最不划算？", ["银行", "商店", "机场", "网上"], 2]
     ]
   },
   "107": {
@@ -491,7 +491,7 @@ window.READING_QUIZ = {
       ["根据短文，下面哪一项是正确的？", ["工作人员会给猫送吃的，还带它们看病", "故宫里的猫没有人管", "游客不能给猫拍照", "故宫里只有十几只猫"], 0]
     ],
     "5": [
-      ["是谁把各国原有的城墙连接起来的？", ["汉武帝", "秦始皇", "明朝皇帝", "唐太宗"], 1],
+      ["是谁把各国原有的墙连接起来的？", ["汉武帝", "秦始皇", "明朝皇帝", "唐太宗"], 1],
       ["我们今天看到的八达岭长城大多是什么时候修建的？", ["秦朝", "汉朝", "明朝", "清朝"], 2],
       ["长城现在面临什么问题？", ["没有游客", "军事作用太大", "太新了", "游客过多和自然风化"], 3]
     ]
