@@ -6,12 +6,12 @@
     "101": {
       title: "通识教育的意义", ko: "교양 교육의 의미",
       s: [
-        ["近年来，越来越多的高校开始重视通识教育，鼓励学生跨越专业的界限选修课程。", "Jìnnián lái, yuè lái yuè duō de gāoxiào kāishǐ zhòngshì tōngshí jiàoyù, gǔlì xuésheng kuàyuè zhuānyè de jièxiàn xuǎnxiū kèchéng.", "최근 점점 더 많은 대학이 교양 교육을 중시하며, 학생들이 전공의 경계를 넘어 과목을 수강하도록 장려해요."],
+        ["近年来，越来越多的高校开始重视通识教育，鼓励学生选修其他专业的课程。", "Jìnnián lái, yuè lái yuè duō de gāoxiào kāishǐ zhòngshì tōngshí jiàoyù, gǔlì xuésheng xuǎnxiū qítā zhuānyè de kèchéng.", "최근 점점 더 많은 대학이 교양 교육을 중시하며, 학생들이 다른 전공의 과목을 수강하도록 장려해요."],
         ["支持者认为，在知识更新日新月异的时代，单一的专业技能很容易过时，而批判性思维和沟通能力却能让人终身受益。", "Zhīchízhě rènwéi, zài zhīshi gēngxīn rìxīn-yuèyì de shídài, dānyī de zhuānyè jìnéng hěn róngyì guòshí, ér pīpànxìng sīwéi hé gōutōng nénglì què néng ràng rén zhōngshēn shòuyì.", "지지하는 사람들은 지식이 하루가 다르게 바뀌는 시대에 한 가지 전공 기술은 쉽게 낡지만, 비판적 사고와 소통 능력은 평생 도움이 된다고 봐요."],
-        ["然而，也有人质疑，通识课程往往流于形式，学生为了凑学分而选课，收获甚微。", "Rán'ér, yě yǒu rén zhìyí, tōngshí kèchéng wǎngwǎng liúyú xíngshì, xuésheng wèile còu xuéfēn ér xuǎn kè, shōuhuò shèn wēi.", "그러나 교양 과목은 형식에 그치기 쉽고, 학생들이 학점을 채우려고 수강해서 얻는 것이 거의 없다며 의문을 제기하는 사람도 있어요."],
+        ["然而，也有人质疑，通识课程往往流于形式，学生只是为了拿到学分而选课，收获甚微。", "Rán'ér, yě yǒu rén zhìyí, tōngshí kèchéng wǎngwǎng liúyú xíngshì, xuésheng zhǐshì wèile nádào xuéfēn ér xuǎn kè, shōuhuò shèn wēi.", "그러나 교양 과목은 형식에 그치기 쉽고, 학생들이 학점을 받으려고만 수강해서 얻는 것이 거의 없다며 의문을 제기하는 사람도 있어요."],
         ["问题的关键或许不在于课程本身，而在于学生是否带着好奇心去选择。", "Wèntí de guānjiàn huòxǔ bú zàiyú kèchéng běnshēn, ér zàiyú xuésheng shìfǒu dàizhe hàoqíxīn qù xuǎnzé.", "문제의 핵심은 아마 과목 자체가 아니라, 학생이 호기심을 갖고 선택하느냐에 있을 거예요."],
-        ["一位理工科学生选修了中文后，不仅能读懂古诗，还学会了从另一种文化的角度审视自己习以为常的事物。", "Yí wèi lǐgōngkē xuésheng xuǎnxiū le Zhōngwén hòu, bùjǐn néng dú dǒng gǔshī, hái xuéhuì le cóng lìng yì zhǒng wénhuà de jiǎodù shěnshì zìjǐ xíyǐwéicháng de shìwù.", "한 이공계 학생은 중국어를 수강한 뒤 옛 시를 읽을 수 있게 되었을 뿐 아니라, 늘 당연하게 여기던 것을 다른 문화의 시각으로 살펴보는 법도 배웠어요."],
-        ["由此可见，选课不只是完成学分要求，更是一次拓宽视野、重新认识自我的机会。", "Yóucǐ kějiàn, xuǎn kè bù zhǐ shì wánchéng xuéfēn yāoqiú, gèng shì yí cì tuòkuān shìyě, chóngxīn rènshi zìwǒ de jīhuì.", "이로 보아 수강 신청은 학점 요건을 채우는 일만이 아니라, 시야를 넓히고 자신을 새롭게 알아 가는 기회예요."]
+        ["一位学工程的学生选修了中文后，不仅能读懂古诗，还学会了从另一种文化的角度审视自己习以为常的事物。", "Yí wèi xué gōngchéng de xuésheng xuǎnxiū le Zhōngwén hòu, bùjǐn néng dú dǒng gǔshī, hái xuéhuì le cóng lìng yì zhǒng wénhuà de jiǎodù shěnshì zìjǐ xíyǐwéicháng de shìwù.", "공학을 공부하는 한 학생은 중국어를 수강한 뒤 옛 시를 읽을 수 있게 되었을 뿐 아니라, 늘 당연하게 여기던 것을 다른 문화의 시각으로 살펴보는 법도 배웠어요."],
+        ["由此可见，选课不只是完成学分要求，更是一次打开视野、重新认识自我的机会。", "Yóucǐ kějiàn, xuǎn kè bù zhǐ shì wánchéng xuéfēn yāoqiú, gèng shì yí cì dǎkāi shìyě, chóngxīn rènshi zìwǒ de jīhuì.", "이로 보아 수강 신청은 학점 요건을 채우는 일만이 아니라, 시야를 넓히고 자신을 새롭게 알아 가는 기회예요."]
       ],
       w: [["通识教育", "tōngshí jiàoyù", "교양 교육"], ["日新月异", "rìxīn-yuèyì", "나날이 새로워지다"], ["终身受益", "zhōngshēn shòuyì", "평생 도움이 되다"], ["流于形式", "liúyú xíngshì", "형식에 그치다"], ["审视", "shěnshì", "자세히 살피다"], ["习以为常", "xíyǐwéicháng", "익숙해져 당연하게 여기다"]],
       q: [
@@ -23,7 +23,7 @@
     "102": {
       title: "春运：回家的路", ko: "춘윈: 집으로 가는 길",
       s: [
-        ["每年春节前后，数以亿计的中国人踏上回乡的旅程，这一现象被称为“春运”。", "Měi nián Chūnjié qiánhòu, shù yǐ yì jì de Zhōngguórén tàshàng huí xiāng de lǚchéng, zhè yí xiànxiàng bèi chēngwéi “chūnyùn”.", "매년 춘절 전후로 수억 명의 중국인이 고향으로 가는 길에 오르는데, 이를 ‘춘윈(춘절 귀성 대이동)’이라 불러요."],
+        ["每年春节前后，数以亿计的中国人开始了回乡的旅程，这一现象被称为“春运”。", "Měi nián Chūnjié qiánhòu, shù yǐ yì jì de Zhōngguórén kāishǐ le huí xiāng de lǚchéng, zhè yí xiànxiàng bèi chēngwéi “chūnyùn”.", "매년 춘절 전후로 수억 명의 중국인이 고향으로 가는 길에 오르는데, 이를 ‘춘윈(춘절 귀성 대이동)’이라 불러요."],
         ["由于出行时间高度集中，火车票一票难求，曾经有人通宵排队，只为买到一张站票。", "Yóuyú chūxíng shíjiān gāodù jízhōng, huǒchēpiào yí piào nán qiú, céngjīng yǒu rén tōngxiāo páiduì, zhǐ wèi mǎidào yì zhāng zhànpiào.", "이동 시기가 한꺼번에 몰려 기차표 구하기가 무척 어려워서, 입석표 한 장을 사려고 밤새 줄을 선 사람도 있었어요."],
         ["随着高铁网络的延伸和网上购票的普及，春运的艰辛程度已大大缓解。", "Suízhe gāotiě wǎngluò de yánshēn hé wǎng shang gòupiào de pǔjí, chūnyùn de jiānxīn chéngdù yǐ dàdà huǎnjiě.", "고속철도망이 넓어지고 온라인 예매가 보급되면서 춘윈의 고생은 크게 줄었어요."],
         ["尽管如此，人们依然不惜长途跋涉，因为在中国人的观念里，“回家过年”承载着团圆的意义。", "Jǐnguǎn rúcǐ, rénmen yīrán bùxī chángtú báshè, yīnwèi zài Zhōngguórén de guānniàn li, “huí jiā guò nián” chéngzàizhe tuányuán de yìyì.", "그래도 사람들은 먼 길을 마다하지 않아요. 중국인에게 ‘집에 가서 설을 쇠는 것’은 가족이 한자리에 모인다는 의미를 담고 있기 때문이에요."],
@@ -42,10 +42,10 @@
       s: [
         ["外卖骑手、网约车司机、自由撰稿人……随着平台经济的兴起，“灵活就业”已成为许多年轻人的选择。", "Wàimài qíshǒu, wǎngyuēchē sījī, zìyóu zhuàngǎorén…… suízhe píngtái jīngjì de xīngqǐ, “línghuó jiùyè” yǐ chéngwéi xǔduō niánqīngrén de xuǎnzé.", "배달 라이더, 호출 차량 기사, 프리랜서 작가… 플랫폼 경제가 떠오르면서 ‘유연한 일자리’는 많은 젊은이의 선택이 되었어요."],
         ["这类工作时间自由、门槛较低，既能为学生提供兼职收入，也为失业者提供了过渡的机会。", "Zhè lèi gōngzuò shíjiān zìyóu, ménkǎn jiào dī, jì néng wèi xuésheng tígōng jiānzhí shōurù, yě wèi shīyèzhě tígōng le guòdù de jīhuì.", "이런 일은 시간이 자유롭고 문턱이 낮아서, 학생에게는 아르바이트 수입을, 실업자에게는 다음 일로 넘어가는 기회를 줘요."],
-        ["但硬币的另一面是，许多从业者缺乏社会保障，收入随订单数量剧烈波动。", "Dàn yìngbì de lìng yí miàn shì, xǔduō cóngyèzhě quēfá shèhuì bǎozhàng, shōurù suí dìngdān shùliàng jùliè bōdòng.", "하지만 동전의 다른 면도 있어요. 많은 종사자가 사회 보장을 받지 못하고, 수입이 주문량에 따라 크게 출렁여요."],
+        ["但另一方面，许多从业者缺乏社会保障，收入随订单数量剧烈波动。", "Dàn lìng yì fāngmiàn, xǔduō cóngyèzhě quēfá shèhuì bǎozhàng, shōurù suí dìngdān shùliàng jùliè bōdòng.", "하지만 다른 한편으로는 많은 종사자가 사회 보장을 받지 못하고, 수입이 주문량에 따라 크게 출렁여요."],
         ["更值得警惕的是，算法不断压缩配送时间，骑手们为了避免超时罚款，不得不在马路上争分夺秒。", "Gèng zhíde jǐngtì de shì, suànfǎ búduàn yāsuō pèisòng shíjiān, qíshǒumen wèile bìmiǎn chāoshí fákuǎn, bùdébù zài mǎlù shang zhēngfēn-duómiǎo.", "더 경계해야 할 점은 알고리즘이 배달 시간을 계속 줄여서, 라이더들이 지연 벌금을 피하려고 도로에서 분초를 다툴 수밖에 없다는 거예요."],
-        ["对此，有关部门已出台政策，要求平台完善劳动者权益保障。", "Duì cǐ, yǒuguān bùmén yǐ chūtái zhèngcè, yāoqiú píngtái wánshàn láodòngzhě quányì bǎozhàng.", "이에 관련 부처는 플랫폼이 노동자의 권익 보장을 개선하도록 요구하는 정책을 내놓았어요."],
-        ["对于大学生而言，打工固然能积累经验，但也应学会识别风险，懂得维护自身的合法权益。", "Duìyú dàxuéshēng ér yán, dǎgōng gùrán néng jīlěi jīngyàn, dàn yě yīng xuéhuì shíbié fēngxiǎn, dǒngde wéihù zìshēn de héfǎ quányì.", "대학생에게 아르바이트는 물론 경험을 쌓게 해 주지만, 위험을 알아보고 자신의 합법적인 권익을 지키는 법도 배워야 해요."]
+        ["对此，有关部门已制定政策，要求平台完善劳动者权益保障。", "Duì cǐ, yǒuguān bùmén yǐ zhìdìng zhèngcè, yāoqiú píngtái wánshàn láodòngzhě quányì bǎozhàng.", "이에 관련 부처는 플랫폼이 노동자의 권익 보장을 개선하도록 요구하는 정책을 마련했어요."],
+        ["对于大学生而言，打工虽然能积累经验，但也应该学会识别风险，懂得维护自身的合法权益。", "Duìyú dàxuéshēng ér yán, dǎgōng suīrán néng jīlěi jīngyàn, dàn yě yīnggāi xuéhuì shíbié fēngxiǎn, dǒngde wéihù zìshēn de héfǎ quányì.", "대학생에게 아르바이트는 물론 경험을 쌓게 해 주지만, 위험을 알아보고 자신의 합법적인 권익을 지키는 법도 배워야 해요."]
       ],
       w: [["门槛", "ménkǎn", "문턱"], ["过渡", "guòdù", "넘어가다, 과도기"], ["波动", "bōdòng", "출렁이다"], ["警惕", "jǐngtì", "경계하다"], ["争分夺秒", "zhēngfēn-duómiǎo", "분초를 다투다"], ["权益", "quányì", "권익"]],
       q: [
@@ -58,7 +58,7 @@
       title: "气候变化下的极端天气", ko: "기후 변화와 극단적인 날씨",
       s: [
         ["近年来，“百年一遇”的暴雨、热浪和寒潮出现得越来越频繁，人们不禁要问：天气为何变得如此反常？", "Jìnnián lái, “bǎi nián yí yù” de bàoyǔ, rèlàng hé háncháo chūxiàn de yuè lái yuè pínfán, rénmen bùjīn yào wèn: tiānqì wèihé biàn de rúcǐ fǎncháng?", "최근 ‘백 년에 한 번’ 올 법한 폭우·폭염·한파가 점점 잦아지자, 사람들은 날씨가 왜 이렇게 이상해졌는지 묻지 않을 수 없어요."],
-        ["科学界普遍认为，全球变暖是幕后推手，大气中的温室气体增多，使气候系统变得更加不稳定。", "Kēxuéjiè pǔbiàn rènwéi, quánqiú biànnuǎn shì mùhòu tuīshǒu, dàqì zhōng de wēnshì qìtǐ zēngduō, shǐ qìhòu xìtǒng biàn de gèngjiā bù wěndìng.", "과학계는 대체로 지구 온난화를 배후의 원인으로 봐요. 대기 중 온실가스가 늘어나 기후 체계가 더 불안정해졌다는 거예요."],
+        ["科学界普遍认为，全球变暖是幕后推手，空气中的温室气体增多，使气候系统变得更加不稳定。", "Kēxuéjiè pǔbiàn rènwéi, quánqiú biànnuǎn shì mùhòu tuīshǒu, kōngqì zhōng de wēnshì qìtǐ zēngduō, shǐ qìhòu xìtǒng biàn de gèngjiā bù wěndìng.", "과학계는 대체로 지구 온난화를 배후의 원인으로 봐요. 대기 중 온실가스가 늘어나 기후 체계가 더 불안정해졌다는 거예요."],
         ["值得注意的是，变暖并不意味着冬天一定更暖和，北极冷空气南下反而可能带来罕见的严寒。", "Zhíde zhùyì de shì, biànnuǎn bìng bú yìwèizhe dōngtiān yídìng gèng nuǎnhuo, Běijí lěng kōngqì nánxià fǎn'ér kěnéng dàilái hǎnjiàn de yánhán.", "주목할 점은 온난화가 겨울이 꼭 더 따뜻해진다는 뜻은 아니라는 거예요. 북극의 찬 공기가 내려오면 오히려 드문 혹한이 올 수 있어요."],
         ["极端天气不仅威胁人们的生命财产安全，还会冲击农业生产，进而影响粮食价格。", "Jíduān tiānqì bùjǐn wēixié rénmen de shēngmìng cáichǎn ānquán, hái huì chōngjī nóngyè shēngchǎn, jìn'ér yǐngxiǎng liángshi jiàgé.", "극단적인 날씨는 생명과 재산의 안전을 위협할 뿐 아니라 농업 생산에 타격을 주어 곡물 가격에도 영향을 줘요."],
         ["为此，各国一方面努力减少碳排放，另一方面加强预警系统建设，提高城市应对灾害的能力。", "Wèi cǐ, gè guó yì fāngmiàn nǔlì jiǎnshǎo tàn páifàng, lìng yì fāngmiàn jiāqiáng yùjǐng xìtǒng jiànshè, tígāo chéngshì yìngduì zāihài de nénglì.", "그래서 각국은 한편으로 탄소 배출을 줄이려 애쓰고, 다른 한편으로 조기 경보 체계를 강화해 도시의 재해 대응력을 높이고 있어요."],
@@ -75,17 +75,17 @@
       title: "一道菜里的乡愁", ko: "요리 한 접시에 담긴 향수",
       s: [
         ["对许多离乡背井的人来说，最难割舍的往往不是风景，而是家乡的味道。", "Duì xǔduō líxiāng-bèijǐng de rén lái shuō, zuì nán gēshě de wǎngwǎng bú shì fēngjǐng, ér shì jiāxiāng de wèidao.", "고향을 떠난 많은 사람에게 가장 떨치기 어려운 것은 풍경이 아니라 고향의 맛이에요."],
-        ["一碗地道的麻辣面、一盘母亲做的红烧肉，能瞬间唤起尘封已久的童年记忆。", "Yì wǎn dìdao de málà miàn, yì pán mǔqīn zuò de hóngshāoròu, néng shùnjiān huànqǐ chénfēng yǐ jiǔ de tóngnián jìyì.", "제대로 된 마라 국수 한 그릇, 어머니가 만든 훙사오러우 한 접시가 오래 잊고 있던 어린 시절 기억을 순식간에 불러와요."],
+        ["一碗地道的牛肉面、一盘母亲做的红烧肉，能瞬间让人想起尘封已久的童年记忆。", "Yì wǎn dìdao de niúròu miàn, yì pán mǔqīn zuò de hóngshāoròu, néng shùnjiān ràng rén xiǎngqǐ chénfēng yǐ jiǔ de tóngnián jìyì.", "제대로 된 소고기 국수 한 그릇, 어머니가 만든 훙사오러우 한 접시가 오래 잊고 있던 어린 시절 기억을 순식간에 떠올리게 해요."],
         ["心理学家指出，味觉和嗅觉与大脑中负责情感和记忆的区域联系紧密，因此食物最容易引发怀旧之情。", "Xīnlǐxuéjiā zhǐchū, wèijué hé xiùjué yǔ dànǎo zhōng fùzé qínggǎn hé jìyì de qūyù liánxì jǐnmì, yīncǐ shíwù zuì róngyì yǐnfā huáijiù zhī qíng.", "심리학자들은 미각과 후각이 뇌에서 감정과 기억을 맡는 영역과 밀접하게 이어져 있어서, 음식이 옛 추억을 가장 쉽게 불러일으킨다고 말해요."],
         ["正因如此，不少餐馆把“家乡味”当作招牌，吸引身在异乡的食客。", "Zhèng yīn rúcǐ, bù shǎo cānguǎn bǎ “jiāxiāng wèi” dàngzuò zhāopai, xīyǐn shēn zài yìxiāng de shíkè.", "그래서 많은 식당이 ‘고향의 맛’을 간판으로 내세워 타향에 사는 손님을 끌어요."],
-        ["然而，同一道菜，换了水土、换了食材，味道总会有微妙的差别，这种“似是而非”反倒让乡愁更加浓烈。", "Rán'ér, tóng yí dào cài, huàn le shuǐtǔ, huàn le shícái, wèidao zǒng huì yǒu wēimiào de chābié, zhè zhǒng “sìshì'érfēi” fǎndào ràng xiāngchóu gèngjiā nóngliè.", "하지만 같은 요리라도 물과 땅, 재료가 바뀌면 맛이 미묘하게 달라지고, 이 ‘비슷한 듯 다른’ 맛이 오히려 향수를 더 짙게 해요."],
+        ["然而，同一道菜，换了地方、换了食材，味道总会有微妙的差别，这种“似是而非”反而让乡愁更加浓烈。", "Rán'ér, tóng yí dào cài, huàn le dìfang, huàn le shícái, wèidao zǒng huì yǒu wēimiào de chābié, zhè zhǒng “sìshì'érfēi” fǎn'ér ràng xiāngchóu gèngjiā nóngliè.", "하지만 같은 요리라도 곳이 바뀌고 재료가 바뀌면 맛이 미묘하게 달라지고, 이 ‘비슷한 듯 다른’ 맛이 오히려 향수를 더 짙게 해요."],
         ["或许，我们怀念的并不只是食物本身，而是那段有家人陪伴的时光。", "Huòxǔ, wǒmen huáiniàn de bìng bù zhǐ shì shíwù běnshēn, ér shì nà duàn yǒu jiārén péibàn de shíguāng.", "어쩌면 우리가 그리워하는 것은 음식 자체가 아니라 가족과 함께했던 그 시간일 거예요."]
       ],
       w: [["离乡背井", "líxiāng-bèijǐng", "고향을 떠나다"], ["割舍", "gēshě", "떨쳐 버리다"], ["地道", "dìdao", "본고장의, 정통의"], ["尘封", "chénfēng", "오래 묻어 두다"], ["怀旧", "huáijiù", "옛날을 그리워하다"], ["似是而非", "sìshì'érfēi", "그럴듯하지만 실제로는 다르다"]],
       q: [
         ["对离乡背井的人来说，最难割舍的往往是什么？", ["家乡的风景", "家乡的味道", "家乡的房子", "家乡的天气"], 1],
         ["为什么食物最容易引发怀旧之情？", ["因为味觉和嗅觉与负责情感和记忆的大脑区域联系紧密", "因为食物很贵", "因为餐馆很多", "因为人们每天都吃饭"], 0],
-        ["作者认为我们真正怀念的是什么？", ["食物的价格", "餐馆的招牌", "有家人陪伴的时光", "家乡的水土"], 2]
+        ["作者认为我们真正怀念的是什么？", ["食物的价格", "餐馆的招牌", "有家人陪伴的时光", "家乡的天气"], 2]
       ]
     },
     "106": {
@@ -125,17 +125,17 @@
     "108": {
       title: "让故宫“活”起来", ko: "고궁을 ‘살아 있게’ 하기",
       s: [
-        ["提起故宫，人们脑海中浮现的往往是庄严肃穆的宫殿和陈列在玻璃柜里的珍贵文物。", "Tíqǐ Gùgōng, rénmen nǎohǎi zhōng fúxiàn de wǎngwǎng shì zhuāngyán sùmù de gōngdiàn hé chénliè zài bōli guì li de zhēnguì wénwù.", "고궁 하면 사람들 머릿속에 떠오르는 것은 흔히 장엄한 궁전과 유리 진열장 속의 귀한 유물이에요."],
-        ["然而近十年来，这座拥有六百年历史的皇家宫殿却频频“出圈”，成了年轻人追捧的文化品牌。", "Rán'ér jìn shí nián lái, zhè zuò yōngyǒu liùbǎi nián lìshǐ de huángjiā gōngdiàn què pínpín “chūquān”, chéng le niánqīngrén zhuīpěng de wénhuà pǐnpái.", "그런데 최근 10년 동안 600년 역사의 이 황궁은 자주 큰 화제가 되며 젊은이들이 열광하는 문화 브랜드가 되었어요."],
-        ["从印有宫廷图案的文具到以文物为原型的手机游戏，文创产品让古老的文化以轻松有趣的方式走进日常生活。", "Cóng yìn yǒu gōngtíng tú'àn de wénjù dào yǐ wénwù wéi yuánxíng de shǒujī yóuxì, wénchuàng chǎnpǐn ràng gǔlǎo de wénhuà yǐ qīngsōng yǒuqù de fāngshì zǒujìn rìcháng shēnghuó.", "궁중 문양을 넣은 문구부터 유물을 본뜬 휴대폰 게임까지, 문화 상품은 오래된 문화를 가볍고 재미있게 일상 속으로 데려왔어요."],
-        ["与此同时，故宫还通过数字技术，把大量文物高清影像放到网上，让人足不出户就能“云游”紫禁城。", "Yǔ cǐ tóngshí, Gùgōng hái tōngguò shùzì jìshù, bǎ dàliàng wénwù gāoqīng yǐngxiàng fàng dào wǎng shang, ràng rén zúbùchūhù jiù néng “yúnyóu” Zǐjìnchéng.", "동시에 고궁은 디지털 기술로 많은 유물의 고화질 영상을 인터넷에 올려, 집 밖에 나가지 않고도 자금성을 ‘온라인으로 여행’할 수 있게 했어요."],
-        ["不过，也有学者提醒，商业开发应把握分寸，避免过度娱乐化而冲淡了文物本身的历史价值。", "Búguò, yě yǒu xuézhě tíxǐng, shāngyè kāifā yīng bǎwò fēncun, bìmiǎn guòdù yúlèhuà ér chōngdàn le wénwù běnshēn de lìshǐ jiàzhí.", "하지만 상업 개발은 적당한 선을 지켜야 하며, 지나치게 오락으로 흘러 유물의 역사적 가치가 흐려지지 않게 해야 한다고 경고하는 학자도 있어요."],
+        ["提起故宫，人们想到的往往是庄严肃穆的古代建筑和放在玻璃柜里的珍贵文物。", "Tíqǐ Gùgōng, rénmen xiǎngdào de wǎngwǎng shì zhuāngyán sùmù de gǔdài jiànzhù hé fàng zài bōli guì li de zhēnguì wénwù.", "고궁 하면 사람들이 떠올리는 것은 흔히 장엄한 옛 건축물과 유리 진열장 속의 귀한 유물이에요."],
+        ["然而近十年来，这座拥有六百年历史的古老建筑却一次次“出圈”，成了年轻人追捧的文化品牌。", "Rán'ér jìn shí nián lái, zhè zuò yōngyǒu liùbǎi nián lìshǐ de gǔlǎo jiànzhù què yí cì cì “chūquān”, chéng le niánqīngrén zhuīpěng de wénhuà pǐnpái.", "그런데 최근 10년 동안 600년 역사의 이 오래된 건축물은 거듭 큰 화제가 되며 젊은이들이 열광하는 문화 브랜드가 되었어요."],
+        ["从印有传统图案的文具到根据文物设计的手机游戏，文创产品让古老的文化以轻松有趣的方式走进日常生活。", "Cóng yìn yǒu chuántǒng tú'àn de wénjù dào gēnjù wénwù shèjì de shǒujī yóuxì, wénchuàng chǎnpǐn ràng gǔlǎo de wénhuà yǐ qīngsōng yǒuqù de fāngshì zǒujìn rìcháng shēnghuó.", "전통 문양을 넣은 문구부터 유물을 바탕으로 만든 휴대폰 게임까지, 문화 상품은 오래된 문화를 가볍고 재미있게 일상 속으로 데려왔어요."],
+        ["与此同时，故宫还通过数字技术，把大量文物的高清图片放到网上，让人足不出户就能“云游”紫禁城。", "Yǔ cǐ tóngshí, Gùgōng hái tōngguò shùzì jìshù, bǎ dàliàng wénwù de gāoqīng túpiàn fàng dào wǎng shang, ràng rén zúbùchūhù jiù néng “yúnyóu” Zǐjìnchéng.", "동시에 고궁은 디지털 기술로 많은 유물의 고화질 사진을 인터넷에 올려, 집 밖에 나가지 않고도 자금성을 ‘온라인으로 여행’할 수 있게 했어요."],
+        ["不过，也有学者提醒，商业开发应该把握分寸，避免过度娱乐化而冲淡了文物本身的历史价值。", "Búguò, yě yǒu xuézhě tíxǐng, shāngyè kāifā yīnggāi bǎwò fēncun, bìmiǎn guòdù yúlèhuà ér chōngdàn le wénwù běnshēn de lìshǐ jiàzhí.", "하지만 상업 개발은 적당한 선을 지켜야 하며, 지나치게 오락으로 흘러 유물의 역사적 가치가 흐려지지 않게 해야 한다고 경고하는 학자도 있어요."],
         ["如何在保护与利用之间找到平衡，是故宫，也是所有文化遗产共同面临的课题。", "Rúhé zài bǎohù yǔ lìyòng zhījiān zhǎodào pínghéng, shì Gùgōng, yě shì suǒyǒu wénhuà yíchǎn gòngtóng miànlín de kètí.", "보호와 활용 사이에서 어떻게 균형을 찾을지는 고궁, 그리고 모든 문화유산이 함께 마주한 과제예요."]
       ],
       w: [["庄严肃穆", "zhuāngyán sùmù", "장엄하고 엄숙하다"], ["出圈", "chūquān", "크게 화제가 되다"], ["追捧", "zhuīpěng", "열광하다"], ["文创", "wénchuàng", "문화 창의 (상품)"], ["足不出户", "zúbùchūhù", "집 밖에 나가지 않다"], ["分寸", "fēncun", "적당한 정도, 선"]],
       q: [
         ["近十年来故宫发生了什么变化？", ["不再开放", "成了年轻人追捧的文化品牌", "搬到了别的城市", "文物都卖掉了"], 1],
-        ["人们怎样“云游”紫禁城？", ["在网上看文物高清影像", "坐飞机参观", "买门票排队", "看电视新闻"], 0],
+        ["人们怎样“云游”紫禁城？", ["在网上看文物高清图片", "坐飞机参观", "买门票排队", "看电视新闻"], 0],
         ["学者提醒商业开发要注意什么？", ["多卖文具", "多做游戏", "避免过度娱乐化而冲淡文物的历史价值", "提高门票价格"], 2]
       ]
     },
