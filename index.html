@@ -2714,12 +2714,12 @@ a { color: var(--green-700); }
 
   <button class="to-top" type="button" aria-label="맨 위로 이동">↑</button>
 
-<script src="weeks/content.js?v=1.11.1"></script>
-<script src="weeks/glossary.js?v=1.11.1"></script>
-<script src="weeks/readings.js?v=1.11.1"></script>
-<script src="weeks/readings6.js?v=1.11.1"></script>
-<script src="weeks/readings-gloss.js?v=1.11.1"></script>
-<script src="weeks/speaking.js?v=1.11.1"></script>
+<script src="weeks/content.js?v=1.12.0"></script>
+<script src="weeks/glossary.js?v=1.12.0"></script>
+<script src="weeks/readings.js?v=1.12.0"></script>
+<script src="weeks/readings6.js?v=1.12.0"></script>
+<script src="weeks/readings-gloss.js?v=1.12.0"></script>
+<script src="weeks/speaking.js?v=1.12.0"></script>
 <script>
 /* ===== config ===== */
 /* CONFIG-START */
@@ -2738,7 +2738,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.11.1",
+    version: "v1.12.0",
     logoText: "漢",
   },
 
@@ -7349,12 +7349,14 @@ window.SiteStore = (function () {
     });
     return ws;
   }
+  /* 급수 표시: 새 HSK 급수표(2025년 11월 개정)에서는 7·8·9급이 한 묶음(7-9급)이라 7은 "7-9"로 보여요 */
+  function hskLabel(lv) { return Number(lv) >= 7 ? "7-9" : String(lv); }
   function glossNoteWs(ws, G) {
     G = G || window.HSK_GLOSS || {};
     if (!ws.length) return "";
     return '<p class="hg-note">' + list(ws, function (w) {
       var g = G[w];
-      return '<span class="hg-item"><span class="hg-star" aria-hidden="true">*</span> <b lang="zh-CN">' + esc(w) + '</b> <span class="hg-py">' + esc(g.py) + '</span> <span class="hg-ko">' + esc(g.ko) + '</span> <span class="hg-badge">HSK' + esc(String(g.lv)) + "</span></span>";
+      return '<span class="hg-item"><span class="hg-star" aria-hidden="true">*</span> <b lang="zh-CN">' + esc(w) + '</b> <span class="hg-py">' + esc(g.py) + '</span> <span class="hg-ko">' + esc(g.ko) + '</span> <span class="hg-badge">HSK' + esc(hskLabel(g.lv)) + "</span></span>";
     }) + "</p>";
   }
   function glossNote() { return glossNoteWs(glossWords.apply(null, arguments)); }
@@ -7569,7 +7571,7 @@ window.SiteStore = (function () {
       (words.length
         ? '<div class="rd-words"><h5>📌 주요 단어</h5><ul>' + list(words, function (e) {
             return "<li>" + (e.lv ? '<span class="hg-star" aria-hidden="true">*</span> ' : "") + "<b>" + esc(e.w) + '</b> <span class="rd-wpy">' + esc(e.py) + "</span> " + esc(e.ko) +
-              (e.lv ? ' <span class="hg-badge">HSK' + e.lv + "</span>" : "") + "</li>";
+              (e.lv ? ' <span class="hg-badge">HSK' + esc(hskLabel(e.lv)) + "</span>" : "") + "</li>";
           }) + "</ul>" +
           (RG ? '<p class="rd-words-note"><span class="hg-star" aria-hidden="true">*</span> 이 글의 급수(HSK ' + esc(String(lv)) + "급)보다 높은 단어예요. 네모 안은 그 단어의 급수예요.</p>" : "") +
           "</div>"
