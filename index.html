@@ -2234,6 +2234,9 @@ a { color: var(--green-700); }
 .rd-title { margin: 0; font-size: 22px; }
 .rd-sub { margin: 4px 0 14px; font-size: 13px; color: var(--text-soft); }
 .rd-text { font-size: 19px; line-height: 2; }
+/* 독해: 글의 급수보다 높은 단어 풀이 (글 오른쪽 아래) */
+.rd-text .hg-star { font-size: 0.62em; }
+.hg-note.rd-gloss { margin-top: 12px !important; gap: 4px 18px; font-size: 14px; }
 .rd-s { cursor: pointer; border-radius: 6px; transition: background .15s; }
 .rd-s:hover { background: rgba(192, 57, 43, .07); }
 .rd-s.is-speaking { background: #fff1c2; color: #2a2420; }
@@ -2710,11 +2713,12 @@ a { color: var(--green-700); }
 
   <button class="to-top" type="button" aria-label="맨 위로 이동">↑</button>
 
-<script src="weeks/content.js?v=1.10.1"></script>
-<script src="weeks/glossary.js?v=1.10.1"></script>
-<script src="weeks/readings.js?v=1.10.1"></script>
-<script src="weeks/readings6.js?v=1.10.1"></script>
-<script src="weeks/speaking.js?v=1.10.1"></script>
+<script src="weeks/content.js?v=1.11.0"></script>
+<script src="weeks/glossary.js?v=1.11.0"></script>
+<script src="weeks/readings.js?v=1.11.0"></script>
+<script src="weeks/readings6.js?v=1.11.0"></script>
+<script src="weeks/readings-gloss.js?v=1.11.0"></script>
+<script src="weeks/speaking.js?v=1.11.0"></script>
 <script>
 /* ===== config ===== */
 /* CONFIG-START */
@@ -2733,7 +2737,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.10.1",
+    version: "v1.11.0",
     logoText: "漢",
   },
 
@@ -7308,8 +7312,9 @@ window.SiteStore = (function () {
   /* 설명이 필요한 단어(HSK 5급 등): 본문에 * 표시, 카드·슬라이드 오른쪽 아래에 「* 한자 병음 뜻 [HSK5]」 풀이.
      단어 목록은 weeks/glossary.js의 HSK_GLOSS */
   /* 글 속에서 풀이 단어의 위치 찾기: skip 목록의 단어 속에 들어 있으면 빼고(非常의 非 등), 겹치면 긴 단어 우선 */
-  function glossHits(t) {
-    var G = window.HSK_GLOSS || {}, hits = [];
+  function glossHits(t, G) {
+    var hits = [];
+    G = G || window.HSK_GLOSS || {};
     if (!t) return hits;
     t = String(t);
     Object.keys(G).forEach(function (w) {
@@ -7325,11 +7330,11 @@ window.SiteStore = (function () {
     hits.forEach(function (h) { if (h.i >= end) { out.push(h); end = h.i + h.w.length; } });
     return out;
   }
-  function glossMark(t) {
+  function glossMark(t, G) {
     if (t == null) return "";
     t = String(t);
     var h = "", p = 0;
-    glossHits(t).forEach(function (x) {
+    glossHits(t, G).forEach(function (x) {
       h += esc(t.slice(p, x.i)) + '<span class="hg-w">' + esc(x.w) + '<sup class="hg-star" aria-hidden="true">*</sup></span>';
       p = x.i + x.w.length;
     });
@@ -7343,8 +7348,8 @@ window.SiteStore = (function () {
     });
     return ws;
   }
-  function glossNoteWs(ws) {
-    var G = window.HSK_GLOSS || {};
+  function glossNoteWs(ws, G) {
+    G = G || window.HSK_GLOSS || {};
     if (!ws.length) return "";
     return '<p class="hg-note">' + list(ws, function (w) {
       var g = G[w];
@@ -7352,6 +7357,12 @@ window.SiteStore = (function () {
     }) + "</p>";
   }
   function glossNote() { return glossNoteWs(glossWords.apply(null, arguments)); }
+  /* 독해연습: 그 글의 급수보다 높은 단어만 모은 사전 (weeks/readings-gloss.js, item.g = 그 글에서 표시할 단어) */
+  function readingGloss(item) {
+    var all = window.RD_GLOSS_WORDS || {}, G = {}, n = 0;
+    (item.g || []).forEach(function (w) { if (all[w]) { G[w] = all[w]; n++; } });
+    return n ? G : null;
+  }
   function notesHTML(n, wn) {
     var secs = n.sections || [];
     var ex = n.expressions || [];
@@ -7534,14 +7545,18 @@ window.SiteStore = (function () {
   }
   function readingBody(item, lv) {
     var chars = item.s.reduce(function (n, x) { return n + x[0].replace(/[，。！？：；、“”‘’《》（）—…\s]/g, "").length; }, 0);
+    /* 글의 급수보다 높은 단어: 본문에 * 표시, 글 오른쪽 아래에 풀이 (처음 나온 순서대로) */
+    var RG = readingGloss(item), rgWords = [];
+    if (RG) item.s.forEach(function (x) { glossHits(x[0], RG).forEach(function (h) { if (rgWords.indexOf(h.w) < 0) rgWords.push(h.w); }); });
     return (
       '<h4 class="rd-title">' + esc(item.title) + "</h4>" +
       '<p class="rd-sub">' + esc(item.ko) + " · HSK " + lv + "급 · " + chars + "자</p>" +
       '<div class="rd-text">' +
       list(item.s, function (x) {
-        return '<span class="rd-s" data-say="' + esc(x[0]) + '" title="누르면 이 문장을 읽어 줘요"><span class="rd-zh">' + esc(x[0]) + '</span><span class="rd-py">' + esc(x[1]) + '</span><span class="rd-ko">' + esc(x[2]) + "</span></span>";
+        return '<span class="rd-s" data-say="' + esc(x[0]) + '" title="누르면 이 문장을 읽어 줘요"><span class="rd-zh">' + (RG ? glossMark(x[0], RG) : esc(x[0])) + '</span><span class="rd-py">' + esc(x[1]) + '</span><span class="rd-ko">' + esc(x[2]) + "</span></span>";
       }) +
       "</div>" +
+      (RG ? glossNoteWs(rgWords, RG).replace('class="hg-note"', 'class="hg-note rd-gloss"') : "") +
       ((item.w || []).length
         ? '<div class="rd-words"><h5>📌 주요 단어</h5><ul>' + list(item.w, function (x) { return "<li><b>" + esc(x[0]) + '</b> <span class="rd-wpy">' + esc(x[1]) + "</span> " + esc(x[2]) + "</li>"; }) + "</ul></div>"
         : "") +
