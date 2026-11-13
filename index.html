@@ -2157,6 +2157,16 @@ a { color: var(--green-700); }
 .wa-ko { font-size: 14px; color: var(--text-soft); }
 .wa-ko small { opacity: 0.8; }
 .hide-py .wa-py, .hide-ko .wa-ko, .hide-gram .wa-gram { display: none; }
+/* 설명이 필요한 단어 풀이 (HSK 5급 등): 본문 * 표시 + 오른쪽 아래 풀이 */
+.hg-star { color: #d2463a; font-weight: 700; }
+.hg-w .hg-star { font-size: 0.7em; margin-left: 1px; }
+.hg-note { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 16px; margin: 8px 0 0 !important; font-size: 13px; line-height: 1.6; color: #5b5566; text-align: right; }
+.hg-item { white-space: nowrap; }
+.hg-item b { font-size: 1.15em; color: #2b2b2b; }
+.hg-py { color: #6b6478; }
+.hg-badge { display: inline-block; margin-left: 2px; padding: 0 6px; border: 1.5px solid #d2463a; border-radius: 4px; color: #d2463a; background: #fff; font-size: 0.82em; font-weight: 700; line-height: 1.5; vertical-align: 1px; }
+.cs-slide .hg-note { position: absolute; right: 4%; bottom: 58px; z-index: 2; margin: 0 !important; padding: 4px 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.92); font-size: clamp(11px, 1.3vw, 14px) !important; }
+.cs.is-present .cs-slide .hg-note { right: 4vw; bottom: 11vh; padding: 0.6vh 1.2vw; font-size: min(2.6vh, 1.9vw) !important; }
 .wa-gram { margin-top: 6px; padding: 8px 12px; border-left: 4px solid #e0559a; border-radius: 0 10px 10px 0; background: #f6f3ff; font-size: 14px; line-height: 1.6; }
 .wa-gram p { margin: 0; }
 .wa-gram-pat { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 3px !important; }
@@ -2695,10 +2705,11 @@ a { color: var(--green-700); }
 
   <button class="to-top" type="button" aria-label="맨 위로 이동">↑</button>
 
-<script src="weeks/content.js?v=1.9.7"></script>
-<script src="weeks/readings.js?v=1.9.7"></script>
-<script src="weeks/readings6.js?v=1.9.7"></script>
-<script src="weeks/speaking.js?v=1.9.7"></script>
+<script src="weeks/content.js?v=1.10.0"></script>
+<script src="weeks/glossary.js?v=1.10.0"></script>
+<script src="weeks/readings.js?v=1.10.0"></script>
+<script src="weeks/readings6.js?v=1.10.0"></script>
+<script src="weeks/speaking.js?v=1.10.0"></script>
 <script>
 /* ===== config ===== */
 /* CONFIG-START */
@@ -2717,7 +2728,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.9.7",
+    version: "v1.10.0",
     logoText: "漢",
   },
 
@@ -7289,6 +7300,25 @@ window.SiteStore = (function () {
   /* 강의 노트를 문화 슬라이드와 같은 모양의 슬라이드로: 표지 → 수업 흐름 → 단계별 → 핵심 표현 → 확인 질문
      수업 진행용이라 멈춘 상태로 시작하고, ‹ › 버튼·방향키·전체 화면으로 넘깁니다. */
   var NOTE_ICON = ["🚪", "💡", "🧩", "🗣️", "🔍", "✅"];
+  /* 설명이 필요한 단어(HSK 5급 등): 본문에 * 표시, 카드·슬라이드 오른쪽 아래에 「* 한자 병음 뜻 [HSK5]」 풀이.
+     단어 목록은 weeks/glossary.js의 HSK_GLOSS */
+  function glossWords(zh) {
+    var G = window.HSK_GLOSS || {};
+    return Object.keys(G).filter(function (w) { return zh && zh.indexOf(w) >= 0; }).sort(function (a, b) { return zh.indexOf(a) - zh.indexOf(b); });
+  }
+  function glossMark(zh) {
+    var h = esc(zh);
+    glossWords(zh).forEach(function (w) { h = h.split(esc(w)).join('<span class="hg-w">' + esc(w) + '<sup class="hg-star" aria-hidden="true">*</sup></span>'); });
+    return h;
+  }
+  function glossNote(zh) {
+    var G = window.HSK_GLOSS || {}, ws = glossWords(zh);
+    if (!ws.length) return "";
+    return '<p class="hg-note">' + list(ws, function (w) {
+      var g = G[w];
+      return '<span class="hg-item"><span class="hg-star" aria-hidden="true">*</span> <b lang="zh-CN">' + esc(w) + '</b> <span class="hg-py">' + esc(g.py) + '</span> <span class="hg-ko">' + esc(g.ko) + '</span> <span class="hg-badge">HSK' + esc(String(g.lv)) + "</span></span>";
+    }) + "</p>";
+  }
   function notesHTML(n, wn) {
     var secs = n.sections || [];
     var ex = n.expressions || [];
@@ -7297,9 +7327,9 @@ window.SiteStore = (function () {
     var slides = [];
     /* AI가 만든 수업용 슬라이드(기본 20장)가 있으면 그대로 씀 */
     (n.slides || []).forEach(function (s) {
-      slides.push({ emoji: esc(s.emoji || "📘"), img: s.img, kicker: (Number(wn) > 100 ? "제" + (wn - 100) + "과" : wn + "주차") + " 강의 노트", title: s.title, body:
+      slides.push({ emoji: esc(s.emoji || "📘"), img: s.img, kicker: (Number(wn) > 100 ? "제" + (wn - 100) + "과" : wn + "주차") + " 강의 노트", title: s.title, note: glossNote(s.zh), body:
         ((s.points || []).length ? '<ul class="cs-points">' + list(s.points, function (p) { return "<li>" + esc(p) + "</li>"; }) + "</ul>" : "") +
-        (s.zh ? '<p class="cs-phrase"><button class="wa-say" type="button" data-say="' + esc(s.zh) + '" aria-label="듣기">🔊</button> <span><b lang="zh-CN">' + esc(s.zh) + "</b>" +
+        (s.zh ? '<p class="cs-phrase"><button class="wa-say" type="button" data-say="' + esc(s.zh) + '" aria-label="듣기">🔊</button> <span><b lang="zh-CN">' + glossMark(s.zh) + "</b>" +
           (s.pinyin ? ' <small class="cs-py">' + esc(s.pinyin) + "</small>" : "") + (s.ko ? "<br />" + esc(s.ko) : "") + "</span></p>" : "") });
     });
     if (slides.length) return slidesShell(slides, "강의 노트 슬라이드", true);
@@ -7340,7 +7370,7 @@ window.SiteStore = (function () {
           '<section class="cs-slide fx' + (i % 5) + (i === 0 ? " on" : "") + '" style="background:' + SLIDE_BG[i % SLIDE_BG.length] + '" aria-hidden="' + (i === 0 ? "false" : "true") + '">' +
           '<span class="cs-deco d1" aria-hidden="true"></span><span class="cs-deco d2" aria-hidden="true"></span>' +
           slideArt(s, s.title + " 그림") +
-          '<div class="cs-text"><p class="cs-no">' + (i + 1) + " / " + slides.length + " · " + esc(s.kicker) + "</p><h5>" + esc(s.title) + "</h5>" + s.body + "</div></section>"
+          '<div class="cs-text"><p class="cs-no">' + (i + 1) + " / " + slides.length + " · " + esc(s.kicker) + "</p><h5>" + esc(s.title) + "</h5>" + s.body + "</div>" + (s.note || "") + "</section>"
         );
       }) +
       "</div>" + slideCtrlHTML(paused) + "</div>"
@@ -7390,13 +7420,14 @@ window.SiteStore = (function () {
           '<span class="wa-num" aria-label="' + (i + 1) + '번">' + (i < 9 ? "0" : "") + (i + 1) + "</span>" +
           '<button class="wa-say" type="button" data-say="' + esc(s.zh) + '" aria-label="' + (i + 1) + '번 문장 듣기">🔊</button>' +
           '<div class="wa-s-body">' +
-          '<p class="wa-zh" lang="zh-CN">' + esc(s.zh) + ' <span class="tag tag-opt">' + esc(s.type) + "</span></p>" +
+          '<p class="wa-zh" lang="zh-CN">' + glossMark(s.zh) + ' <span class="tag tag-opt">' + esc(s.type) + "</span></p>" +
           '<p class="wa-py">' + esc(s.pinyin) + "</p>" +
           '<p class="wa-ko">' + esc(s.ko) + (s.point ? ' <small>· ' + esc(s.point) + "</small>" : "") + "</p>" +
           (s.pattern || s.explain
             ? '<div class="wa-gram">' + (s.pattern ? '<p class="wa-gram-pat"><span>📐 구조</span><b lang="zh-CN">' + esc(s.pattern) + "</b></p>" : "") +
               (s.explain ? "<p>" + esc(s.explain) + "</p>" : "") + "</div>"
             : "") +
+          glossNote(s.zh) +
           "</div></li>"
         );
       }) +
