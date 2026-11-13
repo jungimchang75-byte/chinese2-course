@@ -2165,8 +2165,13 @@ a { color: var(--green-700); }
 .hg-item b { font-size: 1.15em; color: #2b2b2b; }
 .hg-py { color: #6b6478; }
 .hg-badge { display: inline-block; margin-left: 2px; padding: 0 6px; border: 1.5px solid #d2463a; border-radius: 4px; color: #d2463a; background: #fff; font-size: 0.82em; font-weight: 700; line-height: 1.5; vertical-align: 1px; }
-.cs-slide .hg-note { position: absolute; right: 4%; bottom: 58px; z-index: 2; margin: 0 !important; padding: 4px 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.92); font-size: clamp(11px, 1.3vw, 14px) !important; }
-.cs.is-present .cs-slide .hg-note { right: 4vw; bottom: 11vh; padding: 0.6vh 1.2vw; font-size: min(2.6vh, 1.9vw) !important; }
+/* 슬라이드에서는 맨 아래 줄(쪽 번호와 넘기기 버튼 사이)에 두어 본문과 겹치지 않게 */
+.cs-slide .hg-note { position: absolute; left: 84px; right: 216px; bottom: 14px; z-index: 2; margin: 0 !important; padding: 0; font-size: clamp(11px, 1.3vw, 14px) !important; }
+.cs-slide .hg-note .hg-item { padding: 2px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.92); }
+.wa-fb p, .lqp-exp p { margin: 0; font-size: inherit; color: inherit; }
+.lqp .hg-note { font-size: 15px; }
+.lqp.is-present .hg-note { font-size: min(2.6vh, 1.9vw); }
+.cs.is-present .cs-slide .hg-note { left: 12vw; right: calc(2vw + 230px); bottom: 2.4vh; font-size: min(2.6vh, 1.9vw) !important; }
 .wa-gram { margin-top: 6px; padding: 8px 12px; border-left: 4px solid #e0559a; border-radius: 0 10px 10px 0; background: #f6f3ff; font-size: 14px; line-height: 1.6; }
 .wa-gram p { margin: 0; }
 .wa-gram-pat { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 3px !important; }
@@ -2705,11 +2710,11 @@ a { color: var(--green-700); }
 
   <button class="to-top" type="button" aria-label="맨 위로 이동">↑</button>
 
-<script src="weeks/content.js?v=1.10.0"></script>
-<script src="weeks/glossary.js?v=1.10.0"></script>
-<script src="weeks/readings.js?v=1.10.0"></script>
-<script src="weeks/readings6.js?v=1.10.0"></script>
-<script src="weeks/speaking.js?v=1.10.0"></script>
+<script src="weeks/content.js?v=1.10.1"></script>
+<script src="weeks/glossary.js?v=1.10.1"></script>
+<script src="weeks/readings.js?v=1.10.1"></script>
+<script src="weeks/readings6.js?v=1.10.1"></script>
+<script src="weeks/speaking.js?v=1.10.1"></script>
 <script>
 /* ===== config ===== */
 /* CONFIG-START */
@@ -2728,7 +2733,7 @@ window.SITE_CONFIG = {
     semester: "2026학년도 겨울학기",
     // 사이트 버전 — 제목 오른쪽에 빨간 글씨로 표시됩니다.
     // 관리자 화면에서 저장할 때마다 마지막 자리가 1씩 자동으로 올라갑니다 (v1.0.0 → v1.0.1).
-    version: "v1.10.0",
+    version: "v1.10.1",
     logoText: "漢",
   },
 
@@ -7302,23 +7307,51 @@ window.SiteStore = (function () {
   var NOTE_ICON = ["🚪", "💡", "🧩", "🗣️", "🔍", "✅"];
   /* 설명이 필요한 단어(HSK 5급 등): 본문에 * 표시, 카드·슬라이드 오른쪽 아래에 「* 한자 병음 뜻 [HSK5]」 풀이.
      단어 목록은 weeks/glossary.js의 HSK_GLOSS */
-  function glossWords(zh) {
+  /* 글 속에서 풀이 단어의 위치 찾기: skip 목록의 단어 속에 들어 있으면 빼고(非常의 非 등), 겹치면 긴 단어 우선 */
+  function glossHits(t) {
+    var G = window.HSK_GLOSS || {}, hits = [];
+    if (!t) return hits;
+    t = String(t);
+    Object.keys(G).forEach(function (w) {
+      var skip = G[w].skip || [], i = t.indexOf(w);
+      while (i >= 0) {
+        var bad = skip.some(function (s) { var k = s.indexOf(w); return k >= 0 && i - k >= 0 && t.slice(i - k, i - k + s.length) === s; });
+        if (!bad) hits.push({ w: w, i: i });
+        i = t.indexOf(w, i + w.length);
+      }
+    });
+    hits.sort(function (a, b) { return a.i - b.i || b.w.length - a.w.length; });
+    var out = [], end = -1;
+    hits.forEach(function (h) { if (h.i >= end) { out.push(h); end = h.i + h.w.length; } });
+    return out;
+  }
+  function glossMark(t) {
+    if (t == null) return "";
+    t = String(t);
+    var h = "", p = 0;
+    glossHits(t).forEach(function (x) {
+      h += esc(t.slice(p, x.i)) + '<span class="hg-w">' + esc(x.w) + '<sup class="hg-star" aria-hidden="true">*</sup></span>';
+      p = x.i + x.w.length;
+    });
+    return h + esc(t.slice(p));
+  }
+  /* 여러 글(제목·본문·포인트…)에서 나온 풀이 단어를 처음 나온 순서대로 모으기 */
+  function glossWords() {
+    var ws = [];
+    Array.prototype.slice.call(arguments).forEach(function (a) {
+      [].concat(a || []).forEach(function (t) { glossHits(t).forEach(function (h) { if (ws.indexOf(h.w) < 0) ws.push(h.w); }); });
+    });
+    return ws;
+  }
+  function glossNoteWs(ws) {
     var G = window.HSK_GLOSS || {};
-    return Object.keys(G).filter(function (w) { return zh && zh.indexOf(w) >= 0; }).sort(function (a, b) { return zh.indexOf(a) - zh.indexOf(b); });
-  }
-  function glossMark(zh) {
-    var h = esc(zh);
-    glossWords(zh).forEach(function (w) { h = h.split(esc(w)).join('<span class="hg-w">' + esc(w) + '<sup class="hg-star" aria-hidden="true">*</sup></span>'); });
-    return h;
-  }
-  function glossNote(zh) {
-    var G = window.HSK_GLOSS || {}, ws = glossWords(zh);
     if (!ws.length) return "";
     return '<p class="hg-note">' + list(ws, function (w) {
       var g = G[w];
       return '<span class="hg-item"><span class="hg-star" aria-hidden="true">*</span> <b lang="zh-CN">' + esc(w) + '</b> <span class="hg-py">' + esc(g.py) + '</span> <span class="hg-ko">' + esc(g.ko) + '</span> <span class="hg-badge">HSK' + esc(String(g.lv)) + "</span></span>";
     }) + "</p>";
   }
+  function glossNote() { return glossNoteWs(glossWords.apply(null, arguments)); }
   function notesHTML(n, wn) {
     var secs = n.sections || [];
     var ex = n.expressions || [];
@@ -7327,8 +7360,8 @@ window.SiteStore = (function () {
     var slides = [];
     /* AI가 만든 수업용 슬라이드(기본 20장)가 있으면 그대로 씀 */
     (n.slides || []).forEach(function (s) {
-      slides.push({ emoji: esc(s.emoji || "📘"), img: s.img, kicker: (Number(wn) > 100 ? "제" + (wn - 100) + "과" : wn + "주차") + " 강의 노트", title: s.title, note: glossNote(s.zh), body:
-        ((s.points || []).length ? '<ul class="cs-points">' + list(s.points, function (p) { return "<li>" + esc(p) + "</li>"; }) + "</ul>" : "") +
+      slides.push({ emoji: esc(s.emoji || "📘"), img: s.img, kicker: (Number(wn) > 100 ? "제" + (wn - 100) + "과" : wn + "주차") + " 강의 노트", title: s.title, titleHTML: glossMark(s.title), note: glossNote(s.title, s.points, s.zh), body:
+        ((s.points || []).length ? '<ul class="cs-points">' + list(s.points, function (p) { return "<li>" + glossMark(p) + "</li>"; }) + "</ul>" : "") +
         (s.zh ? '<p class="cs-phrase"><button class="wa-say" type="button" data-say="' + esc(s.zh) + '" aria-label="듣기">🔊</button> <span><b lang="zh-CN">' + glossMark(s.zh) + "</b>" +
           (s.pinyin ? ' <small class="cs-py">' + esc(s.pinyin) + "</small>" : "") + (s.ko ? "<br />" + esc(s.ko) : "") + "</span></p>" : "") });
     });
@@ -7370,7 +7403,7 @@ window.SiteStore = (function () {
           '<section class="cs-slide fx' + (i % 5) + (i === 0 ? " on" : "") + '" style="background:' + SLIDE_BG[i % SLIDE_BG.length] + '" aria-hidden="' + (i === 0 ? "false" : "true") + '">' +
           '<span class="cs-deco d1" aria-hidden="true"></span><span class="cs-deco d2" aria-hidden="true"></span>' +
           slideArt(s, s.title + " 그림") +
-          '<div class="cs-text"><p class="cs-no">' + (i + 1) + " / " + slides.length + " · " + esc(s.kicker) + "</p><h5>" + esc(s.title) + "</h5>" + s.body + "</div>" + (s.note || "") + "</section>"
+          '<div class="cs-text"><p class="cs-no">' + (i + 1) + " / " + slides.length + " · " + esc(s.kicker) + "</p><h5>" + (s.titleHTML || esc(s.title)) + "</h5>" + s.body + "</div>" + (s.note || "") + "</section>"
         );
       }) +
       "</div>" + slideCtrlHTML(paused) + "</div>"
@@ -7422,12 +7455,12 @@ window.SiteStore = (function () {
           '<div class="wa-s-body">' +
           '<p class="wa-zh" lang="zh-CN">' + glossMark(s.zh) + ' <span class="tag tag-opt">' + esc(s.type) + "</span></p>" +
           '<p class="wa-py">' + esc(s.pinyin) + "</p>" +
-          '<p class="wa-ko">' + esc(s.ko) + (s.point ? ' <small>· ' + esc(s.point) + "</small>" : "") + "</p>" +
+          '<p class="wa-ko">' + esc(s.ko) + (s.point ? ' <small>· ' + glossMark(s.point) + "</small>" : "") + "</p>" +
           (s.pattern || s.explain
-            ? '<div class="wa-gram">' + (s.pattern ? '<p class="wa-gram-pat"><span>📐 구조</span><b lang="zh-CN">' + esc(s.pattern) + "</b></p>" : "") +
-              (s.explain ? "<p>" + esc(s.explain) + "</p>" : "") + "</div>"
+            ? '<div class="wa-gram">' + (s.pattern ? '<p class="wa-gram-pat"><span>📐 구조</span><b lang="zh-CN">' + glossMark(s.pattern) + "</b></p>" : "") +
+              (s.explain ? "<p>" + glossMark(s.explain) + "</p>" : "") + "</div>"
             : "") +
-          glossNote(s.zh) +
+          glossNote(s.zh, s.point, s.pattern, s.explain) +
           "</div></li>"
         );
       }) +
@@ -7451,17 +7484,17 @@ window.SiteStore = (function () {
     if ((q.mc || []).length) {
       html += '<h5>객관식</h5>' + list(q.mc, function (m, i) {
         n++;
-        return '<fieldset class="wa-q" data-t="mc" data-a="' + m.answer + '"><legend>' + n + ". " + esc(m.q) + "</legend>" +
-          list(m.choices, function (c, ci) { return '<label class="choice"><input type="radio" name="mc' + wn + "-" + i + '" value="' + ci + '" /> ' + esc(c) + "</label>"; }) +
-          '<p class="wa-fb" hidden>' + esc(m.explanation) + "</p></fieldset>";
+        return '<fieldset class="wa-q" data-t="mc" data-a="' + m.answer + '"><legend>' + n + ". " + glossMark(m.q) + "</legend>" +
+          list(m.choices, function (c, ci) { return '<label class="choice"><input type="radio" name="mc' + wn + "-" + i + '" value="' + ci + '" /> ' + glossMark(c) + "</label>"; }) +
+          '<div class="wa-fb" hidden><p>' + glossMark(m.explanation) + "</p>" + glossNote(m.q, m.choices, m.explanation) + "</div></fieldset>";
       });
     }
     if ((q.ox || []).length) {
       html += '<h5>OX</h5>' + list(q.ox, function (o, i) {
         n++;
-        return '<fieldset class="wa-q" data-t="ox" data-a="' + (o.answer ? "o" : "x") + '"><legend>' + n + ". " + esc(o.q) + "</legend>" +
+        return '<fieldset class="wa-q" data-t="ox" data-a="' + (o.answer ? "o" : "x") + '"><legend>' + n + ". " + glossMark(o.q) + "</legend>" +
           '<div class="wa-ox"><label><input type="radio" name="ox' + wn + "-" + i + '" value="o" /> <span>O</span></label><label><input type="radio" name="ox' + wn + "-" + i + '" value="x" /> <span>X</span></label></div>' +
-          '<p class="wa-fb" hidden>' + esc(o.explanation) + "</p></fieldset>";
+          '<div class="wa-fb" hidden><p>' + glossMark(o.explanation) + "</p>" + glossNote(o.q, o.explanation) + "</div></fieldset>";
       });
     }
     if ((q.blank || []).length) {
@@ -7469,8 +7502,8 @@ window.SiteStore = (function () {
         n++;
         var parts = String(b.sentence).split(/＿+|_{2,}/);
         return '<fieldset class="wa-q" data-t="blank" data-a="' + esc(b.answer) + '"><legend>' + n + ". " + esc(b.ko) + "</legend>" +
-          '<p class="wa-zh" lang="zh-CN">' + esc(parts[0] || "") + '<input class="wa-blank" maxlength="4" lang="zh-CN" aria-label="빈칸" />' + esc(parts.slice(1).join("") || "") + "</p>" +
-          '<p class="wa-fb" hidden>정답: <b lang="zh-CN">' + esc(b.answer) + "</b> · " + esc(b.pinyin) + "</p></fieldset>";
+          '<p class="wa-zh" lang="zh-CN">' + glossMark(parts[0] || "") + '<input class="wa-blank" maxlength="4" lang="zh-CN" aria-label="빈칸" />' + glossMark(parts.slice(1).join("") || "") + "</p>" +
+          '<div class="wa-fb" hidden><p>정답: <b lang="zh-CN">' + glossMark(b.answer) + "</b> · " + esc(b.pinyin) + "</p>" + glossNote(String(b.sentence).replace(/＿+|_{2,}/, b.answer)) + "</div></fieldset>";
       });
     }
     if ((q.order || []).length) {
@@ -7479,7 +7512,7 @@ window.SiteStore = (function () {
         return '<fieldset class="wa-q" data-t="order" data-a="' + esc(r.tokens.join("")) + '"><legend>' + n + ". " + esc(r.ko) + "</legend>" +
           '<div class="wa-order-ans" lang="zh-CN" aria-label="고른 순서"></div>' +
           '<div class="wa-order-pool" lang="zh-CN">' + list(shuffle(r.tokens, wn * 31 + i + 7), function (t) { return '<button type="button" class="wa-tok">' + esc(t) + "</button>"; }) + "</div>" +
-          '<p class="wa-fb" hidden>정답: <b lang="zh-CN">' + esc(r.tokens.join(" ")) + "</b></p></fieldset>";
+          '<div class="wa-fb" hidden><p>정답: <b lang="zh-CN">' + glossMark(r.tokens.join(" ")) + "</b></p>" + glossNote(r.tokens.join("")) + "</div></fieldset>";
       });
     }
     html += '<div class="ad-actions"><button class="btn btn-primary btn-sm" type="submit">채점하기</button><button class="btn btn-ghost btn-sm wa-oq-reset" type="button">다시 풀기</button><span class="wa-score" aria-live="polite"></span></div></form>';
@@ -7617,10 +7650,13 @@ window.SiteStore = (function () {
   var LQP_TIME = 10; // 실시간 퀴즈 제한 시간(초) — 모든 문제 공통
   function lqpStage(q, i) {
     return (
-      '<div class="lqp-q"><span class="lqp-no">Q' + (i + 1) + "</span>" + esc(q.q) + "</div>" +
-      '<ol class="lqp-ch">' + list(q.choices, function (c, k) { return '<li class="lqp-c' + k + '"><b>' + (k + 1) + "</b><span>" + esc(c) + "</span></li>"; }) + "</ol>" +
+      '<div class="lqp-q"><span class="lqp-no">Q' + (i + 1) + "</span>" + glossMark(q.q) + "</div>" +
+      '<ol class="lqp-ch">' + list(q.choices, function (c, k) { return '<li class="lqp-c' + k + '"><b>' + (k + 1) + "</b><span>" + glossMark(c) + "</span></li>"; }) + "</ol>" +
       '<p class="lqp-fb" hidden></p>' +
-      (q.explanation ? '<p class="lqp-exp" hidden>💡 ' + esc(q.explanation) + "</p>" : "")
+      /* 풀이는 정답을 본 뒤에만 보이게(문제가 그 단어의 뜻을 물을 수 있으므로) 해설 칸 안에 넣음 */
+      (q.explanation || glossWords(q.q, q.choices).length
+        ? '<div class="lqp-exp" hidden>' + (q.explanation ? "<p>💡 " + glossMark(q.explanation) + "</p>" : "") + glossNote(q.q, q.choices, q.explanation) + "</div>"
+        : "")
     );
   }
   function liveQuizHTML(lq) {
@@ -7807,11 +7843,11 @@ window.SiteStore = (function () {
           '<section class="cs-slide fx' + (i % 5) + (i === 0 ? " on" : "") + '" style="background:' + SLIDE_BG[i % SLIDE_BG.length] + '" aria-hidden="' + (i === 0 ? "false" : "true") + '">' +
           '<span class="cs-deco d1" aria-hidden="true"></span><span class="cs-deco d2" aria-hidden="true"></span>' +
           slideArt({ img: s.img, emoji: esc(s.emoji) }, s.title + " 그림") +
-          '<div class="cs-text"><p class="cs-no">' + (i + 1) + " / " + slides.length + "</p><h5>" + esc(s.title) + "</h5><p>" + esc(s.text) + "</p>" +
-          ((s.points || []).length ? '<ul class="cs-points">' + list(s.points, function (p) { return "<li>" + esc(p) + "</li>"; }) + "</ul>" : "") +
-          (s.keyword ? '<p class="cs-key" lang="zh-CN">' + esc(s.keyword) + "</p>" : "") +
-          (s.phrase ? '<p class="cs-phrase"><button class="wa-say" type="button" data-say="' + esc(String(s.phrase).split(/\s[A-Za-zÀ-ž]/)[0]) + '" aria-label="듣기">🔊</button> <span lang="zh-CN">' + esc(s.phrase) + "</span></p>" : "") +
-          "</div></section>"
+          '<div class="cs-text"><p class="cs-no">' + (i + 1) + " / " + slides.length + "</p><h5>" + glossMark(s.title) + "</h5><p>" + glossMark(s.text) + "</p>" +
+          ((s.points || []).length ? '<ul class="cs-points">' + list(s.points, function (p) { return "<li>" + glossMark(p) + "</li>"; }) + "</ul>" : "") +
+          (s.keyword ? '<p class="cs-key" lang="zh-CN">' + glossMark(s.keyword) + "</p>" : "") +
+          (s.phrase ? '<p class="cs-phrase"><button class="wa-say" type="button" data-say="' + esc(String(s.phrase).split(/\s[A-Za-zÀ-ž]/)[0]) + '" aria-label="듣기">🔊</button> <span lang="zh-CN">' + glossMark(s.phrase) + "</span></p>" : "") +
+          "</div>" + glossNote(s.title, s.text, s.points, s.keyword, s.phrase) + "</section>"
         );
       }) +
       "</div>" + slideCtrlHTML(false) + "</div>"
